@@ -16,8 +16,11 @@ export class MainPage {
               private surveyService: SurveyService) {
     surveyService.getLast3Surveys().subscribe(data => {
       this.last3surveys = data;
-      data.forEach(d => console.log(d.id + " " + d.startedDate));
     }, err => console.log(err));
+  }
+
+  showAnonymousAlert() {
+    
   }
 
   openSurveyPage() {

@@ -1,0 +1,53 @@
+.main-page {
+  scroll-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .welcome-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2em;
+    ion-icon {
+      color: #AB9D31;
+    }
+
+    .credits {
+      display: flex;
+      border: 2px black solid;
+      align-items: center;
+      font-weight: 600;
+      border-radius: 10px;
+
+      .buy-credits {
+        padding: 0 4px;
+        border-right: 2px black solid;
+        font-size: 1.2em;
+        background-color: #32db64;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+      }
+
+      .credits-amount {
+        padding-left: 10px;
+      }
+
+      .credits-coins {
+        padding: 0 4px;
+      }
+    }
+  }
+
+  .middle-area {
+    flex-grow: 1;
+
+  }
+
+  ion-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

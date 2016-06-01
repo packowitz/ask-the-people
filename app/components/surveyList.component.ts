@@ -1,5 +1,7 @@
 import {Component, Input} from "angular2/core";
 import {Survey} from "./survey.component";
+import {NavController} from "ionic-angular/index";
+import {StartSurveyPage} from "../pages/startSurvey/startSurvey";
 
 @Component({
   selector: 'survey-list',
@@ -8,6 +10,10 @@ import {Survey} from "./survey.component";
 export class SurveyListComponent {
   @Input()
   surveys: Survey[];
+  @Input()
+  surveyCount: number;
+
+  constructor(private nav: NavController) {}
 
   getTimeDiff(survey: Survey) {
     let surveyStarted: number = new Date(Date.parse(survey.startedDate)).getTime();
@@ -19,6 +25,10 @@ export class SurveyListComponent {
       return Math.round(diffInMin / 60) + " hours";
     }
     return Math.round(diffInMin / 1440) + " days";
+  }
+
+  gotoStartSurvey() {
+    this.nav.push(StartSurveyPage);
   }
 
   surveyDetails(survey: Survey) {

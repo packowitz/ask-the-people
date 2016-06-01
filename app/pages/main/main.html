@@ -2,9 +2,22 @@
     <ion-title *ngIf="model.user">Ask the people</ion-title>
 </ion-navbar>
 
-<ion-content padding>
-    <h3>You have {{model.user.credits}} Credits!</h3>
-    <button (click)="openSurveyPage()">Earn some Credits</button>
-    <button (click)="openStartSurveyPage()">Start an own survey</button>
-    <survey-list [surveys]="last3surveys"></survey-list>
+<ion-content padding class="main-page">
+    <div class="welcome-line">
+        <span *ngIf="model.user.username">Hello {{model.user.username}}</span>
+        <span *ngIf="!model.user.username">Hello ANONYMOUS <ion-icon name="help-circle" (click)="showAnonymousAlert()"></ion-icon></span>
+        <div class="credits">
+            <div class="buy-credits">+</div>
+            <div class="credits-amount">{{model.user.credits}}</div>
+            <div class="credits-coins"><ion-icon name="ribbon"></ion-icon></div>
+        </div>
+    </div>
+    <div class="middle-area">
+        <button (click)="openStartSurveyPage()">Start an own survey</button>
+    </div>
+    <button (click)="openSurveyPage()" large>Earn some Credits!</button>
+    <ion-card>
+        <ion-card-header>Your latest surveys<button (click)="openStartSurveyPage()" secondary round small>start new</button></ion-card-header>
+        <survey-list [surveys]="last3surveys" [surveyCount]="3"></survey-list>
+    </ion-card>
 </ion-content>
