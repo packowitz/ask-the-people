@@ -1,0 +1,30 @@
+<ion-navbar *navbar>
+    <ion-title>Start new survey</ion-title>
+</ion-navbar>
+
+<ion-content class="start-survey" id="start-survey-content">
+    <!-- div [style.width]="picSize + 'px'" [style.height]="picSize + 'px'" (click)="choosePicture(true)" class="picture">
+        <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" [width]="picSize" [height]="picSize" class="pic"/>
+        <div *ngIf="!survey.pic1" class="placeholer-image"><ion-icon name="images" class="default-icon"></ion-icon></div>
+    </div>
+    <div [style.width]="picSize + 'px'" [style.height]="picSize + 'px'" (click)="choosePicture(false)" class="picture">
+        <img [src]="'data:image/jpeg;base64,' + survey.pic2" *ngIf="survey.pic2" [width]="picSize" [height]="picSize" class="pic"/>
+        <div *ngIf="!survey.pic2" class="placeholer-image"><ion-icon name="images" class="default-icon"></ion-icon></div>
+    </div -->
+
+    <div class="picture-container">
+        <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" (click)="choosePicture(true)" [width]="picSize" [height]="picSize" class="pic"/>
+        <div *ngIf="!survey.pic1" (click)="choosePicture(true)" class="pic" [style.width]="picSize + 'px'" [style.height]="picSize + 'px'"><ion-icon name="images" class="default-icon"></ion-icon></div>
+        <img [src]="'data:image/jpeg;base64,' + survey.pic2" *ngIf="survey.pic2" (click)="choosePicture(false)" [width]="picSize" [height]="picSize" class="pic"/>
+        <div *ngIf="!survey.pic2" (click)="choosePicture(false)" class="pic" [style.width]="picSize + 'px'" [style.height]="picSize + 'px'"><ion-icon name="images" class="default-icon"></ion-icon></div>
+    </div>
+</ion-content>
+
+<ion-toolbar position="bottom">
+    <ion-buttons class="fourButtonToolbar">
+        <button (click)="chooseCountry()"><img src="img/flags/{{survey.country}}.png" class="flag"/></button>
+        <button class="rangeBtn" (click)="chooseAge()">{{survey.minAge ? survey.minAge : '0'}} - {{survey.maxAge ? survey.maxAge : '99'}}</button>
+        <button class="genderBtn" (click)="chooseGender()"><ion-icon name="man" *ngIf="survey.male"></ion-icon><ion-icon name="woman" *ngIf="survey.female"></ion-icon></button>
+        <button class="sumbmitBtn" (click)="submitSurvey()"><ion-icon name="log-out"></ion-icon></button>
+    </ion-buttons>
+</ion-toolbar>

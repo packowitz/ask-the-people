@@ -1,0 +1,10 @@
+<ion-navbar *navbar>
+    <ion-title *ngIf="model.user">Ask the people</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+    <h3>You have {{model.user.credits}} Credits!</h3>
+    <button (click)="openSurveyPage()">Earn some Credits</button>
+    <button (click)="openStartSurveyPage()">Start an own survey</button>
+    <survey-list [surveys]="last3surveys"></survey-list>
+</ion-content>

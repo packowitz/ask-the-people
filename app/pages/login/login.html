@@ -1,0 +1,26 @@
+<ion-navbar *navbar>
+    <ion-title>Register</ion-title>
+</ion-navbar>
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-label>year of birth</ion-label>
+            <ion-input type="text" [(ngModel)]="user.yearOfBirth" placeholder="yyyy"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>gender</ion-label>
+            <ion-select [(ngModel)]="user.male">
+                <ion-option value="true">male</ion-option>
+                <ion-option value="false">female</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>country</ion-label>
+            <ion-select [(ngModel)]="user.country">
+                <ion-option *ngFor="#country of countries" [value]="country.alpha3">{{country.nameEng}}</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <button (click)="register()">register</button>
+</ion-content>

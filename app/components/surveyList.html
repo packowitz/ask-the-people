@@ -1,0 +1,27 @@
+<div *ngIf="surveys" class="survey-list">
+    <ion-card>
+        <ion-card-header>Your latest surveys</ion-card-header>
+        <ul>
+            <li *ngFor="#survey of surveys" (click)="surveyDetails(survey)" class="survey-list-item">
+                <img [src]="'data:image/jpeg;base64,' + survey.pic1" class="survey-list-img pic1-img">
+                <div class="survey-item-data" [ngClass]="survey.status">
+                    <div class="survey-item-text">{{getTimeDiff(survey)}} ago<span>{{survey.status}}</span></div>
+                    <div class="survey-item-diagram">
+                        <div class="survey-item-diagram-pic1" *ngIf="survey.pic1Count > 0" [style.width]="100 * survey.pic1Count / survey.answered + '%'">
+                            <span *ngIf="(100 * survey.pic1Count / survey.answered) >= 10" class="diagram-text">{{survey.pic1Count}}</span>
+                        </div>
+                        <div class="survey-item-diagram-noOpinion" *ngIf="survey.noOpinionCount > 0" [style.width]="100 * survey.noOpinionCount / survey.answered + '%'">
+                            <span *ngIf="(100 * survey.noOpinionCount / survey.answered) >= 10" class="diagram-text">{{survey.noOpinionCount}}</span>
+                        </div>
+                        <div class="survey-item-diagram-pic2" *ngIf="survey.pic2Count > 0" [style.width]="100 * survey.pic2Count / survey.answered + '%'">
+                            <span *ngIf="(100 * survey.pic2Count / survey.answered) >= 10" class="diagram-text">{{survey.pic2Count}}</span>
+                        </div>
+                    </div>
+                    <div class="survey-item-text">{{survey.answered}} votes</div>
+                </div>
+                <img [src]="'data:image/jpeg;base64,' + survey.pic2" class="survey-list-img pic2-img">
+            </li>
+        </ul>
+    </ion-card>
+</div>
+<div *ngIf="!surveys">loading surveys</div>

@@ -1,0 +1,81 @@
+.survey-list {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .survey-list-item {
+    display: flex;
+    padding: 1vw 0;
+    border-bottom: 1px grey solid;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .survey-item-data {
+    flex-grow: 1;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    &.ACTIVE {
+      background-color: #B7F1B7;
+    }
+    &.FINISHED {
+      background-color: #E0E0DA;
+    }
+    &.ABUSE {
+      background-color: #E45757;
+    }
+
+
+    .survey-item-text {
+      height: 6vw;
+      padding: 1vw;
+      display: flex;
+      justify-content: space-between;
+    }
+    .survey-item-diagram {
+      flex-grow: 1;
+      border: 2px black solid;
+      background-color: white;
+      display: flex;
+      .survey-item-diagram-pic1 {
+        background-color: dodgerblue;
+        border-right: 1px black solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .survey-item-diagram-noOpinion {
+        background-color: darkgrey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .survey-item-diagram-pic2 {
+        background-color: darkorange;
+        border-left: 1px black solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .diagram-text {
+        color: antiquewhite;
+        vertical-align: sub;
+      }
+    }
+  }
+
+  .survey-list-img {
+    width: 20vw;
+    height: 20vw;
+    &.pic1-img {
+      border: 2px dodgerblue solid;
+    }
+    &.pic2-img {
+      border: 2px darkorange solid;
+    }
+  }
+}
