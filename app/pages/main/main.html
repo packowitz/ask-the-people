@@ -2,7 +2,7 @@
     <div class="title-line">
         <img src="img/appicon.png" class="title-logo">
         <span class="toolbar-title">Ask The People</span>
-        <button dark clear class="title-settings"><ion-icon name="settings"></ion-icon></button>
+        <button dark clear class="title-settings" (click)="openSettingsPage()"><ion-icon name="settings"></ion-icon></button>
     </div>
 </ion-toolbar>
 
@@ -30,7 +30,7 @@
             <button (click)="openStartSurveyPage()" outline>A<br/>T<br/>P</button>
         </div>
     </div>
-    <button (click)="openSurveyPage()" large>Earn some Credits!</button>
+    <button (click)="openSurveyPage()" large class="survey-button">Earn some Credits!</button>
     <ion-card>
         <ion-card-header>Your latest surveys<button (click)="openStartSurveyPage()" secondary round small>start new</button></ion-card-header>
         <survey-list [surveys]="last3surveys" [surveyCount]="3"></survey-list>

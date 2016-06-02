@@ -3,15 +3,6 @@
 </ion-navbar>
 
 <ion-content class="start-survey" id="start-survey-content">
-    <!-- div [style.width]="picSize + 'px'" [style.height]="picSize + 'px'" (click)="choosePicture(true)" class="picture">
-        <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" [width]="picSize" [height]="picSize" class="pic"/>
-        <div *ngIf="!survey.pic1" class="placeholer-image"><ion-icon name="images" class="default-icon"></ion-icon></div>
-    </div>
-    <div [style.width]="picSize + 'px'" [style.height]="picSize + 'px'" (click)="choosePicture(false)" class="picture">
-        <img [src]="'data:image/jpeg;base64,' + survey.pic2" *ngIf="survey.pic2" [width]="picSize" [height]="picSize" class="pic"/>
-        <div *ngIf="!survey.pic2" class="placeholer-image"><ion-icon name="images" class="default-icon"></ion-icon></div>
-    </div -->
-
     <div class="picture-container">
         <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" (click)="choosePicture(true)" [width]="picSize" [height]="picSize" class="pic"/>
         <div *ngIf="!survey.pic1" (click)="choosePicture(true)" class="pic" [style.width]="picSize + 'px'" [style.height]="picSize + 'px'"><ion-icon name="images" class="default-icon"></ion-icon></div>

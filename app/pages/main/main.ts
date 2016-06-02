@@ -4,6 +4,7 @@ import {SurveyPage} from "../survey/survey";
 import {StartSurveyPage} from "../startSurvey/startSurvey";
 import {SurveyService} from "../../services/survey.service";
 import {Survey} from "../../components/survey.component";
+import {SettingsPage} from "../settings/setting";
 
 @Page({
     templateUrl: 'build/pages/main/main.html'
@@ -21,6 +22,10 @@ export class MainPage {
 
   showAnonymousAlert() {
     
+  }
+
+  openSettingsPage() {
+    this.nav.push(SettingsPage);
   }
 
   openSurveyPage() {

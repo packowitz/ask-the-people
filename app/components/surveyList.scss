@@ -24,7 +24,7 @@
 
   .survey-item-data {
     flex-grow: 1;
-    padding: 1vw;
+    padding: 0 1vw;
     display: flex;
     flex-direction: column;
     &.ACTIVE {
@@ -39,16 +39,17 @@
 
 
     .survey-item-text {
-      height: 6vw;
-      padding: 1vw;
+      height: 3.5vh;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
     .survey-item-diagram {
       flex-grow: 1;
       border: 2px black solid;
       background-color: white;
       display: flex;
+      font-size: 2vh;
       .survey-item-diagram-pic1 {
         background-color: dodgerblue;
         border-right: 1px black solid;
@@ -77,8 +78,8 @@
   }
 
   .survey-list-img {
-    width: 20vw;
-    height: 20vw;
+    width: 10vh;
+    height: 10vh;
     &.pic1-img {
       border: 2px dodgerblue solid;
     }
@@ -86,4 +87,10 @@
       border: 2px darkorange solid;
     }
   }
+}
+
+.no-surveys {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

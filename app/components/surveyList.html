@@ -1,5 +1,5 @@
-<div [style.height]="surveyCount * 22.2 + 'vw'" class="survey-list">
-    <ul *ngIf="surveys && surveys.length > 0">
+<div class="survey-list" *ngIf="surveys && surveys.length > 0">
+    <ul>
         <li *ngFor="#survey of surveys" (click)="surveyDetails(survey)" class="survey-list-item">
             <img [src]="'data:image/jpeg;base64,' + survey.pic1" class="survey-list-img pic1-img">
             <div class="survey-item-data" [ngClass]="survey.status">
@@ -20,6 +20,8 @@
             <img [src]="'data:image/jpeg;base64,' + survey.pic2" class="survey-list-img pic2-img">
         </li>
     </ul>
+</div>
+<div *ngIf="!surveys || surveys.length == 0" class="no-surveys" [style.height]="surveyCount * 22.2 + 'vw'">
     <button *ngIf="surveys && surveys.length == 0" (click)="gotoStartSurvey()" secondary round>start your first survey</button>
     <ion-spinner *ngIf="!surveys" name="bubbles"></ion-spinner>
 </div>
