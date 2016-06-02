@@ -5,6 +5,26 @@
     justify-content: space-between;
   }
 
+  .title-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+
+    .title-logo {
+      width: 10vw;
+    }
+
+    .toolbar-title {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .title-settings {
+      width: 10vw;
+    }
+  }
+
   .welcome-line {
     display: flex;
     align-items: center;
@@ -42,7 +62,36 @@
 
   .middle-area {
     flex-grow: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 12px 0;
 
+    .button-area {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .text-area {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      span {
+        padding: 12px;
+      }
+    }
+    .atp-btn {
+      display: flex;
+      button {
+        height: inherit;
+        line-height: 200%;
+        font-size: 1.4em;
+        font-weight: 600;
+      }
+    }
   }
 
   ion-card-header {

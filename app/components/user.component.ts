@@ -4,4 +4,6 @@ export class User {
   country: string;
   male: boolean;
   credits: number;
+  surveysAnswered: number;
+  surveysStarted: number;
 }
