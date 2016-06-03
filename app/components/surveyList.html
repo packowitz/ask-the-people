@@ -1,6 +1,6 @@
 <div class="survey-list" *ngIf="surveys && surveys.length > 0">
     <ul>
-        <li *ngFor="#survey of surveys" (click)="surveyDetails(survey)" class="survey-list-item">
+        <li *ngFor="#survey of surveys" (click)="openSurveyDetails(survey)" class="survey-list-item">
             <img [src]="'data:image/jpeg;base64,' + survey.pic1" class="survey-list-img pic1-img">
             <div class="survey-item-data" [ngClass]="survey.status">
                 <div class="survey-item-text">{{getTimeDiff(survey)}} ago<span>{{survey.status}}</span></div>

@@ -2,6 +2,7 @@ import {Component, Input} from "angular2/core";
 import {Survey} from "./survey.component";
 import {NavController} from "ionic-angular/index";
 import {StartSurveyPage} from "../pages/startSurvey/startSurvey";
+import {SurveyDetailsPage} from "../pages/surveyDetails/surveyDetails";
 
 @Component({
   selector: 'survey-list',
@@ -31,6 +32,7 @@ export class SurveyListComponent {
     this.nav.push(StartSurveyPage);
   }
 
-  surveyDetails(survey: Survey) {
+  openSurveyDetails(survey: Survey) {
+    this.nav.push(SurveyDetailsPage, {survey: survey});
   }
 }

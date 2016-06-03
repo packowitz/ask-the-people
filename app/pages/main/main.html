@@ -10,7 +10,7 @@
     <div class="welcome-line">
         <span *ngIf="model.user.username">Hello {{model.user.username}}</span>
         <span *ngIf="!model.user.username">Hello ANONYMOUS <ion-icon name="help-circle" (click)="showAnonymousAlert()"></ion-icon></span>
-        <div class="credits">
+        <div class="credits" (click)="openPurchasePage()">
             <div class="buy-credits">+</div>
             <div class="credits-amount">{{model.user.credits}}</div>
             <div class="credits-coins"><ion-icon name="ribbon"></ion-icon></div>
@@ -18,9 +18,9 @@
     </div>
     <div class="middle-area">
         <div class="button-area">
-            <button dark clear><ion-icon name="trophy"></ion-icon></button>
-            <button dark clear><ion-icon name="chatbubbles"></ion-icon></button>
-            <button dark clear><ion-icon name="list-box"></ion-icon></button>
+            <button (click)="openHighscorePage()" dark clear><ion-icon name="trophy"></ion-icon></button>
+            <button (click)="openFeedbackPage()" dark clear><ion-icon name="chatbubbles"></ion-icon></button>
+            <button (click)="openMySurveysPage()" dark clear><ion-icon name="list-box"></ion-icon></button>
         </div>
         <div class="text-area">
             <span>You asked {{model.user.surveysStarted}} questions</span>
