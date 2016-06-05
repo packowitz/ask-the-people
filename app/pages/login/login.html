@@ -2,25 +2,36 @@
     <ion-title>Register</ion-title>
 </ion-navbar>
 
-<ion-content>
+<ion-content class="login-page">
     <ion-list>
         <ion-item>
-            <ion-label>year of birth</ion-label>
-            <ion-input type="text" [(ngModel)]="user.yearOfBirth" placeholder="yyyy"></ion-input>
+            <ion-label floating>year of birth (yyyy)</ion-label>
+            <ion-input type="number" [ngFormControl]="yearOfBirth"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>gender</ion-label>
-            <ion-select [(ngModel)]="user.male">
-                <ion-option value="true">male</ion-option>
-                <ion-option value="false">female</ion-option>
-            </ion-select>
+            <ion-label>Gender: <span *ngIf="user.male">Male</span><span *ngIf="!user.male">Female</span></ion-label>
+            <ion-toggle [(ngModel)]="user.male"></ion-toggle>
         </ion-item>
         <ion-item>
             <ion-label>country</ion-label>
-            <ion-select [(ngModel)]="user.country">
+            <ion-select [ngFormControl]="country">
                 <ion-option *ngFor="#country of countries" [value]="country.alpha3">{{country.nameEng}}</ion-option>
             </ion-select>
         </ion-item>
+        <ion-item><button full [disabled]="!registerForm.valid" (click)="register()">Register</button></ion-item>
+        <ion-list-header class="login" (click)="showLoginForm = !showLoginForm">
+            <ion-icon name="arrow-dropdown" *ngIf="showLoginForm"></ion-icon>
+            <ion-icon name="arrow-dropright" *ngIf="!showLoginForm"></ion-icon>
+            or Login
+        </ion-list-header>
+        <ion-item *ngIf="showLoginForm">
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" [ngFormControl]="username"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showLoginForm">
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [ngFormControl]="password"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="showLoginForm"><button full [disabled]="!loginForm.valid" (click)="login()">Login</button></ion-item>
     </ion-list>
-    <button (click)="register()">register</button>
 </ion-content>

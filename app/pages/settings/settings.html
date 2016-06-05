@@ -2,6 +2,24 @@
     <ion-title>Settings</ion-title>
 </ion-navbar>
 
-<ion-content>
-    
+<ion-content class="settings-page">
+    <ion-list *ngIf="!model.user.username">
+        <ion-list-header (click)="newUsernameExpanded=!newUsernameExpanded">
+            <ion-icon name="arrow-dropdown" *ngIf="newUsernameExpanded"></ion-icon>
+            <ion-icon name="arrow-dropright" *ngIf="!newUsernameExpanded"></ion-icon>
+            Username & Password</ion-list-header>
+        <ion-item *ngIf="newUsernameExpanded">
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" [ngFormControl]="newUsername"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="newUsernameExpanded" [class.error]="newUsernameForm.hasError('mismatchedPasswords')">
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [ngFormControl]="newPassword"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="newUsernameExpanded" [class.error]="newUsernameForm.hasError('mismatchedPasswords')">
+            <ion-label floating>Repeat Password</ion-label>
+            <ion-input type="password" [ngFormControl]="newPasswordRepeat"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="newUsernameExpanded"><button full [disabled]="!newUsernameForm.valid" (click)="doSubmit()">Save</button></ion-item>
+    </ion-list>
 </ion-content>
