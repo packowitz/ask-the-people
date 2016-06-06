@@ -66,6 +66,7 @@ export class LoginPage {
       content: 'Register',
       spinner: 'dots'
     });
+    this.nav.present(loading);
     this.user.yearOfBirth = this.yearOfBirth.value;
     this.user.country = this.country.value;
     this.authService.register(this.user).subscribe(data => {
