@@ -1,6 +1,6 @@
 import {User} from "./user.component.ts";
 import {Platform, Loading, NavController} from "ionic-angular";
-import {Injectable} from "angular2/core";
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class Model {

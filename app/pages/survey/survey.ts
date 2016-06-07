@@ -1,10 +1,11 @@
-import {Page, Loading, NavController, Toast, Alert} from "ionic-angular";
+import {Loading, NavController, Toast, Alert} from "ionic-angular";
 import {SurveyService} from "../../services/survey.service";
 import {Survey} from "../../components/survey.component";
 import {MainPage} from "../main/main";
 import {Messages} from "../../components/messages.component";
+import {Component} from "@angular/core";
 
-@Page({
+@Component({
   templateUrl: 'build/pages/survey/survey.html'
 })
 export class SurveyPage {
@@ -103,7 +104,6 @@ export class SurveyPage {
     } else {
       this.nav.present(Toast.create({
         message: Messages.getTooFastMsg(),
-        enableBackdropDismiss: false,
         duration: 1000
       }));
     }

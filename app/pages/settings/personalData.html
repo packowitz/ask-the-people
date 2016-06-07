@@ -1,0 +1,19 @@
+<ion-list>
+    <ion-list-header (click)="expanded=!expanded">
+        <ion-icon name="arrow-dropdown" *ngIf="expanded"></ion-icon>
+        <ion-icon name="arrow-dropright" *ngIf="!expanded"></ion-icon>
+        Personal Data</ion-list-header>
+    <ion-item *ngIf="expanded">
+        <ion-label floating>year of birth (yyyy)</ion-label>
+        <ion-input type="number" [(ngModel)]="yearOfBirth"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="expanded">
+        <ion-label>Gender: <span *ngIf="male">Male</span><span *ngIf="!male">Female</span></ion-label>
+        <ion-toggle [(ngModel)]="male"></ion-toggle>
+    </ion-item>
+    <ion-item *ngIf="expanded" (click)="chooseCountry()">
+        <ion-label>Country: <span class="country"><img src="img/flags/{{country}}.png" class="flag"> {{countryName}}</span></ion-label>
+    </ion-item>
+    <ion-item *ngIf="expanded"><button full [disabled]="dataUnchanged()" (click)="doSubmit()">Save</button></ion-item>
+
+</ion-list>

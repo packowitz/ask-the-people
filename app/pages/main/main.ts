@@ -1,4 +1,4 @@
-import {Page, NavController, Alert} from "ionic-angular";
+import {NavController, Alert} from "ionic-angular";
 import {Model} from "../../components/model.component";
 import {SurveyPage} from "../survey/survey";
 import {StartSurveyPage} from "../startSurvey/startSurvey";
@@ -9,8 +9,9 @@ import {PurchasePage} from "../purchase/purchase";
 import {HighscorePage} from "../highscore/highscore";
 import {FeedbackPage} from "../feedback/feedback";
 import {MySurveysPage} from "../mySurveys/mySurveys";
+import {Component} from "@angular/core";
 
-@Page({
+@Component({
     templateUrl: 'build/pages/main/main.html'
 })
 export class MainPage {

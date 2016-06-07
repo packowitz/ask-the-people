@@ -1,6 +1,6 @@
-import {Page} from "ionic-angular/index";
+import {Component} from "@angular/core";
 
-@Page({
+@Component({
   templateUrl: 'build/pages/highscore/highscore.html'
 })
 export class HighscorePage {

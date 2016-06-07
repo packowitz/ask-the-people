@@ -1,7 +1,8 @@
-import {Page, NavParams} from "ionic-angular/index";
+import {NavParams} from "ionic-angular/index";
 import {Survey} from "../../components/survey.component";
+import {Component} from "@angular/core";
 
-@Page({
+@Component({
   templateUrl: 'build/pages/surveyDetails/surveyDetails.html'
 })
 export class SurveyDetailsPage {

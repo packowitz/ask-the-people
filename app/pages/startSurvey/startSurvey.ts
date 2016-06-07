@@ -1,5 +1,5 @@
-import {Page, ActionSheet, Platform, NavController, Alert, Loading, Toast} from "ionic-angular";
-import {NgZone} from "angular2/core";
+import {ActionSheet, Platform, NavController, Alert, Loading, Toast} from "ionic-angular";
+import {NgZone} from "@angular/core";
 import {CameraOptions} from "ionic-native/dist/plugins/camera";
 import {Camera} from "ionic-native/dist/index";
 import {Survey} from "../../components/survey.component";
@@ -8,8 +8,9 @@ import {CountryService} from "../../services/country.service";
 import {SurveyService} from "../../services/survey.service";
 import {RandomImage} from "../../components/randomImage.component";
 import {MainPage} from "../main/main";
+import {Component} from "@angular/core";
 
-@Page({
+@Component({
   templateUrl: 'build/pages/startSurvey/startSurvey.html'
 })
 export class StartSurveyPage {

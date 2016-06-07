@@ -1,13 +1,14 @@
-import {Page, NavController, Storage, SqlStorage, Alert, Toast, Loading} from 'ionic-angular';
+import {NavController, Storage, SqlStorage, Alert, Toast, Loading} from 'ionic-angular';
 import {CountryService} from "../../services/country.service";
 import {Country} from "../../components/country.component";
 import {User} from "../../components/user.component";
 import {AuthService} from "../../services/auth.service";
 import {MainPage} from "../main/main";
 import {Model} from "../../components/model.component";
-import {AbstractControl, ControlGroup, FormBuilder, Validators} from "angular2/common";
+import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
+import {Component} from "@angular/core";
 
-@Page({
+@Component({
   templateUrl: 'build/pages/login/login.html'
 })
 export class LoginPage {

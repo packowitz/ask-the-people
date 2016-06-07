@@ -1,4 +1,4 @@
-import {App, IonicApp, Platform, Storage, SqlStorage, NavController, Alert} from 'ionic-angular';
+import {ionicBootstrap, Platform, Storage, SqlStorage, Alert, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {LoginPage} from './pages/login/login'
 import 'rxjs/add/operator/map'
@@ -9,20 +9,18 @@ import {Model} from "./components/model.component.ts";
 import {MainPage} from "./pages/main/main";
 import {SurveyService} from "./services/survey.service";
 import {SurveyListComponent} from "./components/surveyList.component";
+import {ViewChild, Component} from "@angular/core";
 
-@App({
+@Component({
   templateUrl: 'build/app.html',
-  providers: [AuthService, CountryService, SurveyService, Model],
-  directives: [SurveyListComponent],
-  config: {}
+  directives: [SurveyListComponent]
 })
 class AtpApp {
   rootPage: any = LoadingPage;
-  nav: NavController;
+  @ViewChild(Nav) nav: Nav;
   localStorage: Storage;
 
-  constructor(private app: IonicApp,
-              private platform: Platform,
+  constructor(private platform: Platform,
               private authService: AuthService,
               private model: Model) {
     this.initializeApp();
@@ -31,7 +29,6 @@ class AtpApp {
   initializeApp() {
     this.platform.ready().then(() => {
       StatusBar.styleDefault();
-      this.nav = this.app.getComponent('nav');
       this.localStorage = new Storage(SqlStorage);
       this.localStorage.get('token').then(token => {
         if(token) {
@@ -70,3 +67,7 @@ class AtpApp {
     });
   }
 }
+
+ionicBootstrap(AtpApp, [AuthService, CountryService, SurveyService, Model], {
+
+});

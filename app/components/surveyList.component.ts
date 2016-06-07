@@ -1,4 +1,4 @@
-import {Component, Input} from "angular2/core";
+import {Component, Input} from "@angular/core";
 import {Survey} from "./survey.component";
 import {NavController} from "ionic-angular/index";
 import {StartSurveyPage} from "../pages/startSurvey/startSurvey";

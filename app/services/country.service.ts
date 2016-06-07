@@ -1,7 +1,7 @@
-import {Http} from "angular2/http";
+import {Http} from "@angular/http";
 import {Country} from "../components/country.component";
 import {Observable} from "rxjs/Observable";
-import {Injectable} from "angular2/core";
+import {Injectable} from "@angular/core";
 import {Model} from "../components/model.component";
 
 @Injectable()

@@ -15,7 +15,7 @@
         <ion-item>
             <ion-label>country</ion-label>
             <ion-select [ngFormControl]="country">
-                <ion-option *ngFor="#country of countries" [value]="country.alpha3">{{country.nameEng}}</ion-option>
+                <ion-option *ngFor="let country of countries" [value]="country.alpha3">{{country.nameEng}}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item><button full [disabled]="!registerForm.valid" (click)="register()">Register</button></ion-item>
