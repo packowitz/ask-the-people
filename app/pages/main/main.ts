@@ -10,9 +10,11 @@ import {HighscorePage} from "../highscore/highscore";
 import {FeedbackPage} from "../feedback/feedback";
 import {MySurveysPage} from "../mySurveys/mySurveys";
 import {Component} from "@angular/core";
+import {SurveyListComponent} from "../../components/surveyList.component";
 
 @Component({
-    templateUrl: 'build/pages/main/main.html'
+  templateUrl: 'build/pages/main/main.html',
+  directives: [SurveyListComponent]
 })
 export class MainPage {
   last3surveys: Survey[];

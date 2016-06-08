@@ -12,8 +12,7 @@ import {SurveyListComponent} from "./components/surveyList.component";
 import {ViewChild, Component} from "@angular/core";
 
 @Component({
-  templateUrl: 'build/app.html',
-  directives: [SurveyListComponent]
+  templateUrl: 'build/app.html'
 })
 class AtpApp {
   rootPage: any = LoadingPage;
@@ -36,7 +35,7 @@ class AtpApp {
         } else {
           this.nav.setRoot(LoginPage);
         }
-      }).catch(err => console.log(err));
+      });
     });
   }
 
