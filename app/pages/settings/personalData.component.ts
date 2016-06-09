@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
 import {Model} from "../../components/model.component";
 import {CountryService} from "../../services/country.service";
-import {NavController} from "ionic-angular/index";
+import {NavController, Toast} from "ionic-angular/index";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'personal-data',
@@ -22,7 +23,10 @@ export class PersonalData {
   country: string;
   countryName: string;
 
-  constructor(private model: Model, private countryService: CountryService, private nav: NavController) {
+  constructor(private model: Model,
+              private countryService: CountryService,
+              private nav: NavController,
+              private authService: AuthService) {
     this.yearOfBirth = model.user.yearOfBirth;
     this.male = model.user.male;
     this.country = model.user.country;
@@ -46,6 +50,11 @@ export class PersonalData {
   }
 
   doSubmit() {
-    
+    this.authService.postPersonalData(this.yearOfBirth, this.male, this.country).subscribe(() => {
+      this.nav.present(Toast.create({
+        message: 'Personal data updated',
+        duration: 2000
+      }));
+    }, err => console.log(err))
   }
 }

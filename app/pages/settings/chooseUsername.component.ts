@@ -35,7 +35,7 @@ export class ChooseUsername {
       let password = group.controls[passwordKey];
       let confirmPassword = group.controls[confirmPasswordKey];
       if (password.value !== confirmPassword.value) {
-        confirmPassword.setErrors({notEquivalent: true});
+        confirmPassword.setErrors({'notEquivalent': true});
       }
     }
   }

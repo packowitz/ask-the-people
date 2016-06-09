@@ -40,4 +40,15 @@ export class AuthService {
       return user;
     });
   }
+
+  postPersonalData(yearOfBirth: number, male: boolean, country: string) {
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.model.token);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(Model.server + "/user/personal-data", JSON.stringify({'yearOfBirth': yearOfBirth, male: male, country: country}), {headers: headers}).map(res => {
+      let user = res.json();
+      this.model.user = user;
+      return user;
+    });
+  }
 }

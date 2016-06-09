@@ -8,7 +8,6 @@ import {LoadingPage} from "./pages/loading/loading";
 import {Model} from "./components/model.component.ts";
 import {MainPage} from "./pages/main/main";
 import {SurveyService} from "./services/survey.service";
-import {SurveyListComponent} from "./components/surveyList.component";
 import {ViewChild, Component} from "@angular/core";
 
 @Component({

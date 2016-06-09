@@ -4,15 +4,15 @@
         <ion-icon name="arrow-dropright" *ngIf="!newUsernameExpanded"></ion-icon>
         Username & Password</ion-list-header>
     <ion-item *ngIf="newUsernameExpanded">
-        <ion-label floating>Username</ion-label>
+        <ion-label floating>Username<span *ngIf="newUsername.touched && newUsername.hasError('minlength')" class="error-label"> Username too short</span></ion-label>
         <ion-input type="text" [ngFormControl]="newUsername"></ion-input>
     </ion-item>
-    <ion-item *ngIf="newUsernameExpanded" [class.error]="newUsernameForm.hasError('mismatchedPasswords')">
-        <ion-label floating>Password</ion-label>
+    <ion-item *ngIf="newUsernameExpanded">
+        <ion-label floating>Password<span *ngIf="newPassword.touched && newPassword.hasError('minlength')" class="error-label"> Password too short</span></ion-label>
         <ion-input type="password" [ngFormControl]="newPassword"></ion-input>
     </ion-item>
-    <ion-item *ngIf="newUsernameExpanded" [class.error]="newUsernameForm.hasError('mismatchedPasswords')">
-        <ion-label floating>Repeat Password</ion-label>
+    <ion-item *ngIf="newUsernameExpanded">
+        <ion-label floating>Repeat Password<span *ngIf="newPasswordRepeat.touched && newPasswordRepeat.hasError('notEquivalent')" class="error-label"> Passwords are not the same!</span></ion-label>
         <ion-input type="password" [ngFormControl]="newPasswordRepeat"></ion-input>
     </ion-item>
     <ion-item *ngIf="newUsernameExpanded"><button full [disabled]="!newUsernameForm.valid" (click)="doSubmit()">Save</button></ion-item>
