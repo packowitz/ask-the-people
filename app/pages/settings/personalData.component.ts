@@ -1,8 +1,10 @@
 import {Component} from "@angular/core";
 import {Model} from "../../components/model.component";
 import {CountryService} from "../../services/country.service";
-import {NavController, Toast} from "ionic-angular/index";
+import {NavController, Toast, Popover} from "ionic-angular/index";
 import {AuthService} from "../../services/auth.service";
+import {CountrySelection} from "../../components/countrySelection.component";
+import {Country} from "../../components/country.component";
 
 @Component({
   selector: 'personal-data',
@@ -46,7 +48,12 @@ export class PersonalData {
   }
 
   chooseCountry() {
-    
+    let countrySelection = Popover.create(CountrySelection, {callback: country => {
+      this.country = country.alpha3;
+      this.countryName = country.nameEng;
+      countrySelection.dismiss();
+    }});
+    this.nav.present(countrySelection);
   }
 
   doSubmit() {

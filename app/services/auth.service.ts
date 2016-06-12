@@ -41,6 +41,17 @@ export class AuthService {
     });
   }
 
+  postNotification(enabled: boolean, soundEnabled: boolean, vibrationEnabled: boolean): Observable<boolean> {
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.model.token);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(Model.server + "/user/notifications", JSON.stringify({enabled: enabled, soundEnabled: soundEnabled, vibrationEnabled: vibrationEnabled}), {headers: headers}).map(res => {
+      let user = res.json();
+      this.model.user = user;
+      return user;
+    });
+  }
+
   postPersonalData(yearOfBirth: number, male: boolean, country: string) {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);

@@ -6,4 +6,7 @@ export class User {
   credits: number;
   surveysAnswered: number;
   surveysStarted: number;
+  notifications: boolean;
+  notificationsSound: boolean;
+  notificationsVibration: boolean;
 }
