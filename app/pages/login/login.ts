@@ -1,4 +1,4 @@
-import {NavController, Storage, SqlStorage, Alert, Toast, Loading} from 'ionic-angular';
+import {NavController, Storage, SqlStorage, Alert, Toast, Loading, Popover} from 'ionic-angular';
 import {CountryService} from "../../services/country.service";
 import {Country} from "../../components/country.component";
 import {User} from "../../components/user.component";
@@ -7,35 +7,24 @@ import {MainPage} from "../main/main";
 import {Model} from "../../components/model.component";
 import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {Component} from "@angular/core";
+import {CountrySelection} from "../../components/countrySelection.component";
 
 @Component({
   templateUrl: 'build/pages/login/login.html'
 })
 export class LoginPage {
-  countries: Country[];
   user: User = new User();
-  registerForm: ControlGroup;
-  yearOfBirth: AbstractControl;
-  country: AbstractControl;
+  countryName: string;
   loginForm: ControlGroup;
   username: AbstractControl;
   password: AbstractControl;
   showLoginForm: boolean = false;
   
   constructor(private nav: NavController,
-              private countryService: CountryService,
               private authService: AuthService,
               private model: Model,
               private formBuilder: FormBuilder) {
-    this.loadCountries();
-    this.user.male = true;
-
-    this.registerForm = formBuilder.group({
-      'yearOfBirth': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      'country': ['', Validators.required]
-    });
-    this.yearOfBirth = this.registerForm.controls['yearOfBirth'];
-    this.country = this.registerForm.controls['country'];
+    this.user.male = false;
 
     this.loginForm = formBuilder.group({
       'username': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -45,21 +34,23 @@ export class LoginPage {
     this.password = this.loginForm.controls['password'];
   }
 
-  loadCountries() {
-    this.countryService.getCountries().subscribe(data => {
-      this.countries = data;
-    }, err => {
-      this.nav.present(Alert.create({
-        title: 'Network Error',
-        message: 'There was a network error!',
-        buttons: [{
-          text: 'Retry',
-          handler: () => {
-            this.loadCountries();
-          }
-        }]
-      }));
-    });
+  chooseCountry() {
+    let countrySelection = Popover.create(CountrySelection, {callback: country => {
+      this.user.country = country.alpha3;
+      this.countryName = country.nameEng;
+      countrySelection.dismiss();
+    }});
+    this.nav.present(countrySelection);
+  }
+
+  registerFormInvalid(): boolean {
+    if(!this.user.yearOfBirth || this.user.yearOfBirth < 1900 || this.user.yearOfBirth > 2050) {
+      return true;
+    }
+    if(!this.user.country) {
+      return true;
+    }
+    return false;
   }
 
   register() {
@@ -68,8 +59,6 @@ export class LoginPage {
       spinner: 'dots'
     });
     this.nav.present(loading);
-    this.user.yearOfBirth = this.yearOfBirth.value;
-    this.user.country = this.country.value;
     this.authService.register(this.user).subscribe(data => {
       if(data.token) {
         let storage = new Storage(SqlStorage);

@@ -20,6 +20,7 @@ class AtpApp {
 
   constructor(private platform: Platform,
               private authService: AuthService,
+              private countryService: CountryService,
               private model: Model) {
     this.initializeApp();
   }
@@ -27,6 +28,7 @@ class AtpApp {
   initializeApp() {
     this.platform.ready().then(() => {
       StatusBar.styleDefault();
+      this.loadCountries();
       this.localStorage = new Storage(SqlStorage);
       this.localStorage.get('token').then(token => {
         if(token) {
@@ -62,6 +64,23 @@ class AtpApp {
         ]
       });
       this.nav.present(confirm);
+    });
+  }
+
+  loadCountries() {
+    this.countryService.getCountries().subscribe(data => {
+      console.log("countries loaded");
+    }, err => {
+      this.nav.present(Alert.create({
+        title: 'Network Error',
+        message: 'There was a network error!',
+        buttons: [{
+          text: 'Retry',
+          handler: () => {
+            this.loadCountries();
+          }
+        }]
+      }));
     });
   }
 }
