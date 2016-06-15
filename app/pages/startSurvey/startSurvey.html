@@ -1,21 +1,41 @@
 <ion-navbar *navbar>
-    <ion-title>Start new survey</ion-title>
+    <ion-title>Start your new ATP</ion-title>
 </ion-navbar>
 
 <ion-content class="start-survey" id="start-survey-content">
     <div class="picture-container">
-        <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" (click)="choosePicture(true)" [width]="picSize" [height]="picSize" class="pic"/>
-        <div *ngIf="!survey.pic1" (click)="choosePicture(true)" class="pic" [style.width]="picSize + 'px'" [style.height]="picSize + 'px'"><ion-icon name="images" class="default-icon"></ion-icon></div>
-        <img [src]="'data:image/jpeg;base64,' + survey.pic2" *ngIf="survey.pic2" (click)="choosePicture(false)" [width]="picSize" [height]="picSize" class="pic"/>
-        <div *ngIf="!survey.pic2" (click)="choosePicture(false)" class="pic" [style.width]="picSize + 'px'" [style.height]="picSize + 'px'"><ion-icon name="images" class="default-icon"></ion-icon></div>
+        <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" (click)="choosePicture(true)" class="pic"/>
+        <div *ngIf="!survey.pic1" (click)="choosePicture(true)" class="pic"><ion-icon name="images" class="default-icon"></ion-icon></div>
+        <img [src]="'data:image/jpeg;base64,' + survey.pic2" *ngIf="survey.pic2" (click)="choosePicture(false)" class="pic"/>
+        <div *ngIf="!survey.pic2" (click)="choosePicture(false)" class="pic"><ion-icon name="images" class="default-icon"></ion-icon></div>
     </div>
+    <ion-list>
+        <ion-item>
+            <ion-label stacked primary>Tell the people where to look at. OPTIONAL!</ion-label>
+            <ion-input type="text" maxLength="25" [(ngModel)]="survey.title" placeholder="keep it SHORT and PRECISE"></ion-input>
+        </ion-item>
+        <ion-item>
+            Gender: <span *ngIf="survey.male"><strong>male</strong></span><span *ngIf="survey.male && survey.female"> and </span><span *ngIf="survey.female"><strong>female</strong></span><span *ngIf="!survey.male || !survey.female"> <strong>only</strong></span>
+            <a href="" (click)="changeGender($event)" item-right>change</a>
+        </ion-item>
+        <ion-item>
+            <ion-range dualKnobs="true" min="1" max="99" [(ngModel)]="ageRange">
+                <ion-label range-left>Age: <strong>{{ageRange.lower}} - {{ageRange.upper}}</strong>&nbsp;</ion-label>
+            </ion-range>
+        </ion-item>
+        <ion-item>
+            Countries: <ion-icon name="add-circle" *ngIf="countries.length < 20" (click)="addCountry()"></ion-icon>
+            <div class="countries">
+                <span class="country" *ngFor="let country of countries" (click)="removeCountry(country)"><img src="img/flags/{{country}}.png" class="flag"></span>
+            </div>
+        </ion-item>
+        <ion-item class="submit-row">
+            <div class="submit-row" (click)="saveAsDefault = !saveAsDefault">
+                <ion-icon name="square-outline" *ngIf="!saveAsDefault"></ion-icon>
+                <ion-icon name="checkbox-outline" *ngIf="saveAsDefault"></ion-icon>
+                <span class="save-default-text"> save settings as default</span>
+            </div>
+            <button item-right large round [disabled]="!surveyComplete()" (click)="startSurvey()">Start ATP</button>
+        </ion-item>
+    </ion-list>
 </ion-content>
-
-<ion-toolbar position="bottom">
-    <ion-buttons class="fourButtonToolbar">
-        <button (click)="chooseCountry()"><img src="img/flags/{{survey.country}}.png" class="flag"/></button>
-        <button class="rangeBtn" (click)="chooseAge()">{{survey.minAge ? survey.minAge : '0'}} - {{survey.maxAge ? survey.maxAge : '99'}}</button>
-        <button class="genderBtn" (click)="chooseGender()"><ion-icon name="man" *ngIf="survey.male"></ion-icon><ion-icon name="woman" *ngIf="survey.female"></ion-icon></button>
-        <button class="sumbmitBtn" (click)="submitSurvey()"><ion-icon name="log-out"></ion-icon></button>
-    </ion-buttons>
-</ion-toolbar>

@@ -1,4 +1,4 @@
-import {ActionSheet, Platform, NavController, Alert, Loading, Toast} from "ionic-angular";
+import {ActionSheet, Platform, NavController, Alert, Loading, Toast, Popover} from "ionic-angular";
 import {NgZone} from "@angular/core";
 import {CameraOptions} from "ionic-native/dist/plugins/camera";
 import {Camera} from "ionic-native/dist/index";
@@ -9,6 +9,8 @@ import {SurveyService} from "../../services/survey.service";
 import {RandomImage} from "../../components/randomImage.component";
 import {MainPage} from "../main/main";
 import {Component} from "@angular/core";
+import {Country} from "../../components/country.component";
+import {CountrySelection} from "../../components/countrySelection.component";
 
 @Component({
   templateUrl: 'build/pages/startSurvey/startSurvey.html'
@@ -25,14 +27,15 @@ export class StartSurveyPage {
     saveToPhotoAlbum: false
   };
   survey: Survey;
-  countries;
+  countries: string[] = [];
+  ageRange = {lower: 1, upper: 99};
+  saveAsDefault: boolean = true;
   picSize: number;
 
   constructor(private platform: Platform,
               private nav: NavController,
               private ngZone: NgZone,
               private model: Model,
-              private countryService: CountryService,
               private surveyService: SurveyService) {
     this.survey = new Survey();
     this.survey.country = model.user.country;
@@ -40,9 +43,7 @@ export class StartSurveyPage {
     this.survey.female = true;
     this.survey.minAge = 1;
     this.survey.maxAge = 99;
-    countryService.getCountries().subscribe(data => {
-      this.countries = data;
-    }, err => console.log('ERROR: ' + err));
+    this.countries.push(model.user.country);
   }
 
   ngOnInit() {
@@ -102,90 +103,53 @@ export class StartSurveyPage {
     }
   }
 
-  chooseCountry() {
-    let alert = Alert.create();
-    alert.setTitle('Choose country');
-    this.countries.forEach(country => {
-      alert.addInput({type: 'radio', label: country.nameEng, value: country.alpha3, checked: country.alpha3 == this.survey.country});
-    });
-    alert.addButton('Cancel');
-    alert.addButton({text: 'Ok', handler: data => this.survey.country = data});
-    this.nav.present(alert);
+  changeGender(event: Event) {
+    if(this.survey.male && this.survey.female) {
+      this.survey.male = false;
+    } else if(this.survey.male) {
+      this.survey.female = true;
+    } else {
+      this.survey.male = true;
+      this.survey.female = false;
+    }
+    event.preventDefault();
   }
 
-  chooseAge() {
-    let prompt = Alert.create({
-      title: 'Choose age range',
-      inputs: [
-        {name: 'minAge', label: 'minimum age', type: 'number', value: '' + this.survey.minAge},
-        {name: 'maxAge', label: 'maximum age', type: 'number', value: '' + this.survey.maxAge}
-      ],
-      buttons: [
-        {text: 'Cancel'},
-        {text: 'OK',  handler: data => {
-          if(!data.minAge || data.minAge < 1) {
-            data.minAge = 1
-          }
-          if(data.minAge > 99) {
-            data.minAge = 99;
-          }
-          if(!data.maxAge || data.maxAge > 99) {
-            data.maxAge = 99;
-          }
-          if(data.maxAge < 1) {
-            data.maxAge = 1;
-          }
-          if(data.maxAge < data.minAge) {
-            this.survey.minAge = data.maxAge;
-            this.survey.maxAge = data.minAge;
-          } else {
-            this.survey.minAge = data.minAge;
-            this.survey.maxAge = data.maxAge;
-          }
-        }}
-      ]
-    });
-    this.nav.present(prompt);
-  }
-
-  chooseGender() {
-    let alert = Alert.create();
-    alert.setTitle('Choose gender');
-    alert.addInput({type: 'radio', label: 'male only', value: 'male', checked: this.survey.male && !this.survey.female});
-    alert.addInput({type: 'radio', label: 'female only', value: 'female', checked: !this.survey.male && this.survey.female});
-    alert.addInput({type: 'radio', label: 'male and female', value: 'both', checked: this.survey.male && this.survey.female});
-    alert.addButton('Cancel');
-    alert.addButton({text: 'Ok', handler: data => {
-      this.survey.male = data == 'male' || data == 'both';
-      this.survey.female = data == 'female' || data == 'both';
+  addCountry() {
+    let countrySelection = Popover.create(CountrySelection, {callback: country => {
+      if(this.countries.indexOf(country.alpha3) == -1) {
+        this.countries.push(country.alpha3);
+        this.countries.sort();
+      }
+      countrySelection.dismiss();
     }});
-    this.nav.present(alert);
+    this.nav.present(countrySelection);
   }
 
-  submitSurvey() {
-    let prompt = Alert.create({
-      title: 'Complete survey',
-      message: 'You can give a short hint to which part of the picture the people should focus on.',
-      cssClass: 'specialClassForGetHint',
-      inputs: [
-        {name: 'hint', id: 'startSurveyHint', placeholder: 'use maximal 3 words as hint', type: 'text'}
-      ],
-      buttons: [
-        {text: 'Cancel'},
-        {text: 'Start',  handler: data => {
-          this.survey.title = data.hint;
-          this.startSurvey();
-        }}
-      ]
-    });
-    this.nav.present(prompt);
-    setTimeout(() => {
-      //noinspection TypeScriptUnresolvedVariable
-      document.getElementsByClassName('specialClassForGetHint')[0].getElementsByTagName('input')[0].maxLength=25;
-    }, 500);
+  removeCountry(country: string) {
+    let idx = this.countries.indexOf(country);
+    if(idx != -1) {
+      this.countries.splice(idx,1);
+    }
+  }
+
+  surveyComplete(): boolean {
+    if(!this.survey.pic1 || !this.survey.pic2 || this.countries.length == 0) {
+      return false;
+    }
+    return true;
   }
 
   private startSurvey() {
+    this.survey.minAge = this.ageRange.lower;
+    this.survey.maxAge = this.ageRange.upper;
+    this.survey.country = "";
+    this.countries.forEach(c => {
+      if(this.survey.country != "") {
+        this.survey.country += ",";
+      }
+      this.survey.country += c;
+    });
     let loading = Loading.create({
       content: 'Starting survey',
       spinner: 'dots'

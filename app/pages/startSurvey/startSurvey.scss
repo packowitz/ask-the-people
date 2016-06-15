@@ -1,44 +1,43 @@
 .start-survey {
 
   .picture-container {
-    width: 100%;
+    display: flex;
+    margin: 4vw;
+    justify-content: space-between;
   }
 
   .pic {
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 2px black solid;
-
-    &:nth-child(2) {
-      margin-top: 2px;
-    }
+    width: 44vw;
+    height: 44vw;
 
     .default-icon {
-      display: table-cell;
-      text-align: center;
-      vertical-align: middle;
+
       color: #B4B4B4;
       font-size: 30vw;
     }
   }
-}
 
-.fourButtonToolbar {
-  button {
-    width: 23%;
+  ion-range {
+    padding-left: 0;
   }
-  .sumbmitBtn {
-    color: #05882C;
+
+  .flag {
+    height: 1.3em;
   }
-  .rangeBtn {
-    font-size: 1.6rem;
+  .country {
+    margin-right: 1vw;
+    float: left;
   }
-  .genderBtn {
-    font-size: 2.4rem;
-  }
-  .flag{
-    width: 80%;
-    border: 1px black solid;
+
+  .submit-row {
+    display: flex;
+
+    .save-default-text {
+      margin-left: 2vw;
+    }
   }
 }

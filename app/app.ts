@@ -86,5 +86,11 @@ class AtpApp {
 }
 
 ionicBootstrap(AtpApp, [AuthService, CountryService, SurveyService, Model], {
-
+  tabbarHighlight: true,
+  tabbarPlacement: 'bottom',
+  platforms: {
+    ios: {
+      statusbarPadding: true
+    }
+  }
 });
