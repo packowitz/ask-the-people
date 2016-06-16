@@ -15,11 +15,12 @@ export class SurveyService {
     return response.data;
   }
 
-  postSurvey(survey: Survey): Observable<Survey> {
+  postSurvey(survey: Survey, type: string, saveAsDefault: boolean): Observable<Survey> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
     headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/survey/private", JSON.stringify(survey), {headers: headers}).map(res => this.extractUser(res));
+    let request = {survey: survey, type: type, saveAsDefault: saveAsDefault};
+    return this.http.post(Model.server + "/survey/private", JSON.stringify(request), {headers: headers}).map(res => this.extractUser(res));
   }
 
   getSurveyToAnswer(): Observable<Survey> {

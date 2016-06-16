@@ -4,12 +4,10 @@ import {CameraOptions} from "ionic-native/dist/plugins/camera";
 import {Camera} from "ionic-native/dist/index";
 import {Survey} from "../../components/survey.component";
 import {Model} from "../../components/model.component";
-import {CountryService} from "../../services/country.service";
 import {SurveyService} from "../../services/survey.service";
 import {RandomImage} from "../../components/randomImage.component";
 import {MainPage} from "../main/main";
 import {Component} from "@angular/core";
-import {Country} from "../../components/country.component";
 import {CountrySelection} from "../../components/countrySelection.component";
 
 @Component({
@@ -30,7 +28,6 @@ export class StartSurveyPage {
   countries: string[] = [];
   ageRange = {lower: 1, upper: 99};
   saveAsDefault: boolean = true;
-  picSize: number;
 
   constructor(private platform: Platform,
               private nav: NavController,
@@ -38,20 +35,15 @@ export class StartSurveyPage {
               private model: Model,
               private surveyService: SurveyService) {
     this.survey = new Survey();
-    this.survey.country = model.user.country;
-    this.survey.male = true;
-    this.survey.female = true;
-    this.survey.minAge = 1;
-    this.survey.maxAge = 99;
-    this.countries.push(model.user.country);
-  }
-
-  ngOnInit() {
-    setTimeout(() => {
-      let maxWidht = window.innerWidth - 10;
-      let maxHeight = (document.getElementById('start-survey-content').offsetHeight - 2) / 2;
-      this.picSize = Math.min(maxWidht, maxHeight);
-    }, 10);
+    if(model.user.surveyCountry) {
+      this.countries = model.user.surveyCountry.split(",");
+    } else {
+      this.countries.push(model.user.country);
+    }
+    this.survey.male = model.user.surveyMale !== false;
+    this.survey.female = model.user.surveyFemale !== false;
+    this.survey.minAge = model.user.surveyMinAge ? model.user.surveyMinAge : 1;
+    this.survey.maxAge = model.user.surveyMaxAge ? model.user.surveyMaxAge : 99;
   }
 
   doTakePicture(isFirstPic: boolean, source: number) {
@@ -134,10 +126,7 @@ export class StartSurveyPage {
   }
 
   surveyComplete(): boolean {
-    if(!this.survey.pic1 || !this.survey.pic2 || this.countries.length == 0) {
-      return false;
-    }
-    return true;
+    return this.survey.pic1 && this.survey.pic2 && this.countries.length > 0;
   }
 
   private startSurvey() {
@@ -155,7 +144,7 @@ export class StartSurveyPage {
       spinner: 'dots'
     });
     this.nav.present(loading);
-    this.surveyService.postSurvey(this.survey).subscribe(resp => {
+    this.surveyService.postSurvey(this.survey, "NUMBER100", this.saveAsDefault).subscribe(resp => {
       console.log("survey started");
       loading.dismiss().then(() => {
         this.nav.present(Toast.create({

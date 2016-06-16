@@ -9,4 +9,9 @@ export class User {
   notifications: boolean;
   notificationsSound: boolean;
   notificationsVibration: boolean;
+  surveyMale: boolean;
+  surveyFemale: boolean;
+  surveyMinAge: number;
+  surveyMaxAge: number;
+  surveyCountry: string;
 }
