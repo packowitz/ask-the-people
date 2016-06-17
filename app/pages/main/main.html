@@ -1,10 +1,10 @@
-<ion-toolbar position="top">
-    <div class="title-line">
+<ion-navbar *navbar>
+    <ion-title class="title-line">
         <img src="img/appicon.png" class="title-logo">
         <span class="toolbar-title">Ask The People</span>
         <button dark clear class="title-settings" (click)="openSettingsPage()"><ion-icon name="settings"></ion-icon></button>
-    </div>
-</ion-toolbar>
+    </ion-title>
+</ion-navbar>
 
 <ion-content padding class="main-page">
     <div class="welcome-line">
@@ -18,16 +18,11 @@
     </div>
     <div class="middle-area">
         <div class="button-area">
-            <button (click)="openHighscorePage()" dark clear><ion-icon name="trophy"></ion-icon></button>
             <button (click)="openFeedbackPage()" dark clear><ion-icon name="chatbubbles"></ion-icon></button>
-            <button (click)="openMySurveysPage()" dark clear><ion-icon name="list-box"></ion-icon></button>
         </div>
         <div class="text-area">
             <span>You asked {{model.user.surveysStarted}} questions</span>
             <span>You helped {{model.user.surveysAnswered}} people</span>
-        </div>
-        <div class="atp-btn">
-            <button (click)="openStartSurveyPage()" outline>A<br/>T<br/>P</button>
         </div>
     </div>
     <button (click)="openSurveyPage()" large class="survey-button">Earn some Credits!</button>

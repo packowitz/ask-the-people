@@ -1,11 +1,5 @@
-.main-page {
-  scroll-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .title-line {
+.title-line {
+  .toolbar-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,6 +17,14 @@
     .title-settings {
       width: 10vw;
     }
+  }
+}
+
+.main-page {
+  scroll-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .welcome-line {
@@ -61,7 +63,6 @@
   }
 
   .middle-area {
-    flex: 1 1;
     display: flex;
     align-items: stretch;
     justify-content: space-between;

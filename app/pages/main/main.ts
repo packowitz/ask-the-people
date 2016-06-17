@@ -1,11 +1,10 @@
-import {NavController, Alert} from "ionic-angular";
+import {NavController, Alert, Tabs} from "ionic-angular";
 import {Model} from "../../components/model.component";
 import {SurveyPage} from "../survey/survey";
 import {StartSurveyPage} from "../startSurvey/startSurvey";
 import {SurveyService} from "../../services/survey.service";
 import {Survey} from "../../components/survey.component";
 import {SettingsPage} from "../settings/settings";
-import {PurchasePage} from "../purchase/purchase";
 import {HighscorePage} from "../highscore/highscore";
 import {FeedbackPage} from "../feedback/feedback";
 import {MySurveysPage} from "../mySurveys/mySurveys";
@@ -21,7 +20,8 @@ export class MainPage {
 
   constructor(private model: Model,
               private nav: NavController,
-              private surveyService: SurveyService) {
+              private surveyService: SurveyService,
+              private tabs: Tabs) {
     surveyService.getLast3Surveys().subscribe(data => {
       this.last3surveys = data;
     }, err => console.log(err));
@@ -43,11 +43,11 @@ export class MainPage {
   }
 
   openPurchasePage() {
-    this.nav.push(PurchasePage);
+    this.tabs.select(Model.PurchaseTab);
   }
 
   openHighscorePage() {
-    this.nav.push(HighscorePage);
+    this.tabs.select(Model.HighscoreTab);
   }
 
   openFeedbackPage() {
@@ -55,7 +55,7 @@ export class MainPage {
   }
 
   openMySurveysPage() {
-    this.nav.push(MySurveysPage);
+    this.tabs.select(Model.MySurveysTab);
   }
 
   openSurveyPage() {
@@ -63,6 +63,6 @@ export class MainPage {
   }
 
   openStartSurveyPage() {
-    this.nav.push(StartSurveyPage);
+    this.tabs.select(Model.StartSurveyTab);
   }
 }
