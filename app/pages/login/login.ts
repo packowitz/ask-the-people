@@ -1,13 +1,11 @@
-import {NavController, Storage, SqlStorage, Alert, Toast, Loading, Popover} from 'ionic-angular';
-import {CountryService} from "../../services/country.service";
-import {Country} from "../../components/country.component";
+import {NavController, Storage, SqlStorage, Toast, Loading, Popover} from 'ionic-angular';
 import {User} from "../../components/user.component";
 import {AuthService} from "../../services/auth.service";
-import {MainPage} from "../main/main";
 import {Model} from "../../components/model.component";
 import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {Component} from "@angular/core";
 import {CountrySelection} from "../../components/countrySelection.component";
+import {TabsPage} from "../tabs/tabsPage";
 
 @Component({
   templateUrl: 'build/pages/login/login.html'
@@ -67,7 +65,7 @@ export class LoginPage {
           this.model.user = user;
           this.model.token = data.token;
           loading.dismiss();
-          this.nav.setRoot(MainPage);
+          this.nav.setRoot(TabsPage);
         }, error => {
           storage.remove('token');
           loading.dismiss().then(() => {
@@ -109,7 +107,7 @@ export class LoginPage {
           this.model.user = user;
           this.model.token = data.token;
           loading.dismiss();
-          this.nav.setRoot(MainPage);
+          this.nav.setRoot(TabsPage);
         }, error => {
           storage.remove('token');
           loading.dismiss().then(() => {

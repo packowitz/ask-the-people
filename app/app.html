@@ -1,9 +1,1 @@
-<ion-nav id="nav" *ngIf="!showApp" #content [root]="rootPage"></ion-nav>
-
-<ion-tabs *ngIf="showApp" selectedIndex="2">
-    <ion-tab tabIcon="card" [root]="purchasePage"></ion-tab>
-    <ion-tab tabIcon="trophy" [root]="highscorePage"></ion-tab>
-    <ion-tab tabIcon="home" [root]="mainPage"></ion-tab>
-    <ion-tab tabIcon="list-box" [root]="mySurveysPage"></ion-tab>
-    <ion-tab tabTitle="ATP" [root]="startSurveyPage"></ion-tab>
-</ion-tabs>
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
