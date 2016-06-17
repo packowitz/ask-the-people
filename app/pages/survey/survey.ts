@@ -1,9 +1,9 @@
-import {Loading, NavController, Toast, Alert} from "ionic-angular";
+import {Loading, NavController, Toast, Alert, Tabs} from "ionic-angular";
 import {SurveyService} from "../../services/survey.service";
 import {Survey} from "../../components/survey.component";
-import {MainPage} from "../main/main";
 import {Messages} from "../../components/messages.component";
 import {Component} from "@angular/core";
+import {Model} from "../../components/model.component";
 
 @Component({
   templateUrl: 'build/pages/survey/survey.html'
@@ -15,7 +15,7 @@ export class SurveyPage {
   showTitle: boolean = false;
   loading: Loading;
 
-  constructor(private nav: NavController, private surveyService: SurveyService) {
+  constructor(private nav: NavController, private surveyService: SurveyService, private tabs: Tabs) {
     this.loadNextSurvey();
   }
 
@@ -48,7 +48,7 @@ export class SurveyPage {
       }));
     });
     console.log(err);
-    this.nav.setRoot(MainPage);
+    this.goHome();
   }
 
   showSurvey(survey: Survey) {
@@ -63,7 +63,7 @@ export class SurveyPage {
   }
 
   goHome() {
-    this.nav.setRoot(MainPage);
+    this.tabs.select(Model.MainTab);
   }
 
   reportAbuse() {

@@ -1,4 +1,4 @@
-import {ActionSheet, Platform, NavController, Alert, Loading, Toast, Popover} from "ionic-angular";
+import {ActionSheet, Platform, NavController, Alert, Loading, Toast, Popover, Tabs} from "ionic-angular";
 import {NgZone} from "@angular/core";
 import {CameraOptions} from "ionic-native/dist/plugins/camera";
 import {Camera} from "ionic-native/dist/index";
@@ -6,9 +6,9 @@ import {Survey} from "../../components/survey.component";
 import {Model} from "../../components/model.component";
 import {SurveyService} from "../../services/survey.service";
 import {RandomImage} from "../../components/randomImage.component";
-import {MainPage} from "../main/main";
 import {Component} from "@angular/core";
 import {CountrySelection} from "../../components/countrySelection.component";
+import {User} from "../../components/user.component";
 
 @Component({
   templateUrl: 'build/pages/startSurvey/startSurvey.html'
@@ -33,17 +33,22 @@ export class StartSurveyPage {
               private nav: NavController,
               private ngZone: NgZone,
               private model: Model,
-              private surveyService: SurveyService) {
+              private surveyService: SurveyService,
+              private tabs: Tabs) {
+    this.createEmptySurvey(model.user);
+  }
+
+  createEmptySurvey(user: User) {
     this.survey = new Survey();
-    if(model.user.surveyCountry) {
-      this.countries = model.user.surveyCountry.split(",");
+    if(user.surveyCountry) {
+      this.countries = user.surveyCountry.split(",");
     } else {
-      this.countries.push(model.user.country);
+      this.countries.push(user.country);
     }
-    this.survey.male = model.user.surveyMale !== false;
-    this.survey.female = model.user.surveyFemale !== false;
-    this.survey.minAge = model.user.surveyMinAge ? model.user.surveyMinAge : 1;
-    this.survey.maxAge = model.user.surveyMaxAge ? model.user.surveyMaxAge : 99;
+    this.survey.male = user.surveyMale !== false;
+    this.survey.female = user.surveyFemale !== false;
+    this.ageRange.lower = user.surveyMinAge ? user.surveyMinAge : 1;
+    this.ageRange.upper = user.surveyMaxAge ? user.surveyMaxAge : 99;
   }
 
   doTakePicture(isFirstPic: boolean, source: number) {
@@ -154,7 +159,8 @@ export class StartSurveyPage {
           closeButtonText: 'OK'
         }));
       });
-      this.nav.setRoot(MainPage);
+      this.createEmptySurvey(this.model.user);
+      this.tabs.select(Model.MainTab);
     }, err => {
       loading.dismiss().then(() => {
         this.nav.present(Toast.create({
