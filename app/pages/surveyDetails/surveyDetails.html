@@ -14,7 +14,7 @@
     </div>
     <div class="survey-item-data" [ngClass]="survey.status" *ngIf="showSummary">
         <div class="survey-item-text"><span>{{getTimeDiff()}} ago</span><span>{{survey.answered}} votes</span><span>{{survey.status}}</span></div>
-        <div class="survey-item-diagram" *ngIf="surveyAnswered > 0">
+        <div class="survey-item-diagram" *ngIf="survey.answered > 0">
             <div class="survey-item-diagram-pic1" *ngIf="survey.pic1Count > 0" [style.width]="100 * survey.pic1Count / survey.answered + '%'">
                 <span *ngIf="(100 * survey.pic1Count / survey.answered) >= 8" class="diagram-text">{{survey.pic1Count}}</span>
             </div>
