@@ -4,6 +4,7 @@
 @import "../pages/settings/settings";
 @import "../pages/startSurvey/startSurvey";
 @import "../pages/survey/survey";
+@import "../pages/surveyDetails/surveyDetails";
 
 .toolbar-title {
   text-align: center;
@@ -20,6 +21,12 @@
 
 .border-radius {
   border-radius: 10px;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .text-center {

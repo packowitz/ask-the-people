@@ -2,7 +2,7 @@
     <ion-title>Start your new ATP</ion-title>
 </ion-navbar>
 
-<ion-content class="start-survey" id="start-survey-content">
+<ion-content class="start-survey">
     <div class="picture-container">
         <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" (click)="choosePicture(true)" class="pic"/>
         <div *ngIf="!survey.pic1" (click)="choosePicture(true)" class="pic"><ion-icon name="images" class="default-icon"></ion-icon></div>

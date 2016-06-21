@@ -2,6 +2,42 @@
     <ion-title>Survey Details</ion-title>
 </ion-navbar>
 
-<ion-content>
-    <img [src]="'data:image/jpeg;base64,' + survey.pic1">
+<ion-content class="survey-details" padding>
+    <div class="picture-container">
+        <img [src]="'data:image/jpeg;base64,' + survey.pic1" class="pic pic1-img"/>
+        <img [src]="'data:image/jpeg;base64,' + survey.pic2" class="pic pic2-img"/>
+    </div>
+    <div class="detail-title" (click)="showSummary=!showSummary">
+        <ion-icon name="arrow-dropdown" *ngIf="showSummary"></ion-icon>
+        <ion-icon name="arrow-dropright" *ngIf="!showSummary"></ion-icon>
+        Summary
+    </div>
+    <div class="survey-item-data" [ngClass]="survey.status" *ngIf="showSummary">
+        <div class="survey-item-text"><span>{{getTimeDiff()}} ago</span><span>{{survey.answered}} votes</span><span>{{survey.status}}</span></div>
+        <div class="survey-item-diagram" *ngIf="surveyAnswered > 0">
+            <div class="survey-item-diagram-pic1" *ngIf="survey.pic1Count > 0" [style.width]="100 * survey.pic1Count / survey.answered + '%'">
+                <span *ngIf="(100 * survey.pic1Count / survey.answered) >= 8" class="diagram-text">{{survey.pic1Count}}</span>
+            </div>
+            <div class="survey-item-diagram-noOpinion" *ngIf="survey.noOpinionCount > 0" [style.width]="100 * survey.noOpinionCount / survey.answered + '%'">
+                <span *ngIf="(100 * survey.noOpinionCount / survey.answered) >= 8" class="diagram-text">{{survey.noOpinionCount}}</span>
+            </div>
+            <div class="survey-item-diagram-pic2" *ngIf="survey.pic2Count > 0" [style.width]="100 * survey.pic2Count / survey.answered + '%'">
+                <span *ngIf="(100 * survey.pic2Count / survey.answered) >= 8" class="diagram-text">{{survey.pic2Count}}</span>
+            </div>
+        </div>
+    </div>
+    <ion-list *ngIf="showSummary">
+        <ion-item *ngIf="survey.title"><strong>Title:</strong> {{survey.title}}</ion-item>
+        <ion-item>
+            <div class="flex-space-between">
+                <span>
+                    <strong>Age:</strong> {{survey.minAge}} - {{survey.maxAge}}
+                </span>
+                <span>
+                    <strong>Gender:</strong> <span *ngIf="survey.male">male</span><span *ngIf="survey.male && survey.female"> and </span><span *ngIf="survey.female">female</span>
+                </span>
+            </div>
+        </ion-item>
+        <ion-item><strong item-left>Countries:</strong><span class="country" *ngFor="let country of countries"><img src="img/flags/{{country}}.png" class="flag"></span></ion-item>
+    </ion-list>
 </ion-content>

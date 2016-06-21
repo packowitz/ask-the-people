@@ -25,7 +25,7 @@ export class StartSurveyPage {
     saveToPhotoAlbum: false
   };
   survey: Survey;
-  countries: string[] = [];
+  countries: string[];
   ageRange = {lower: 1, upper: 99};
   saveAsDefault: boolean = true;
 
@@ -40,11 +40,7 @@ export class StartSurveyPage {
 
   createEmptySurvey(user: User) {
     this.survey = new Survey();
-    if(user.surveyCountry) {
-      this.countries = user.surveyCountry.split(",");
-    } else {
-      this.countries.push(user.country);
-    }
+    this.countries = user.surveyCountry ? user.surveyCountry.split(",") : [user.country];
     this.survey.male = user.surveyMale !== false;
     this.survey.female = user.surveyFemale !== false;
     this.ageRange.lower = user.surveyMinAge ? user.surveyMinAge : 1;

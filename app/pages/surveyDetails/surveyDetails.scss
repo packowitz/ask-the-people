@@ -1,18 +1,27 @@
-.survey-list-item {
-  padding: 0;
-
-  .item-inner{
-    padding: 0;
+.survey-details {
+  .picture-container {
+    display: flex;
+    margin-bottom: 4vw;
+    justify-content: space-between;
   }
 
-  ion-label {
+  .pic {
     display: flex;
-    margin: 1vh 0;
+    justify-content: center;
+    align-items: center;
+    width: 44vw;
+    height: 44vw;
+
+    &.pic1-img {
+      border: 4px dodgerblue solid;
+    }
+    &.pic2-img {
+      border: 4px darkorange solid;
+    }
   }
 
   .survey-item-data {
     flex-grow: 1;
-    padding: 0 1vw;
     display: flex;
     flex-direction: column;
     &.ACTIVE {
@@ -28,6 +37,7 @@
 
     .survey-item-text {
       height: 3.5vh;
+      padding: 0 1vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -65,14 +75,19 @@
     }
   }
 
-  .survey-list-img {
-    width: 10vh;
-    height: 10vh;
-    &.pic1-img {
-      border: 3px dodgerblue solid;
+  .detail-title {
+    font-weight: 600;
+    padding-bottom: 1vh;
+    ion-icon {
+      width: 3vw;
     }
-    &.pic2-img {
-      border: 3px darkorange solid;
-    }
+  }
+
+  .flag {
+    height: 1.3em;
+  }
+  .country {
+    margin-right: 1vw;
+    float: left;
   }
 }
