@@ -1,4 +1,5 @@
 .title-line {
+  padding: 0 !important;
   .toolbar-title {
     display: flex;
     justify-content: space-between;
@@ -21,11 +22,6 @@
 }
 
 .main-page {
-  scroll-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
 
   .welcome-line {
     display: flex;
@@ -72,8 +68,15 @@
     .button-area {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+
+      .trophy-button {
+        width: 6vh;
+        height: 6vh;
+        color: #e8e556;
+        border-width: 2px;
+      }
     }
     .text-area {
       flex-grow: 1;
@@ -81,6 +84,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
+      font-size: 1.2em;
       span {
         padding: 12px;
       }
@@ -98,22 +102,9 @@
 
   .survey-button {
     height: 9vh;
+    margin-bottom: 3vh;
     span {
       height: 9vh;
     }
-  }
-
-  ion-card {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  ion-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1vh;
   }
 }

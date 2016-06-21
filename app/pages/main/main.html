@@ -8,8 +8,8 @@
 
 <ion-content padding class="main-page">
     <div class="welcome-line">
-        <span *ngIf="model.user.username">Hello {{model.user.username}}</span>
-        <span *ngIf="!model.user.username">Hello ANONYMOUS <ion-icon name="help-circle" (click)="showAnonymousAlert()"></ion-icon></span>
+        <span *ngIf="model.user.username">Logged in as: <strong>{{model.user.username}}</strong></span>
+        <span *ngIf="!model.user.username">You are unregistered <ion-icon name="help-circle" (click)="showAnonymousAlert()"></ion-icon></span>
         <div class="credits" (click)="openPurchasePage()">
             <div class="buy-credits">+</div>
             <div class="credits-amount">{{model.user.credits}}</div>
@@ -18,16 +18,19 @@
     </div>
     <div class="middle-area">
         <div class="button-area">
-            <button (click)="openFeedbackPage()" dark clear><ion-icon name="chatbubbles"></ion-icon></button>
+            <button (click)="openHighscorePage()" dark outline class="trophy-button border-radius"><ion-icon name="trophy"></ion-icon></button>
         </div>
         <div class="text-area">
-            <span>You asked {{model.user.surveysStarted}} questions</span>
-            <span>You helped {{model.user.surveysAnswered}} people</span>
+            <span>You asked <strong>{{model.user.surveysStarted}}</strong> questions</span>
+            <span>You helped <strong>{{model.user.surveysAnswered}}</strong> people</span>
         </div>
     </div>
-    <button (click)="openSurveyPage()" large class="survey-button">Earn some Credits!</button>
-    <ion-card>
-        <ion-card-header>Your latest surveys<button (click)="openStartSurveyPage()" secondary round small>start new</button></ion-card-header>
-        <survey-list [surveys]="last3surveys" [surveyCount]="3"></survey-list>
-    </ion-card>
+    <button (click)="openSurveyPage()" full large class="survey-button border-radius">Earn some Credits!</button>
+    <ion-list>
+        <ion-item *ngIf="!last3surveys" class="text-center"><ion-spinner name="bubbles"></ion-spinner></ion-item>
+        <survey-list [surveys]="last3surveys" *ngIf="last3surveys && last3surveys.length > 0"></survey-list>
+        <ion-item *ngIf="last3surveys" class="text-center">
+            <button large (click)="gotoStartSurvey()" class="border-radius">Start new ATP</button>
+        </ion-item>
+    </ion-list>
 </ion-content>

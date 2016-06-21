@@ -1,32 +1,13 @@
-survey-list {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+.survey-list-item {
+  padding: 0;
 
-.survey-list {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  ul {
-    list-style: none;
+  .item-inner{
     padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
   }
 
-  .survey-list-item {
+  ion-label {
     display: flex;
-    padding: 1vw 0;
-    border-bottom: 1px grey solid;
-    &:last-child {
-      border-bottom: none;
-    }
+    margin: 1vh 0;
   }
 
   .survey-item-data {
@@ -94,10 +75,4 @@ survey-list {
       border: 2px darkorange solid;
     }
   }
-}
-
-.no-surveys {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

@@ -22,7 +22,14 @@ export class MainPage {
               private nav: NavController,
               private surveyService: SurveyService,
               private tabs: Tabs) {
-    surveyService.getLast3Surveys().subscribe(data => {
+  }
+
+  ionViewDidEnter() {
+    this.reloadLast3Surveys();
+  }
+
+  reloadLast3Surveys () {
+    this.surveyService.getLast3Surveys().subscribe(data => {
       this.last3surveys = data;
     }, err => console.log(err));
   }
@@ -47,11 +54,11 @@ export class MainPage {
   }
 
   openHighscorePage() {
-    this.tabs.select(Model.HighscoreTab);
+    this.nav.push(HighscorePage);
   }
 
   openFeedbackPage() {
-    this.nav.push(FeedbackPage);
+    this.tabs.select(Model.FeedbackTab);
   }
 
   openMySurveysPage() {

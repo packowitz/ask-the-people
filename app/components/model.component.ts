@@ -5,8 +5,8 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class Model {
   public static server: string = "http://localhost:8080";
-  public static PurchaseTab = 0;
-  public static HighscoreTab = 1;
+  public static FeedbackTab = 0;
+  public static PurchaseTab = 1;
   public static MainTab = 2;
   public static MySurveysTab = 3;
   public static StartSurveyTab = 4;

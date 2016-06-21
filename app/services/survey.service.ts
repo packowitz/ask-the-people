@@ -45,4 +45,16 @@ export class SurveyService {
     headers.append('Authorization', 'Bearer ' + this.model.token);
     return this.http.get(Model.server + "/survey/list3", {headers: headers}).map(res => this.extractUser(res));
   }
+
+  getCurrentSurveyList(): Observable<Survey[]> {
+    let headers: Headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.model.token);
+    return this.http.get(Model.server + "/survey/list/current", {headers: headers}).map(res => this.extractUser(res));
+  }
+
+  getArchivedSurveyList(): Observable<Survey[]> {
+    let headers: Headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.model.token);
+    return this.http.get(Model.server + "/survey/list/archived", {headers: headers}).map(res => this.extractUser(res));
+  }
 }
