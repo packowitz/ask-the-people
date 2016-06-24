@@ -10,7 +10,7 @@
     <div class="welcome-line">
         <span *ngIf="model.user.username">Logged in as: <strong>{{model.user.username}}</strong></span>
         <span *ngIf="!model.user.username">You are unregistered <ion-icon name="help-circle" (click)="showAnonymousAlert()"></ion-icon></span>
-        <div class="credits" (click)="openPurchasePage()">
+        <div class="credits light-background" (click)="openPurchasePage()">
             <div class="buy-credits">+</div>
             <div class="credits-amount">{{model.user.credits}}</div>
             <div class="credits-coins"><ion-icon name="ribbon"></ion-icon></div>
@@ -18,7 +18,7 @@
     </div>
     <div class="middle-area">
         <div class="button-area">
-            <button (click)="openHighscorePage()" dark outline class="trophy-button border-radius"><ion-icon name="trophy"></ion-icon></button>
+            <button (click)="openHighscorePage()" dark outline class="trophy-button border-radius light-background"><ion-icon name="trophy"></ion-icon></button>
         </div>
         <div class="text-area">
             <span>You asked <strong>{{model.user.surveysStarted}}</strong> questions</span>

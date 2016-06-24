@@ -29,7 +29,7 @@
     justify-content: space-between;
     font-size: 1.2em;
     ion-icon {
-      color: #AB9D31;
+      color: $atp-gold;
     }
 
     .credits {
@@ -74,7 +74,7 @@
       .trophy-button {
         width: 6vh;
         height: 6vh;
-        color: #e8e556;
+        color: $atp-gold;
         border-width: 2px;
       }
     }

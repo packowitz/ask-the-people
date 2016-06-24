@@ -5,9 +5,9 @@
 <ion-content class="start-survey">
     <div class="picture-container">
         <img [src]="'data:image/jpeg;base64,' + survey.pic1" *ngIf="survey.pic1" (click)="choosePicture(true)" class="pic"/>
-        <div *ngIf="!survey.pic1" (click)="choosePicture(true)" class="pic"><ion-icon name="images" class="default-icon"></ion-icon></div>
+        <div *ngIf="!survey.pic1" (click)="choosePicture(true)" class="pic light-background"><ion-icon name="images" class="default-icon"></ion-icon></div>
         <img [src]="'data:image/jpeg;base64,' + survey.pic2" *ngIf="survey.pic2" (click)="choosePicture(false)" class="pic"/>
-        <div *ngIf="!survey.pic2" (click)="choosePicture(false)" class="pic"><ion-icon name="images" class="default-icon"></ion-icon></div>
+        <div *ngIf="!survey.pic2" (click)="choosePicture(false)" class="pic light-background"><ion-icon name="images" class="default-icon"></ion-icon></div>
     </div>
     <ion-list>
         <ion-item>

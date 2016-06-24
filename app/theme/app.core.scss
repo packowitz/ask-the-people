@@ -6,8 +6,14 @@
 @import "../pages/survey/survey";
 @import "../pages/surveyDetails/surveyDetails";
 
-.toolbar-title {
+ion-title {
   text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .popover-content {
@@ -31,5 +37,17 @@
 
 .text-center {
   text-align: center;
+}
+
+.light-background {
+  background-color: $atp-light;
+}
+
+ion-content {
+  background-image: url('/img/background.jpg');
+}
+
+.item {
+  background-color: inherit;
 }
 

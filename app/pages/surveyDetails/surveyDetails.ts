@@ -16,6 +16,10 @@ export class SurveyDetailsPage {
     this.countries = this.survey.country.split(",");
   }
 
+  showOptions(event: Event) {
+
+  }
+  
   getTimeDiff() {
     return Util.getTimeDiff(this.survey.startedDate);
   }
