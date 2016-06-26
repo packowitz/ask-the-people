@@ -45,4 +45,10 @@
         </ion-item>
         <ion-item><strong item-left>Countries:</strong><span class="country" *ngFor="let country of countries"><img src="img/flags/{{country}}.png" class="flag"></span></ion-item>
     </ion-list>
+
+    <div class="detail-title" *ngIf="survey.answers && survey.answers.length > 0" (click)="showStatistics=!showStatistics">
+        <ion-icon name="arrow-dropdown" *ngIf="showStatistics"></ion-icon>
+        <ion-icon name="arrow-dropright" *ngIf="!showStatistics"></ion-icon>
+        Detailed Statistics
+    </div>
 </ion-content>

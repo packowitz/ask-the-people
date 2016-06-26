@@ -141,15 +141,15 @@ export class StartSurveyPage {
       this.survey.country += c;
     });
     let loading = Loading.create({
-      content: 'Starting survey',
+      content: 'Starting ATP',
       spinner: 'dots'
     });
     this.nav.present(loading);
     this.surveyService.postSurvey(this.survey, "NUMBER100", this.saveAsDefault).subscribe(resp => {
-      console.log("survey started");
+      console.log("ATP started");
       loading.dismiss().then(() => {
         this.nav.present(Toast.create({
-          message: 'Survey has started',
+          message: 'ATP started',
           duration: 5000,
           showCloseButton: true,
           closeButtonText: 'OK'

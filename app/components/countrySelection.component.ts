@@ -19,9 +19,10 @@ import {NavParams, NavController, Alert} from "ionic-angular/index";
         justify-content: flex-start;
     }
     .flag {
-        height: 1.3em;
+        height: 1.2em;
         vertical-align: bottom;
         margin-right: 3vw;
+        border: 1px black solid;
     }`]
 })
 

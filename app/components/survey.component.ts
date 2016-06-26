@@ -1,3 +1,5 @@
+import {Answer} from "./answer.component";
+
 export class Survey {
   id: number;
   status: string;
@@ -15,4 +17,6 @@ export class Survey {
   pic2Count: number;
   abuseCount: number;
   startedDate: string;
+  
+  answers: Answer[];
 }

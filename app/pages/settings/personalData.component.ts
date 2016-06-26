@@ -14,7 +14,8 @@ import {Country} from "../../components/country.component";
         float: right;
     }
     .flag {
-        height: 1.3em;
+        height: 1.2em;
+        border: 1px black solid;
         vertical-align: bottom;
     }`]
 })
