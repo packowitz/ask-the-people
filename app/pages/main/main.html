@@ -27,7 +27,7 @@
     </div>
     <button (click)="openSurveyPage()" full large class="survey-button border-radius">Earn some Credits!</button>
     <ion-list>
-        <ion-item *ngIf="!last3surveys" class="text-center"><ion-spinner name="bubbles"></ion-spinner></ion-item>
+        <ion-item *ngIf="!last3surveys" class="text-center"><ion-spinner name="crescent"></ion-spinner></ion-item>
         <survey-list [surveys]="last3surveys" *ngIf="last3surveys && last3surveys.length > 0"></survey-list>
         <ion-item *ngIf="last3surveys" class="text-center">
             <button large (click)="openStartSurveyPage()" class="border-radius">Start new ATP</button>

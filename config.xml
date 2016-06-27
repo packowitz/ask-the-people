@@ -19,16 +19,28 @@
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" density="xhdpi"/>
     <icon src="resources\android\icon\drawable-xxhdpi-icon.png" density="xxhdpi"/>
     <icon src="resources\android\icon\drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
+    <splash src="resources\android\splash\drawable-port-ldpi-screen.png" density="port-ldpi"/>
+    <splash src="resources\android\splash\drawable-port-mdpi-screen.png" density="port-mdpi"/>
+    <splash src="resources\android\splash\drawable-port-hdpi-screen.png" density="port-hdpi"/>
+    <splash src="resources\android\splash\drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
+    <splash src="resources\android\splash\drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
+    <splash src="resources\android\splash\drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
   </platform>
+  <preference name="Orientation" value="portrait"/>
+  <preference name="AutoHideSplashScreen" value="false"/>
+  <preference name="FadeSplashScreen" value="false"/>
+  <preference name="ShowSplashScreenSpinner" value="false"/>
+  <preference name="SplashScreen" value="screen"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
+  <preference name="SplashScreenDelay" value="3000"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
