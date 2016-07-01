@@ -42,37 +42,7 @@
       justify-content: space-between;
       align-items: center;
     }
-    .survey-item-diagram {
-      flex-grow: 1;
-      border: 2px black solid;
-      background-color: white;
-      display: flex;
-      font-size: 2vh;
-      .survey-item-diagram-pic1 {
-        background-color: dodgerblue;
-        border-right: 1px black solid;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .survey-item-diagram-noOpinion {
-        background-color: darkgrey;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .survey-item-diagram-pic2 {
-        background-color: darkorange;
-        border-left: 1px black solid;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .diagram-text {
-        color: antiquewhite;
-        vertical-align: sub;
-      }
-    }
+
   }
 
   .detail-title {
@@ -80,6 +50,15 @@
     padding-bottom: 1vh;
     ion-icon {
       width: 3vw;
+    }
+  }
+
+  .detail {
+    .detail-label {
+      width: 15vw;
+    }
+    answer-bar {
+      width: 100%;
     }
   }
 
