@@ -1,4 +1,5 @@
 @import "../components/surveyList";
+@import "../pages/highscore/highscore";
 @import "../pages/main/main";
 @import "../pages/loading/loading";
 @import "../pages/login/login";
@@ -33,6 +34,12 @@ ion-title {
 .flex-space-between {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.flex-space-around {
+  display: flex;
+  justify-content: space-around;
   align-items: center;
 }
 

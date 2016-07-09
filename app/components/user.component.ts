@@ -6,6 +6,8 @@ export class User {
   credits: number;
   surveysAnswered: number;
   surveysStarted: number;
+  surveysAnsweredWeek: number;
+  surveysStartedWeek: number;
   notifications: boolean;
   notificationsSound: boolean;
   notificationsVibration: boolean;
