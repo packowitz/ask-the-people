@@ -2,7 +2,7 @@ import {Component, Input} from "@angular/core";
 import {HighscoreUser} from "../../components/highscoreUser.component";
 @Component({
   selector: 'highscore-entry',
-  template: `<ion-item *ngFor="let hs of highscore; let i = index">
+  template: `<ion-item *ngFor="let hs of highscore; let i = index" class="highscore-row" [class.itsme]="hs.itsme">
                 <ion-label class="highscore-entry">
                     <span>{{i + 1}}.</span>
                     <span class="highscore-name">
@@ -13,30 +13,7 @@ import {HighscoreUser} from "../../components/highscoreUser.component";
                     </span>
                     <span>{{showWeek ? hs.surveysAnsweredWeek : hs.surveysAnswered}} <ion-icon name="trophy" class="trophy"></ion-icon></span>
                 </ion-label>
-            </ion-item>`,
-  styles: [`
-  .highscore-entry {
-    display: flex;
-  }
-
-  .highscore-name {
-    flex-grow: 1;
-    display: flex;
-  }
-  .highscore-name-element {
-    margin-left: 2vw;
-    min-width: 4vw;
-  }
-
-  .flag {
-    height: 1.2em;
-    border: 1px black solid;
-  }
-
-  .trophy {
-    color: $atp-gold;
-  }
-`]
+            </ion-item>`
 })
 export class HighscoreEntry {
   @Input()
