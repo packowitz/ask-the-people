@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-    <div padding>
+    <div padding class="no-padding-bottom">
         <ion-segment [(ngModel)]="selection" (ionChange)="ionChange()">
             <ion-segment-button value="week">This week</ion-segment-button>
             <ion-segment-button value="total">Total</ion-segment-button>
@@ -13,7 +13,7 @@
     </div>
     <div [ngSwitch]="selection">
         <ion-list *ngSwitchWhen="'week'" padding class="no-padding-vertical">
-            <ion-item>
+            <ion-item class="no-border">
                 <ion-label class="flex-space-around">
                     <button round small [ngClass]="showWeekGlobal ? '' : 'button-outline light-background'" (click)="switchWeekGlobalLocal()">Global</button>
                     <button round small [ngClass]="showWeekGlobal ? 'button-outline light-background' : ''" (click)="switchWeekGlobalLocal()">Local</button>
@@ -24,7 +24,7 @@
             <highscore-entry [highscore]="showWeekGlobal ? highscoreWeekGlobal : highscoreWeekLocal" [showWeek]="true"></highscore-entry>
         </ion-list>
         <ion-list *ngSwitchWhen="'total'" padding class="no-padding-vertical">
-            <ion-item>
+            <ion-item class="no-border">
                 <ion-label class="flex-space-around">
                     <button round small [ngClass]="showTotalGlobal ? '' : 'button-outline light-background'" (click)="switchTotalGlobalLocal()">Global</button>
                     <button round small [ngClass]="showTotalGlobal ? 'button-outline light-background' : ''" (click)="switchTotalGlobalLocal()">Local</button>

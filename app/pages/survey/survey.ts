@@ -36,7 +36,7 @@ export class SurveyPage {
       let maxHeight = (document.getElementById('survey-content').offsetHeight - 2) / 2;
       this.picSize = Math.min(maxWidht, maxHeight);
       console.log("picSize=" + this.picSize + " maxWidth=" + maxWidht + " maxHeight=" + maxHeight);
-    }, 100);
+    }, 200);
   }
 
   handleError(err) {
