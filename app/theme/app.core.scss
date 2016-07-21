@@ -1,4 +1,6 @@
+@import "margins";
 @import "../components/surveyList";
+@import "../pages/feedback/feedback";
 @import "../pages/highscore/highscore";
 @import "../pages/highscore/highscoreEntry";
 @import "../pages/main/main";
@@ -17,15 +19,19 @@ ion-title {
   width: 100%;
   height: 100%;
   z-index: -1;
+
+  &.has-back-arrow {
+    .toolbar-title {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
 }
 
 .popover-content {
   border: 1px black solid;
-}
-
-.no-padding-vertical {
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 .border-radius {
@@ -48,6 +54,16 @@ ion-title {
   text-align: center;
 }
 
+.small-headline {
+  color: $atp-grey;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.color-grey {
+  color: $atp-grey;
+}
+
 .light-background {
   background-color: $atp-light;
 }
@@ -65,11 +81,10 @@ ion-content {
   font-weight: 600;
 }
 
-.no-vertical-padding {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .no-border {
   border: 0;
+}
+
+.float-right {
+  float: right;
 }
