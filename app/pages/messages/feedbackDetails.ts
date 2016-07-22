@@ -1,12 +1,12 @@
 import {Component} from "@angular/core";
 import {NavParams, NavController, Loading, Alert} from "ionic-angular/index";
 import {Feedback} from "../../components/feedback.component";
-import {FeedbackService} from "../../services/feedback.service";
+import {MessagesService} from "../../services/messages.service";
 import {FeedbackAnswer} from "../../components/feedbackAnswer.component";
 import {Model} from "../../components/model.component";
 import {Util} from "../../components/util.component";
 @Component({
-  templateUrl: 'build/pages/feedback/feedbackDetails.html'
+  templateUrl: 'build/pages/messages/feedbackDetails.html'
 })
 export class FeedbackDetailsPage {
   private feedback: Feedback;
@@ -16,7 +16,7 @@ export class FeedbackDetailsPage {
   constructor(private nav: NavController,
               private navParams: NavParams,
               private model: Model,
-              private feedbackService: FeedbackService) {
+              private feedbackService: MessagesService) {
     this.feedback = navParams.get('feedback');
     this.loadAnswers();
   }

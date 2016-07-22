@@ -6,7 +6,7 @@ import {SurveyService} from "../../services/survey.service";
 import {Survey} from "../../components/survey.component";
 import {SettingsPage} from "../settings/settings";
 import {HighscorePage} from "../highscore/highscore";
-import {FeedbackPage} from "../feedback/feedback";
+import {FeedbackPage} from "../messages/messages";
 import {MySurveysPage} from "../mySurveys/mySurveys";
 import {Component} from "@angular/core";
 import {SurveyListComponent} from "../../components/surveyList.component";

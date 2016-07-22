@@ -3,12 +3,12 @@ import {Popover, NavController, Alert, Loading} from "ionic-angular/index";
 import {ChooseFeedbackType} from "./chooseFeedbackType";
 import {Feedback} from "../../components/feedback.component";
 import {Model} from "../../components/model.component";
-import {FeedbackService} from "../../services/feedback.service";
+import {MessagesService} from "../../services/messages.service";
 import {Util} from "../../components/util.component";
 import {FeedbackDetailsPage} from "./feedbackDetails";
 
 @Component({
-  templateUrl: 'build/pages/feedback/feedback.html'
+  templateUrl: 'build/pages/messages/messages.html'
 })
 export class FeedbackPage {
   selection: string = "feedback";
@@ -16,7 +16,7 @@ export class FeedbackPage {
 
   constructor(private nav: NavController,
               private model: Model,
-              private feedbackService: FeedbackService) {
+              private feedbackService: MessagesService) {
   }
 
   startGiveFeedback() {

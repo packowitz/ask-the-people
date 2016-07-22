@@ -2,9 +2,8 @@ import {Component} from "@angular/core";
 import {StartSurveyPage} from "../startSurvey/startSurvey";
 import {MySurveysPage} from "../mySurveys/mySurveys";
 import {MainPage} from "../main/main";
-import {HighscorePage} from "../highscore/highscore";
 import {PurchasePage} from "../purchase/purchase";
-import {FeedbackPage} from "../feedback/feedback";
+import {FeedbackPage} from "../messages/messages";
 import {Model} from "../../components/model.component";
 
 @Component({

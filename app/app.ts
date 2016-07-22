@@ -10,7 +10,7 @@ import {SurveyService} from "./services/survey.service";
 import {ViewChild, Component} from "@angular/core";
 import {TabsPage} from "./pages/tabs/tabsPage";
 import {HighscoreService} from "./services/highscore.service";
-import {FeedbackService} from "./services/feedback.service";
+import {MessagesService} from "./services/messages.service";
 
 @Component({
   templateUrl: 'build/app.html'
@@ -26,7 +26,7 @@ class AtpApp {
   constructor(private platform: Platform,
               private authService: AuthService,
               private countryService: CountryService,
-              private feedbackService: FeedbackService,
+              private feedbackService: MessagesService,
               private model: Model) {
     this.initializeApp();
   }
@@ -133,7 +133,7 @@ class AtpApp {
   }
 }
 
-ionicBootstrap(AtpApp, [AuthService, CountryService, FeedbackService, HighscoreService, SurveyService, Model], {
+ionicBootstrap(AtpApp, [AuthService, CountryService, MessagesService, HighscoreService, SurveyService, Model], {
   tabbarHighlight: true,
   tabbarPlacement: 'bottom',
   platforms: {

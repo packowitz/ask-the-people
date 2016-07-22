@@ -11,7 +11,7 @@ export class FeedbackAnswerResponse {
 }
 
 @Injectable()
-export class FeedbackService {
+export class MessagesService {
 
   constructor(private http:Http, private model:Model) {}
 
