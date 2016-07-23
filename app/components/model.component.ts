@@ -2,6 +2,7 @@ import {User} from "./user.component.ts";
 import {Platform, Loading, NavController} from "ionic-angular";
 import {Injectable} from "@angular/core";
 import {Feedback} from "./feedback.component";
+import {Survey} from "./survey.component";
 
 @Injectable()
 export class Model {
@@ -14,6 +15,7 @@ export class Model {
   public loading: Loading;
   public user: User;
   public token: string;
+  public last3surveys: Survey[] = [];
   public feedback: Feedback[] = [];
   public unreadFeedback: number = 0;
   public unreadAnnouncements: number = 0;

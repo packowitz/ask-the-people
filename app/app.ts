@@ -21,10 +21,12 @@ class AtpApp {
   localStorage: Storage;
   loadedCountries: boolean = false;
   loadedUser: boolean = false;
+  loadedLast3Surveys: boolean = false;
   loadedUnreadFeedback: boolean = false;
 
   constructor(private platform: Platform,
               private authService: AuthService,
+              private surveyService: SurveyService,
               private countryService: CountryService,
               private feedbackService: MessagesService,
               private model: Model) {
@@ -57,6 +59,8 @@ class AtpApp {
       this.loadCountries();
     } else if((!this.loadedUser)) {
       this.loadUser();
+    } else if((!this.loadedLast3Surveys)) {
+      this.loadLast3Surveys();
     } else if((!this.loadedUnreadFeedback)) {
       this.loadFeedback();
     } else {
@@ -116,6 +120,18 @@ class AtpApp {
           this.showNetworkError();
         }
       }
+    );
+  }
+
+  private loadLast3Surveys() {
+    this.surveyService.getLast3Surveys().subscribe(
+      data => {
+        this.model.last3surveys = data;
+        console.log("Loaded " + this.model.last3surveys.length + " last surveys");
+        this.loadedLast3Surveys = true;
+        this.loadDataFromServer();
+      },
+      error => this.showNetworkError()
     );
   }
 

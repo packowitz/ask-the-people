@@ -57,6 +57,18 @@ export class SurveyService {
     headers.append('Authorization', 'Bearer ' + this.model.token);
     return this.http.get(Model.server + "/survey/list/archived", {headers: headers}).map(res => this.extractUser(res));
   }
+
+  updateSurvey(survey: Survey) {
+    let headers: Headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.model.token);
+    this.http.get(Model.server + "/survey/update/" + survey.id, {headers: headers}).map(res => this.extractUser(res)).subscribe(data => {
+      survey.status = data.status;
+      survey.answered = data.answered;
+      survey.noOpinionCount = data.noOpinionCount;
+      survey.pic1Count = data.pic1Count;
+      survey.pic2Count = data.pic2Count;
+    });
+  }
   
   loadSurveyDetails(survey: Survey) {
     let headers: Headers = new Headers();
