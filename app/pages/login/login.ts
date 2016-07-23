@@ -1,10 +1,10 @@
 import {NavController, Storage, SqlStorage, Toast, Loading, Popover, NavParams} from 'ionic-angular';
 import {User} from "../../components/domain/user.component";
 import {AuthService} from "../../services/auth.service";
-import {Model} from "../../components/model.component";
 import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {Component} from "@angular/core";
 import {CountrySelection} from "../../components/countrySelection.component";
+import {LoadingPage} from "../loading/loading";
 
 @Component({
   templateUrl: 'build/pages/login/login.html'
@@ -51,14 +51,14 @@ export class LoginPage {
 
   register() {
     let loading = Loading.create({
-      content: 'Register',
+      content: 'Registering',
       spinner: 'dots'
     });
     this.nav.present(loading);
     this.authService.register(this.user).subscribe(data => {
       if(data.token) {
         let storage = new Storage(SqlStorage);
-        storage.set('token', data.token).then(() => location.reload());
+        storage.set('token', data.token).then(() => loading.dismiss().then(() => this.nav.setRoot(LoadingPage)));
       } else {
         loading.dismiss().then(() => {
           this.nav.present(Toast.create({
@@ -86,7 +86,7 @@ export class LoginPage {
     this.authService.login(this.username.value, this.password.value).subscribe(data => {
       if(data.token) {
         let storage = new Storage(SqlStorage);
-        storage.set('token', data.token).then(() => location.reload());
+        storage.set('token', data.token).then(() => loading.dismiss().then(() => this.nav.setRoot(LoadingPage)));
       } else {
         loading.dismiss().then(() => {
           this.nav.present(Toast.create({
