@@ -4,7 +4,7 @@ import {CountryService} from "../../services/country.service";
 import {NavController, Toast, Popover} from "ionic-angular/index";
 import {AuthService} from "../../services/auth.service";
 import {CountrySelection} from "../../components/countrySelection.component";
-import {Country} from "../../components/country.component";
+import {Country} from "../../components/domain/country.component";
 
 @Component({
   selector: 'personal-data',

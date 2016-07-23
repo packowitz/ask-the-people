@@ -1,11 +1,10 @@
-import {NavController, Storage, SqlStorage, Toast, Loading, Popover} from 'ionic-angular';
-import {User} from "../../components/user.component";
+import {NavController, Storage, SqlStorage, Toast, Loading, Popover, NavParams} from 'ionic-angular';
+import {User} from "../../components/domain/user.component";
 import {AuthService} from "../../services/auth.service";
 import {Model} from "../../components/model.component";
 import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {Component} from "@angular/core";
 import {CountrySelection} from "../../components/countrySelection.component";
-import {TabsPage} from "../tabs/tabsPage";
 
 @Component({
   templateUrl: 'build/pages/login/login.html'
@@ -17,10 +16,9 @@ export class LoginPage {
   username: AbstractControl;
   password: AbstractControl;
   showLoginForm: boolean = false;
-  
+
   constructor(private nav: NavController,
               private authService: AuthService,
-              private model: Model,
               private formBuilder: FormBuilder) {
     this.user.male = false;
 
@@ -60,21 +58,7 @@ export class LoginPage {
     this.authService.register(this.user).subscribe(data => {
       if(data.token) {
         let storage = new Storage(SqlStorage);
-        storage.set('token', data.token);
-        this.authService.getUserByToken(data.token).subscribe(user => {
-          this.model.user = user;
-          this.model.token = data.token;
-          loading.dismiss();
-          this.nav.setRoot(TabsPage);
-        }, error => {
-          storage.remove('token');
-          loading.dismiss().then(() => {
-            this.nav.present(Toast.create({
-              message: "Registration not successful",
-              duration: 2000
-            }));
-          });
-        });
+        storage.set('token', data.token).then(() => location.reload());
       } else {
         loading.dismiss().then(() => {
           this.nav.present(Toast.create({
@@ -102,21 +86,7 @@ export class LoginPage {
     this.authService.login(this.username.value, this.password.value).subscribe(data => {
       if(data.token) {
         let storage = new Storage(SqlStorage);
-        storage.set('token', data.token);
-        this.authService.getUserByToken(data.token).subscribe(user => {
-          this.model.user = user;
-          this.model.token = data.token;
-          loading.dismiss();
-          this.nav.setRoot(TabsPage);
-        }, error => {
-          storage.remove('token');
-          loading.dismiss().then(() => {
-            this.nav.present(Toast.create({
-              message: "Login not successful",
-              duration: 2000
-            }));
-          });
-        });
+        storage.set('token', data.token).then(() => location.reload());
       } else {
         loading.dismiss().then(() => {
           this.nav.present(Toast.create({

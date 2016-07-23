@@ -12,7 +12,7 @@
         </ion-segment>
     </div>
     <div [ngSwitch]="selection">
-        <ion-list *ngSwitchWhen="'feedback'">
+        <ion-list *ngSwitchCase="'feedback'">
             <ion-item *ngFor="let feedback of model.feedback" (click)="showFeedbackDetails(feedback)">
                 <div class="small-headline">{{getTimeDiff(feedback.lastActionDate)}} ago</div>
                 <div *ngIf="feedback.unreadAnswers > 0"><span *ngIf="feedback.status == 'CLOSED'" class="color-grey"><ion-icon name="lock"></ion-icon> </span><strong>{{feedback.title}}</strong> <ion-badge danger>{{feedback.unreadAnswers}}</ion-badge></div>
@@ -48,6 +48,16 @@
             <ion-item class="text-center" *ngIf="newFeedback.type">
                 <button large [disabled]="!newFeedback.title || !newFeedback.message" (click)="sendFeedback()">Send Feedback</button>
             </ion-item>
+        </ion-list>
+        <ion-list *ngSwitchCase="'announcements'">
+            <ion-card *ngFor="let announcement of model.announcements">
+                <ion-card-header class="small-headline no-padding-bottom">
+                    {{getTimeDiff(announcement.sendDate)}} ago
+                </ion-card-header>
+                <ion-card-content>
+                    {{announcement.message}}
+                </ion-card-content>
+            </ion-card>
         </ion-list>
     </div>
 

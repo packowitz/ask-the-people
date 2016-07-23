@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {Feedback} from "../../components/feedback.component";
+import {Feedback} from "../../components/domain/feedback.component";
 import {Slides, NavParams} from "ionic-angular/index";
 
 @Component({

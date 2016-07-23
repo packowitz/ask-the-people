@@ -2,13 +2,13 @@ import {ActionSheet, Platform, NavController, Alert, Loading, Toast, Popover, Ta
 import {NgZone} from "@angular/core";
 import {CameraOptions} from "ionic-native/dist/plugins/camera";
 import {Camera} from "ionic-native/dist/index";
-import {Survey} from "../../components/survey.component";
+import {Survey} from "../../components/domain/survey.component";
 import {Model} from "../../components/model.component";
 import {SurveyService} from "../../services/survey.service";
 import {RandomImage} from "../../components/randomImage.component";
 import {Component} from "@angular/core";
 import {CountrySelection} from "../../components/countrySelection.component";
-import {User} from "../../components/user.component";
+import {User} from "../../components/domain/user.component";
 
 @Component({
   templateUrl: 'build/pages/startSurvey/startSurvey.html'

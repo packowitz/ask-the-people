@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {Popover, NavController, Alert, Loading} from "ionic-angular/index";
 import {ChooseFeedbackType} from "./chooseFeedbackType";
-import {Feedback} from "../../components/feedback.component";
+import {Feedback} from "../../components/domain/feedback.component";
 import {Model} from "../../components/model.component";
 import {MessagesService} from "../../services/messages.service";
 import {Util} from "../../components/util.component";
@@ -11,12 +11,14 @@ import {FeedbackDetailsPage} from "./feedbackDetails";
   templateUrl: 'build/pages/messages/messages.html'
 })
 export class FeedbackPage {
-  selection: string = "feedback";
+  selection: string;
   newFeedback: Feedback = new Feedback();
 
   constructor(private nav: NavController,
               private model: Model,
               private feedbackService: MessagesService) {
+    this.selection = this.model.unreadAnnouncements > 0 ? 'announcements' : 'feedback';
+    setTimeout(() => this.model.markAnnouncementAsRead(), 1000);
   }
 
   startGiveFeedback() {

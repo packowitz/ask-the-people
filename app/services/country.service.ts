@@ -1,5 +1,5 @@
 import {Http} from "@angular/http";
-import {Country} from "../components/country.component";
+import {Country} from "../components/domain/country.component";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 import {Model} from "../components/model.component";

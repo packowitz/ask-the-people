@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import {Model} from "../components/model.component";
-import {Survey} from "../components/survey.component";
+import {Survey} from "../components/domain/survey.component";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()

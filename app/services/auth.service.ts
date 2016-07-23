@@ -1,5 +1,5 @@
 import {Http, Headers} from "@angular/http";
-import {User} from "../components/user.component";
+import {User} from "../components/domain/user.component";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 import {Model} from "../components/model.component";

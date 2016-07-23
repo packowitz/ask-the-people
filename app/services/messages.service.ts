@@ -2,8 +2,9 @@ import {Model} from "../components/model.component";
 import {Http, Headers} from "@angular/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Rx";
-import {Feedback} from "../components/feedback.component";
-import {FeedbackAnswer} from "../components/feedbackAnswer.component";
+import {Feedback} from "../components/domain/feedback.component";
+import {FeedbackAnswer} from "../components/domain/feedbackAnswer.component";
+import {Announcement} from "../components/domain/announcement.component";
 
 export class FeedbackAnswerResponse {
   feedback: Feedback;
@@ -19,6 +20,12 @@ export class MessagesService {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
     return this.http.get(Model.server + "/feedback/list", {headers: headers}).map(res => res.json());
+  }
+
+  loadAnnouncements(): Observable<Announcement[]> {
+    let headers: Headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.model.token);
+    return this.http.get(Model.server + "/announcement/list", {headers: headers}).map(res => res.json());
   }
 
   loadFeedbackAnswers(id: number): Observable<FeedbackAnswer[]> {

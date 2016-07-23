@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Model} from "../components/model.component";
 import {Http, Headers} from "@angular/http";
-import {HighscoreUser} from "../components/highscoreUser.component";
+import {HighscoreUser} from "../components/domain/highscoreUser.component";
 import {Observable} from "rxjs/Rx";
 
 @Injectable()

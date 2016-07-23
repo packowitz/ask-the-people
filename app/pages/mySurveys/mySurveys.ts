@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {SurveyService} from "../../services/survey.service";
-import {Survey} from "../../components/survey.component";
+import {Survey} from "../../components/domain/survey.component";
 import {SurveyListComponent} from "../../components/surveyList.component";
 import {Tabs} from "ionic-angular/index";
 import {Model} from "../../components/model.component";

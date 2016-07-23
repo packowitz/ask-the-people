@@ -23,6 +23,7 @@ class AtpApp {
   loadedUser: boolean = false;
   loadedLast3Surveys: boolean = false;
   loadedUnreadFeedback: boolean = false;
+  loadedAnnouncements: boolean = false;
 
   constructor(private platform: Platform,
               private authService: AuthService,
@@ -54,6 +55,11 @@ class AtpApp {
     }));
   }
 
+  showLoadingPageAndLoadDataFromServer() {
+    this.rootPage = LoadingPage;
+    this.loadDataFromServer();
+  }
+
   loadDataFromServer() {
     if(!this.loadedCountries) {
       this.loadCountries();
@@ -63,6 +69,8 @@ class AtpApp {
       this.loadLast3Surveys();
     } else if((!this.loadedUnreadFeedback)) {
       this.loadFeedback();
+    } else if((!this.loadedAnnouncements)) {
+      this.loadAnnouncements();
     } else {
       this.nav.setRoot(TabsPage);
     }
@@ -142,6 +150,19 @@ class AtpApp {
         this.model.recalcUnreadMessages();
         console.log("Loaded " + this.model.feedback.length + " feedback");
         this.loadedUnreadFeedback = true;
+        this.loadDataFromServer();
+      },
+      error => this.showNetworkError()
+    );
+  }
+
+  private loadAnnouncements() {
+    this.feedbackService.loadAnnouncements().subscribe(
+      data => {
+        this.model.announcements = data;
+        this.model.recalcUnreadMessages();
+        console.log("Loaded " + this.model.announcements.length + " announcements");
+        this.loadedAnnouncements = true;
         this.loadDataFromServer();
       },
       error => this.showNetworkError()

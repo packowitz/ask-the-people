@@ -1,6 +1,6 @@
 import {Loading, NavController, Toast, Alert, Tabs} from "ionic-angular";
 import {SurveyService} from "../../services/survey.service";
-import {Survey} from "../../components/survey.component";
+import {Survey} from "../../components/domain/survey.component";
 import {Messages} from "../../components/messages.component";
 import {Component} from "@angular/core";
 import {Model} from "../../components/model.component";

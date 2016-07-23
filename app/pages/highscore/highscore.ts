@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HighscoreService} from "../../services/highscore.service";
-import {HighscoreUser} from "../../components/highscoreUser.component";
+import {HighscoreUser} from "../../components/domain/highscoreUser.component";
 import {HighscoreEntry} from "./highscoreEntry";
 
 @Component({
