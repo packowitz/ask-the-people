@@ -23,18 +23,14 @@ export class AuthService {
   getUserByToken(token: string): Observable<User> {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + token);
-    return this.http.get(Model.server + "/user", {headers: headers}).map(res => res.json());
-  }
-
-  getUsernameExists(username: string): Observable<boolean> {
-    return this.http.get(Model.server + "/username_exists/" + username).map(res => res.json().exists);
+    return this.http.get(Model.server + "/app/user", {headers: headers}).map(res => res.json());
   }
 
   postUsername(username: string, password: string): Observable<boolean> {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
     headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/user/username", JSON.stringify({username: username, password: password}), {headers: headers}).map(res => {
+    return this.http.post(Model.server + "/app/user/username", JSON.stringify({username: username, password: password}), {headers: headers}).map(res => {
       let user = res.json();
       this.model.user = user;
       return user;
@@ -45,7 +41,7 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
     headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/user/notifications", JSON.stringify({enabled: enabled, soundEnabled: soundEnabled, vibrationEnabled: vibrationEnabled}), {headers: headers}).map(res => {
+    return this.http.post(Model.server + "/app/user/notifications", JSON.stringify({enabled: enabled, soundEnabled: soundEnabled, vibrationEnabled: vibrationEnabled}), {headers: headers}).map(res => {
       let user = res.json();
       this.model.user = user;
       return user;
@@ -56,7 +52,7 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
     headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/user/personal-data", JSON.stringify({'yearOfBirth': yearOfBirth, male: male, country: country}), {headers: headers}).map(res => {
+    return this.http.post(Model.server + "/app/user/personal-data", JSON.stringify({'yearOfBirth': yearOfBirth, male: male, country: country}), {headers: headers}).map(res => {
       let user = res.json();
       this.model.user = user;
       return user;

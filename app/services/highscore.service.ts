@@ -12,24 +12,24 @@ export class HighscoreService {
   getHighscoreGlobalWeek(): Observable<HighscoreUser[]> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/user/highscore/week", {headers: headers}).map(res => res.json());
+    return this.http.get(Model.server + "/app/user/highscore/week", {headers: headers}).map(res => res.json());
   }
 
   getHighscoreLocalWeek(): Observable<HighscoreUser[]> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/user/highscore/week/local", {headers: headers}).map(res => res.json());
+    return this.http.get(Model.server + "/app/user/highscore/week/local", {headers: headers}).map(res => res.json());
   }
 
   getHighscoreGlobalTotal(): Observable<HighscoreUser[]> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/user/highscore", {headers: headers}).map(res => res.json());
+    return this.http.get(Model.server + "/app/user/highscore", {headers: headers}).map(res => res.json());
   }
 
   getHighscoreLocalTotal(): Observable<HighscoreUser[]> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/user/highscore/local", {headers: headers}).map(res => res.json());
+    return this.http.get(Model.server + "/app/user/highscore/local", {headers: headers}).map(res => res.json());
   }
 }

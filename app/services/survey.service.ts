@@ -20,13 +20,13 @@ export class SurveyService {
     headers.append('Authorization', 'Bearer ' + this.model.token);
     headers.append('Content-Type', 'application/json');
     let request = {survey: survey, type: type, saveAsDefault: saveAsDefault};
-    return this.http.post(Model.server + "/survey/private", JSON.stringify(request), {headers: headers}).map(res => this.extractUser(res));
+    return this.http.post(Model.server + "/app/survey/private", JSON.stringify(request), {headers: headers}).map(res => this.extractUser(res));
   }
 
   getSurveyToAnswer(): Observable<Survey> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/survey/answerable", {headers: headers}).map(res => this.extractUser(res));
+    return this.http.get(Model.server + "/app/survey/answerable", {headers: headers}).map(res => this.extractUser(res));
   }
 
   postResult(survey: Survey, result: number): Observable<Survey> {
@@ -37,31 +37,31 @@ export class SurveyService {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
     headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/survey/result", JSON.stringify(resultObj), {headers: headers}).map(res => this.extractUser(res));
+    return this.http.post(Model.server + "/app/survey/result", JSON.stringify(resultObj), {headers: headers}).map(res => this.extractUser(res));
   }
   
   getLast3Surveys(): Observable<Survey[]> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/survey/list3", {headers: headers}).map(res => this.extractUser(res));
+    return this.http.get(Model.server + "/app/survey/list3", {headers: headers}).map(res => this.extractUser(res));
   }
 
   getCurrentSurveyList(): Observable<Survey[]> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/survey/list/current", {headers: headers}).map(res => this.extractUser(res));
+    return this.http.get(Model.server + "/app/survey/list/current", {headers: headers}).map(res => this.extractUser(res));
   }
 
   getArchivedSurveyList(): Observable<Survey[]> {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/survey/list/archived", {headers: headers}).map(res => this.extractUser(res));
+    return this.http.get(Model.server + "/app/survey/list/archived", {headers: headers}).map(res => this.extractUser(res));
   }
 
   updateSurvey(survey: Survey) {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    this.http.get(Model.server + "/survey/update/" + survey.id, {headers: headers}).map(res => this.extractUser(res)).subscribe(data => {
+    this.http.get(Model.server + "/app/survey/update/" + survey.id, {headers: headers}).map(res => this.extractUser(res)).subscribe(data => {
       survey.status = data.status;
       survey.answered = data.answered;
       survey.noOpinionCount = data.noOpinionCount;
@@ -73,7 +73,7 @@ export class SurveyService {
   loadSurveyDetails(survey: Survey) {
     let headers: Headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.model.token);
-    this.http.get(Model.server + "/survey/details/" + survey.id, {headers: headers}).map(res => this.extractUser(res)).subscribe(data => {
+    this.http.get(Model.server + "/app/survey/details/" + survey.id, {headers: headers}).map(res => this.extractUser(res)).subscribe(data => {
       survey.status = data.status;
       survey.answered = data.answered;
       survey.noOpinionCount = data.noOpinionCount;
