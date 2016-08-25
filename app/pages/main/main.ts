@@ -1,4 +1,4 @@
-import {NavController, Alert, Tabs} from "ionic-angular";
+import {NavController, Tabs, AlertController} from "ionic-angular";
 import {Model} from "../../components/model.component";
 import {SurveyPage} from "../survey/survey";
 import {SurveyService} from "../../services/survey.service";
@@ -16,7 +16,8 @@ export class MainPage {
   constructor(private model: Model,
               private nav: NavController,
               private surveyService: SurveyService,
-              private tabs: Tabs) {
+              private tabs: Tabs,
+              private alertController: AlertController) {
   }
 
   ionViewDidEnter() {
@@ -32,14 +33,14 @@ export class MainPage {
   }
 
   showAnonymousAlert() {
-    this.nav.present(Alert.create({
+    this.alertController.create({
       title: 'Select a username',
       message: 'Go to settings and choose a username to use your ATP account on multiple devices or to be able to restore your account.',
       buttons: [
         {text: 'Settings', handler: () => {this.openSettingsPage();}},
         {text: 'Later'}
       ]
-    }));
+    }).present();
   }
 
   openSettingsPage() {

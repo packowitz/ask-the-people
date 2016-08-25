@@ -43,7 +43,7 @@
             </ion-item>
             <ion-item *ngIf="newFeedback.type">
                 <ion-label floating>Message</ion-label>
-                <ion-textarea [(ngModel)]="newFeedback.message"></ion-textarea>
+                <ion-textarea [(ngModel)]="newFeedback.message" maxlength="255"></ion-textarea>
             </ion-item>
             <ion-item class="text-center" *ngIf="newFeedback.type">
                 <button large [disabled]="!newFeedback.title || !newFeedback.message" (click)="sendFeedback()">Send Feedback</button>

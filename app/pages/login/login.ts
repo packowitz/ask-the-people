@@ -1,4 +1,4 @@
-import {NavController, Storage, SqlStorage, Toast, Loading, Popover, NavParams} from 'ionic-angular';
+import {NavController, Storage, SqlStorage, PopoverController, LoadingController, ToastController} from 'ionic-angular';
 import {User} from "../../components/domain/user.component";
 import {AuthService} from "../../services/auth.service";
 import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
@@ -19,7 +19,10 @@ export class LoginPage {
 
   constructor(private nav: NavController,
               private authService: AuthService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private popoverController: PopoverController,
+              private loadingController: LoadingController,
+              private toastController: ToastController) {
     this.user.male = false;
 
     this.loginForm = formBuilder.group({
@@ -31,12 +34,12 @@ export class LoginPage {
   }
 
   chooseCountry() {
-    let countrySelection = Popover.create(CountrySelection, {callback: country => {
+    let countrySelection = this.popoverController.create(CountrySelection, {callback: country => {
       this.user.country = country.alpha3;
       this.countryName = country.nameEng;
       countrySelection.dismiss();
     }});
-    this.nav.present(countrySelection);
+    countrySelection.present();
   }
 
   registerFormInvalid(): boolean {
@@ -50,57 +53,57 @@ export class LoginPage {
   }
 
   register() {
-    let loading = Loading.create({
+    let loading = this.loadingController.create({
       content: 'Registering',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
     this.authService.register(this.user).subscribe(data => {
       if(data.token) {
         let storage = new Storage(SqlStorage);
         storage.set('token', data.token).then(() => loading.dismiss().then(() => this.nav.setRoot(LoadingPage)));
       } else {
         loading.dismiss().then(() => {
-          this.nav.present(Toast.create({
+          this.toastController.create({
             message: "Registration not successful",
             duration: 2000
-          }));
+          }).present();
         });
       }
     }, error => {
       loading.dismiss().then(() => {
-        this.nav.present(Toast.create({
+        this.toastController.create({
           message: "Registration not successful",
           duration: 2000
-        }));
+        }).present();
       });
     });
   }
   
   login() {
-    let loading = Loading.create({
+    let loading = this.loadingController.create({
       content: 'Logging in',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
     this.authService.login(this.username.value, this.password.value).subscribe(data => {
       if(data.token) {
         let storage = new Storage(SqlStorage);
         storage.set('token', data.token).then(() => loading.dismiss().then(() => this.nav.setRoot(LoadingPage)));
       } else {
         loading.dismiss().then(() => {
-          this.nav.present(Toast.create({
+          this.toastController.create({
             message: "Login not successful",
             duration: 2000
-          }));
+          }).present();
         });
       }
     }, error => {
       loading.dismiss().then(() => {
-        this.nav.present(Toast.create({
+        this.toastController.create({
           message: "Login not successful",
           duration: 2000
-        }));
+        }).present();
       });
     });
   }

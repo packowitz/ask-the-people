@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {Toast, NavController} from "ionic-angular/index";
+import {ToastController} from "ionic-angular/index";
 import {ControlGroup, AbstractControl, FormBuilder, Validators} from "@angular/common";
 import {Model} from "../../components/model.component.ts";
 import {AuthService} from "../../services/auth.service.ts";
@@ -18,7 +18,7 @@ export class ChooseUsername {
   constructor(private model: Model,
               private authService: AuthService,
               private formBuilder: FormBuilder,
-              private nav: NavController) {
+              private toastController: ToastController) {
     this.newUsernameForm = formBuilder.group({
       'newUsername': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'newPassword': ['', Validators.compose([Validators.required, Validators.minLength(8)])],
@@ -42,10 +42,10 @@ export class ChooseUsername {
 
   doSubmit() {
     this.authService.postUsername(this.newUsername.value, this.newPassword.value).subscribe(() => {
-      this.nav.present(Toast.create({
+      this.toastController.create({
         message: 'Username created',
         duration: 2000
-      }));
+      }).present();
     }, err => console.log(err))
   }
 }

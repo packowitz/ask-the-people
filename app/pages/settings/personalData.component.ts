@@ -1,10 +1,9 @@
 import {Component} from "@angular/core";
 import {Model} from "../../components/model.component";
 import {CountryService} from "../../services/country.service";
-import {NavController, Toast, Popover} from "ionic-angular/index";
+import {ToastController, PopoverController} from "ionic-angular/index";
 import {AuthService} from "../../services/auth.service";
 import {CountrySelection} from "../../components/countrySelection.component";
-import {Country} from "../../components/domain/country.component";
 
 @Component({
   selector: 'personal-data',
@@ -28,8 +27,9 @@ export class PersonalData {
 
   constructor(private model: Model,
               private countryService: CountryService,
-              private nav: NavController,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private toastController: ToastController,
+              private popoverController: PopoverController) {
     this.yearOfBirth = model.user.yearOfBirth;
     this.male = model.user.male;
     this.country = model.user.country;
@@ -49,20 +49,20 @@ export class PersonalData {
   }
 
   chooseCountry() {
-    let countrySelection = Popover.create(CountrySelection, {callback: country => {
+    let countrySelection = this.popoverController.create(CountrySelection, {callback: country => {
       this.country = country.alpha3;
       this.countryName = country.nameEng;
       countrySelection.dismiss();
     }});
-    this.nav.present(countrySelection);
+    countrySelection.present();
   }
 
   doSubmit() {
     this.authService.postPersonalData(this.yearOfBirth, this.male, this.country).subscribe(() => {
-      this.nav.present(Toast.create({
+      this.toastController.create({
         message: 'Personal data updated',
         duration: 2000
-      }));
+      }).present();
     }, err => console.log(err))
   }
 }

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavParams, NavController, Loading, Alert} from "ionic-angular/index";
+import {NavParams, NavController, LoadingController, AlertController} from "ionic-angular/index";
 import {Feedback} from "../../components/domain/feedback.component";
 import {MessagesService} from "../../services/messages.service";
 import {FeedbackAnswer} from "../../components/domain/feedbackAnswer.component";
@@ -16,7 +16,9 @@ export class FeedbackDetailsPage {
   constructor(private nav: NavController,
               private navParams: NavParams,
               private model: Model,
-              private feedbackService: MessagesService) {
+              private feedbackService: MessagesService,
+              private loadingController: LoadingController,
+              private alertController: AlertController) {
     this.feedback = navParams.get('feedback');
     this.loadAnswers();
   }
@@ -27,11 +29,11 @@ export class FeedbackDetailsPage {
 
   loadAnswers() {
     if(this.feedback.answers) {
-      let loading = Loading.create({
+      let loading = this.loadingController.create({
         content: 'Loading Feedback Details',
         spinner: 'dots'
       });
-      this.nav.present(loading);
+      loading.present();
       this.feedbackService.loadFeedbackAnswers(this.feedback.id).subscribe(
         answers => {
           this.answers = answers;
@@ -43,7 +45,7 @@ export class FeedbackDetailsPage {
         },
         error => {
           loading.dismiss().then(() => {
-            this.nav.present(Alert.create({
+            this.alertController.create({
               title: 'Network Error',
               message: 'There was a network error!',
               buttons: [{
@@ -52,7 +54,7 @@ export class FeedbackDetailsPage {
                 text: 'Retry',
                 handler: () => this.loadAnswers()
               }]
-            }));
+            }).present();
           });
         }
       );
@@ -60,11 +62,11 @@ export class FeedbackDetailsPage {
   }
 
   closeFeedback() {
-    let loading = Loading.create({
+    let loading = this.loadingController.create({
       content: 'Closing Conversation',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
     this.feedbackService.closeFeedback(this.feedback).subscribe(
       feedback => {
         Feedback.update(this.feedback, feedback);
@@ -72,7 +74,7 @@ export class FeedbackDetailsPage {
       },
       error => {
         loading.dismiss().then(() => {
-          this.nav.present(Alert.create({
+          this.alertController.create({
             title: 'Network Error',
             message: 'There was a network error!',
             buttons: [{
@@ -81,7 +83,7 @@ export class FeedbackDetailsPage {
               text: 'Retry',
               handler: () => this.closeFeedback()
             }]
-          }));
+          }).present();
         });
       }
     );
@@ -92,11 +94,11 @@ export class FeedbackDetailsPage {
   }
 
   sendAnswer() {
-    let loading = Loading.create({
+    let loading = this.loadingController.create({
       content: 'Sending Response',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
     this.feedbackService.sendFeedbackAnswer(this.feedback, this.newAnswer).subscribe(
       response => {
         this.newAnswer = null;
@@ -106,7 +108,7 @@ export class FeedbackDetailsPage {
       },
       error => {
         loading.dismiss().then(() => {
-          this.nav.present(Alert.create({
+          this.alertController.create({
             title: 'Network Error',
             message: 'There was a network error!',
             buttons: [{
@@ -115,7 +117,7 @@ export class FeedbackDetailsPage {
               text: 'Retry',
               handler: () => this.sendAnswer()
             }]
-          }));
+          }).present();
         });
       }
     );

@@ -1,4 +1,4 @@
-import {ActionSheet, Platform, NavController, Alert, Loading, Toast, Popover, Tabs} from "ionic-angular";
+import {Platform, Tabs, ActionSheetController, PopoverController, LoadingController, ToastController} from "ionic-angular";
 import {NgZone} from "@angular/core";
 import {CameraOptions} from "ionic-native/dist/plugins/camera";
 import {Camera} from "ionic-native/dist/index";
@@ -30,11 +30,14 @@ export class StartSurveyPage {
   saveAsDefault: boolean = true;
 
   constructor(private platform: Platform,
-              private nav: NavController,
               private ngZone: NgZone,
               private model: Model,
               private surveyService: SurveyService,
-              private tabs: Tabs) {
+              private tabs: Tabs,
+              private actionShetController: ActionSheetController,
+              private popoverController: PopoverController,
+              private loadingController: LoadingController,
+              private toastController: ToastController) {
     this.createEmptySurvey(model.user);
   }
 
@@ -61,31 +64,30 @@ export class StartSurveyPage {
   }
 
   choosePicture(isFirstPic: boolean) {
-    let actionSheet = ActionSheet.create({
+    this.actionShetController.create({
       title: 'Choose action',
       cssClass: 'action-sheets-basic-page',
       buttons: [{
-          text: 'Camera',
-          icon: this.platform.is('ios') ? null : 'camera',
-          handler: () => {
-            this.doTakePicture(isFirstPic, 1);
-          }
-        }, {
-          text: 'Gallery',
-          icon: this.platform.is('ios') ? null : 'image',
-          handler: () => {
-            this.doTakePicture(isFirstPic, 0);
-          }
-        }, {
-          text: 'Dummy for Test',
-          icon: this.platform.is('ios') ? null : 'bug',
-          handler: () => {
-            this.chooseDummyPicture(isFirstPic);
-          }
+        text: 'Camera',
+        icon: this.platform.is('ios') ? null : 'camera',
+        handler: () => {
+          this.doTakePicture(isFirstPic, 1);
+        }
+      }, {
+        text: 'Gallery',
+        icon: this.platform.is('ios') ? null : 'image',
+        handler: () => {
+          this.doTakePicture(isFirstPic, 0);
+        }
+      }, {
+        text: 'Dummy for Test',
+        icon: this.platform.is('ios') ? null : 'bug',
+        handler: () => {
+          this.chooseDummyPicture(isFirstPic);
+        }
       }
       ]
-    });
-    this.nav.present(actionSheet);
+    }).present();
   }
   
   chooseDummyPicture(isFirstPic: boolean) {
@@ -109,14 +111,14 @@ export class StartSurveyPage {
   }
 
   addCountry() {
-    let countrySelection = Popover.create(CountrySelection, {callback: country => {
+    let countrySelection = this.popoverController.create(CountrySelection, {callback: country => {
       if(this.countries.indexOf(country.alpha3) == -1) {
         this.countries.push(country.alpha3);
         this.countries.sort();
       }
       countrySelection.dismiss();
     }});
-    this.nav.present(countrySelection);
+    countrySelection.present();
   }
 
   removeCountry(country: string) {
@@ -140,31 +142,31 @@ export class StartSurveyPage {
       }
       this.survey.country += c;
     });
-    let loading = Loading.create({
+    let loading = this.loadingController.create({
       content: 'Starting ATP',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
     this.surveyService.postSurvey(this.survey, "NUMBER100", this.saveAsDefault).subscribe(resp => {
       console.log("ATP started");
       loading.dismiss().then(() => {
-        this.nav.present(Toast.create({
+        this.toastController.create({
           message: 'ATP started',
           duration: 5000,
           showCloseButton: true,
           closeButtonText: 'OK'
-        }));
+        }).present();
       });
       this.createEmptySurvey(this.model.user);
       this.tabs.select(Model.MainTab);
     }, err => {
       loading.dismiss().then(() => {
-        this.nav.present(Toast.create({
+        this.toastController.create({
           message: 'Sorry, an error occured',
           duration: 3000,
           showCloseButton: true,
           closeButtonText: 'OK'
-        }));
+        }).present();
       });
       console.log(err);
     });

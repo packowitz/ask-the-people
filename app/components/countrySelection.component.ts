@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {CountryService} from "../services/country.service";
 import {Country} from "./domain/country.component";
-import {NavParams, NavController, Alert} from "ionic-angular/index";
+import {NavParams, AlertController} from "ionic-angular/index";
 
 @Component({
   template: `
@@ -31,8 +31,8 @@ export class CountrySelection{
   callback;
 
   constructor(private countryService: CountryService,
-              private nav: NavController,
-              private navParams: NavParams) {
+              private navParams: NavParams,
+              private alertController: AlertController) {
     this.loadCountries();
     this.callback = navParams.get('callback');
   }
@@ -41,7 +41,7 @@ export class CountrySelection{
     this.countryService.getCountries().subscribe(data => {
       this.countries = data;
     }, err => {
-      this.nav.present(Alert.create({
+      this.alertController.create({
         title: 'Network Error',
         message: 'There was a network error!',
         buttons: [{
@@ -50,7 +50,7 @@ export class CountrySelection{
             this.loadCountries();
           }
         }]
-      }));
+      }).present();
     });
   }
 }

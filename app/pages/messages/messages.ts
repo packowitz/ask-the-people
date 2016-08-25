@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {Popover, NavController, Alert, Loading} from "ionic-angular/index";
+import {NavController, PopoverController, AlertController, LoadingController} from "ionic-angular/index";
 import {ChooseFeedbackType} from "./chooseFeedbackType";
 import {Feedback} from "../../components/domain/feedback.component";
 import {Model} from "../../components/model.component";
@@ -16,19 +16,22 @@ export class FeedbackPage {
 
   constructor(private nav: NavController,
               private model: Model,
-              private feedbackService: MessagesService) {
+              private feedbackService: MessagesService,
+              private popoverController: PopoverController,
+              private alertController: AlertController,
+              private loadingController: LoadingController) {
     this.selection = this.model.unreadAnnouncements > 0 ? 'announcements' : 'feedback';
     setTimeout(() => this.model.markAnnouncementAsRead(), 1000);
   }
 
   startGiveFeedback() {
-    let popover = Popover.create(ChooseFeedbackType, {
+    let popover = this.popoverController.create(ChooseFeedbackType, {
       callback: type => {
         this.newFeedback.type = type;
         popover.dismiss();
       }
     });
-    this.nav.present(popover);
+    popover.present();
   }
 
   getTimeDiff(date: string) {
@@ -40,11 +43,11 @@ export class FeedbackPage {
   }
 
   sendFeedback() {
-    let loading = Loading.create({
+    let loading = this.loadingController.create({
       content: 'Sending Feedback',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
     this.feedbackService.sendFeedback(this.newFeedback).subscribe(
       feedback => {
         this.newFeedback = new Feedback();
@@ -53,7 +56,7 @@ export class FeedbackPage {
       },
       error => {
         loading.dismiss().then(() => {
-          this.nav.present(Alert.create({
+          this.alertController.create({
             title: 'Network Error',
             message: 'There was a network error!',
             buttons: [{
@@ -62,7 +65,7 @@ export class FeedbackPage {
               text: 'Retry',
               handler: () => this.sendFeedback()
             }]
-          }));
+          }).present();
         });
       }
     );

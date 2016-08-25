@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {Splashscreen} from "ionic-native/dist/index";
-import {Storage, SqlStorage, Alert, NavController} from "ionic-angular/index";
+import {Storage, SqlStorage, Alert, NavController, AlertController} from "ionic-angular/index";
 import {Model} from "../../components/model.component";
 import {MessagesService} from "../../services/messages.service";
 import {CountryService} from "../../services/country.service";
@@ -25,7 +25,8 @@ export class LoadingPage {
               private surveyService: SurveyService,
               private countryService: CountryService,
               private feedbackService: MessagesService,
-              private model: Model) {
+              private model: Model,
+              private alertController: AlertController) {
     this.localStorage = new Storage(SqlStorage);
     this.loadDataFromServer();
   }
@@ -35,7 +36,7 @@ export class LoadingPage {
   }
 
   showNetworkError() {
-    this.nav.present(Alert.create({
+    this.alertController.create({
       title: 'Connection lost',
       message: 'The ATP-Servers are not reachable. Please check your internet connection.',
       buttons: [{
@@ -44,7 +45,7 @@ export class LoadingPage {
           this.loadDataFromServer();
         }
       }]
-    }));
+    }).present();
   }
 
   loadDataFromServer() {
@@ -94,7 +95,7 @@ export class LoadingPage {
       },
       error => {
         if(error.status == 401) {
-          let confirm = Alert.create({
+          this.alertController.create({
             title: 'Authentication Error',
             message: 'Your account does not exist! Go to the Login Page to login or create a new account.',
             buttons: [{
@@ -109,8 +110,7 @@ export class LoadingPage {
                 this.resolveUser(token);
               }
             }]
-          });
-          this.nav.present(confirm);
+          }).present();
         } else {
           this.showNetworkError();
         }

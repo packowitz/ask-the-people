@@ -1,4 +1,4 @@
-import {NavParams, Popover, NavController, ViewController} from "ionic-angular/index";
+import {NavParams, ViewController, PopoverController} from "ionic-angular/index";
 import {Survey} from "../../components/domain/survey.component";
 import {Component, PipeTransform, Pipe} from "@angular/core";
 import {Util} from "../../components/util.component";
@@ -91,16 +91,16 @@ export class SurveyDetailsPage {
   showSummary: boolean = true;
   showStatistics: boolean = false;
 
-  constructor(private nav: NavController,
-              private navParams: NavParams,
-              private surveyService: SurveyService) {
+  constructor(private navParams: NavParams,
+              private surveyService: SurveyService,
+              private popoverController: PopoverController) {
     this.survey = navParams.get('survey');
     this.countries = this.survey.country.split(",");
     surveyService.loadSurveyDetails(this.survey);
   }
 
   showOptions(event: Event) {
-    let popover = Popover.create(SurveyDetailsMenu, {
+    let popover = this.popoverController.create(SurveyDetailsMenu, {
       survey: this.survey,
       callbacks: {
         refresh: () => {this.surveyService.loadSurveyDetails(this.survey)},
@@ -109,7 +109,7 @@ export class SurveyDetailsPage {
       }
     });
 
-    this.nav.present(popover, {
+    popover.present({
       ev: event
     });
   }

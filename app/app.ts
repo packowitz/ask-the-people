@@ -29,8 +29,9 @@ class AtpApp {
 }
 
 ionicBootstrap(AtpApp, [AuthService, CountryService, MessagesService, HighscoreService, SurveyService, Model], {
-  tabbarHighlight: true,
-  tabbarPlacement: 'bottom',
+  tabsHighlight: true,
+  tabsPlacement: 'bottom',
+  tabsHideOnSubPages: true,
   platforms: {
     ios: {
       statusbarPadding: true

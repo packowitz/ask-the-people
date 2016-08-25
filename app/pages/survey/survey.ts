@@ -1,4 +1,4 @@
-import {Loading, NavController, Toast, Alert, Tabs} from "ionic-angular";
+import {Loading, Tabs, LoadingController, ToastController, AlertController} from "ionic-angular";
 import {SurveyService} from "../../services/survey.service";
 import {Survey} from "../../components/domain/survey.component";
 import {Messages} from "../../components/messages.component";
@@ -15,16 +15,20 @@ export class SurveyPage {
   showTitle: boolean = false;
   loading: Loading;
 
-  constructor(private nav: NavController, private surveyService: SurveyService, private tabs: Tabs) {
+  constructor(private surveyService: SurveyService,
+              private tabs: Tabs,
+              private loadingController: LoadingController,
+              private toastController: ToastController,
+              private alertController: AlertController) {
     this.loadNextSurvey();
   }
 
   loadNextSurvey() {
-    this.loading = Loading.create({
+    this.loading = this.loadingController.create({
       content: 'Loading survey',
       spinner: 'dots'
     });
-    this.nav.present(this.loading);
+    this.loading.present();
     this.surveyService.getSurveyToAnswer().subscribe(data => {
       this.showSurvey(data);
     }, err => this.handleError(err));
@@ -41,12 +45,12 @@ export class SurveyPage {
 
   handleError(err) {
     this.loading.dismiss().then(() => {
-      this.nav.present(Toast.create({
+      this.toastController.create({
         message: 'Sorry, an error occured',
         duration: 3000,
         showCloseButton: true,
         closeButtonText: 'OK'
-      }));
+      }).present();
     });
     console.log(err);
     this.goHome();
@@ -68,7 +72,7 @@ export class SurveyPage {
   }
 
   reportAbuse() {
-    this.nav.present(Alert.create({
+    this.alertController.create({
       title: 'Report Abuse',
       message: "Abuse means that you think that these pictures show <strong>illegal</strong> or <strong>illegitimate</strong> content.<br/>If you just don't have a meaning on these picture then please press 'skip'.",
       buttons: [
@@ -77,7 +81,7 @@ export class SurveyPage {
           this.selectPicture(3);
         }}
       ]
-    }));
+    }).present();
   }
   
   selectPicture(picNr: number) {
@@ -89,11 +93,11 @@ export class SurveyPage {
       } else {
         message = Messages.getAnsweredMsg();
       }
-      this.loading = Loading.create({
+      this.loading = this.loadingController.create({
         content: message,
         spinner: 'dots'
       });
-      this.nav.present(this.loading);
+      this.loading.present();
       this.surveyService.postResult(this.survey, picNr).subscribe(data => {
         let timeDiff: number = new Date().getTime() - timestamp;
         if(timeDiff > 1500) {
@@ -103,10 +107,10 @@ export class SurveyPage {
         }
       }, err => this.handleError(err));
     } else {
-      this.nav.present(Toast.create({
+      this.toastController.create({
         message: Messages.getTooFastMsg(),
         duration: 1000
-      }));
+      }).present();
     }
   }
 }

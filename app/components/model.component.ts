@@ -1,5 +1,5 @@
 import {User} from "./domain/user.component.ts";
-import {Platform, Loading, NavController,Storage, LocalStorage} from "ionic-angular";
+import {Platform, Loading, NavController, Storage, LocalStorage, LoadingController} from "ionic-angular";
 import {Injectable} from "@angular/core";
 import {Feedback} from "./domain/feedback.component";
 import {Survey} from "./domain/survey.component";
@@ -24,7 +24,7 @@ export class Model {
   public unreadAnnouncements: number = 0;
   readAnnouncements: string;
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform, private loadingController: LoadingController) {
     if(platform.is("cordova") || platform.is("android") || platform.is("ios")) {
       Model.server = "https://atp-pacworx.rhcloud.com";
     }
@@ -57,11 +57,11 @@ export class Model {
     if(this.loading) {
       this.loading.dismiss();
     }
-    this.loading = Loading.create({
+    this.loading = this.loadingController.create({
       content: text,
       spinner: 'dots'
     });
-    nav.present(this.loading);
+    this.loading.present();
   }
 
   public dismissLoading() {
