@@ -6,9 +6,14 @@
 
 <ion-content class="login-page">
     <ion-list>
+        <!--<ion-item>-->
+            <!--<ion-label>Year of birth:</ion-label>-->
+            <!--<ion-label floating>(yyyy)</ion-label>-->
+            <!--<ion-input type="number" min="1900" max="2050" [(ngModel)]="user.yearOfBirth" style="text-align: right;"></ion-input>-->
+        <!--</ion-item>-->
         <ion-item>
-            <ion-label floating>year of birth (yyyy)</ion-label>
-            <ion-input type="number" min="1900" max="2050" [(ngModel)]="user.yearOfBirth"></ion-input>
+            <ion-label>Year of birth:</ion-label>
+            <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="1900" max="2016" [(ngModel)]="user.yearOfBirth"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label>Gender:</ion-label>
