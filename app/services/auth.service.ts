@@ -8,13 +8,13 @@ import {Model} from "../components/model.component";
 export class AuthService {
   constructor(public http:Http, private model: Model) {}
 
-  register(user: User): Observable {
+  register(user: User) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(Model.server + "/auth/register", JSON.stringify(user), {headers: headers}).map(res => res.json());
   }
 
-  login(username: string, password: string): Observable {
+  login(username: string, password: string) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(Model.server + "/auth/login", JSON.stringify({username: username, password: password}), {headers: headers}).map(res => res.json());

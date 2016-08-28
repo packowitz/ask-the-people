@@ -16,17 +16,12 @@ import {Model} from "../../components/model.component";
 </ion-tabs>`
 })
 export class TabsPage {
-  feedbackPage: FeedbackPage;
-  purchasePage: PurchasePage;
-  mainPage: MainPage;
-  mySurveysPage: MySurveysPage;
-  startSurveyPage: StartSurveyPage;
+  feedbackPage: any = FeedbackPage;
+  purchasePage: any = PurchasePage;
+  mainPage: any = MainPage;
+  mySurveysPage: any = MySurveysPage;
+  startSurveyPage: any = StartSurveyPage;
   
   constructor(private model: Model) {
-    this.feedbackPage = FeedbackPage;
-    this.purchasePage = PurchasePage;
-    this.mainPage = MainPage;
-    this.mySurveysPage = MySurveysPage;
-    this.startSurveyPage = StartSurveyPage;
   }
 }
