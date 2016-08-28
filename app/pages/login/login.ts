@@ -32,6 +32,9 @@ export class LoginPage {
     });
     this.username = this.loginForm.controls['username'];
     this.password = this.loginForm.controls['password'];
+
+    // Save default year
+    this.saveYear();
   }
 
   // Helper method for translating date string into the integer we need
