@@ -15,6 +15,7 @@ export class LoginPage {
   loginForm: ControlGroup;
   username: AbstractControl;
   password: AbstractControl;
+  year: string = '2016';
   showLoginForm: boolean = false;
 
   constructor(private nav: NavController,
@@ -33,6 +34,13 @@ export class LoginPage {
     this.password = this.loginForm.controls['password'];
   }
 
+  // Helper method for translating date string into the integer we need
+  saveYear() {
+    this.user.yearOfBirth = +this.year;
+
+    console.log(this.user.yearOfBirth);
+  }
+
   chooseCountry() {
     let countrySelection = this.popoverController.create(CountrySelection, {callback: country => {
       this.user.country = country.alpha3;
@@ -46,10 +54,8 @@ export class LoginPage {
     if(!this.user.yearOfBirth || this.user.yearOfBirth < 1900 || this.user.yearOfBirth > 2050) {
       return true;
     }
-    if(!this.user.country) {
-      return true;
-    }
-    return false;
+
+    return !this.user.country;
   }
 
   register() {

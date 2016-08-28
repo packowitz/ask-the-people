@@ -8,7 +8,7 @@
     <ion-list>
         <ion-item>
             <ion-label>Year of birth:</ion-label>
-            <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="1900" max="2016" [(ngModel)]="user.yearOfBirth"></ion-datetime>
+            <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="1900" max="2016" [(ngModel)]="year" (ionChange)="saveYear()"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label>Gender:</ion-label>
