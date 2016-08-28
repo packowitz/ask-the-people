@@ -10,5 +10,4 @@ import {NotificationSettings} from "./notifications.component";
 })
 export class SettingsPage {
   constructor(private model: Model) {}
-
 }

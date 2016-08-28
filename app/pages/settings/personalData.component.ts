@@ -20,7 +20,7 @@ import {CountrySelection} from "../../components/countrySelection.component";
 })
 export class PersonalData {
   expanded: boolean = false;
-  yearOfBirth: number;
+  yearOfBirth: string;
   male: boolean;
   country: string;
   countryName: string;
@@ -30,7 +30,7 @@ export class PersonalData {
               private authService: AuthService,
               private toastController: ToastController,
               private popoverController: PopoverController) {
-    this.yearOfBirth = model.user.yearOfBirth;
+    this.yearOfBirth = String(model.user.yearOfBirth);
     this.male = model.user.male;
     this.country = model.user.country;
     countryService.getCountries().subscribe(countries => {
@@ -43,7 +43,7 @@ export class PersonalData {
   }
   
   dataUnchanged(): boolean {
-    return this.model.user.yearOfBirth == this.yearOfBirth &&
+    return String(this.model.user.yearOfBirth) == this.yearOfBirth &&
       this.model.user.male == this.male &&
       this.model.user.country == this.country;
   }
@@ -58,7 +58,7 @@ export class PersonalData {
   }
 
   doSubmit() {
-    this.authService.postPersonalData(this.yearOfBirth, this.male, this.country).subscribe(() => {
+    this.authService.postPersonalData(Number(this.yearOfBirth), this.male, this.country).subscribe(() => {
       this.toastController.create({
         message: 'Personal data updated',
         duration: 2000

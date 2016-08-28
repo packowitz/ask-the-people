@@ -38,7 +38,7 @@ export class LoginPage {
 
   // Helper method for translating date string into the integer we need
   saveYear() {
-    this.user.yearOfBirth = +this.year;
+    this.user.yearOfBirth = Number(this.year);
   }
 
   chooseCountry() {
@@ -55,9 +55,7 @@ export class LoginPage {
             || this.user.yearOfBirth < 1900
             || this.user.yearOfBirth > 2050
             || isUndefined(this.user.country)
-            || isUndefined(this.user.male))
-      ? true
-      : false;
+            || isUndefined(this.user.male)) ? true : false;
   }
 
   register() {
