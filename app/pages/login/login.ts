@@ -37,8 +37,6 @@ export class LoginPage {
   // Helper method for translating date string into the integer we need
   saveYear() {
     this.user.yearOfBirth = +this.year;
-
-    console.log(this.user.yearOfBirth);
   }
 
   chooseCountry() {
