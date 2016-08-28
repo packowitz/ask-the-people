@@ -31,7 +31,6 @@ export class LoginPage {
     });
     this.username = this.loginForm.controls['username'];
     this.password = this.loginForm.controls['password'];
-    this.user.yearOfBirth = 2016;
   }
 
   chooseCountry() {

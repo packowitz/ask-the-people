@@ -6,11 +6,6 @@
 
 <ion-content class="login-page">
     <ion-list>
-        <!--<ion-item>-->
-            <!--<ion-label>Year of birth:</ion-label>-->
-            <!--<ion-label floating>(yyyy)</ion-label>-->
-            <!--<ion-input type="number" min="1900" max="2050" [(ngModel)]="user.yearOfBirth" style="text-align: right;"></ion-input>-->
-        <!--</ion-item>-->
         <ion-item>
             <ion-label>Year of birth:</ion-label>
             <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="1900" max="2016" [(ngModel)]="user.yearOfBirth"></ion-datetime>
@@ -25,10 +20,10 @@
                     Female
                 </ion-segment-button>
             </ion-segment>
-            <!--<ion-toggle [(ngModel)]="user.male"></ion-toggle>-->
         </ion-item>
         <ion-item (click)="chooseCountry()">
-            <ion-label>Country: <span *ngIf="user.country" class="country"><img src="img/flags/{{user.country}}.png" class="flag"> {{countryName}}</span></ion-label>
+            <ion-label>Country: <span *ngIf="user.country" class="country"><img src="img/flags/{{user.country}}.png" class="flag"> {{countryName}}</span>
+                <span *ngIf="!user.country" class="country">Please select country</span></ion-label>
         </ion-item>
         <ion-item><button full [disabled]="registerFormInvalid()" (click)="register()">Register</button></ion-item>
         <ion-list-header class="login" (click)="showLoginForm = !showLoginForm">
