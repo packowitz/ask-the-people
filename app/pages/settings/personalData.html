@@ -3,23 +3,25 @@
         <ion-icon name="arrow-dropdown" *ngIf="expanded"></ion-icon>
         <ion-icon name="arrow-dropright" *ngIf="!expanded"></ion-icon>
         Personal Data</ion-list-header>
-    <ion-item *ngIf="expanded">
-        <ion-label>Year of birth:</ion-label>
-        <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="1900" max="2016" [(ngModel)]="yearOfBirth"></ion-datetime>
-    </ion-item>
-    <ion-item *ngIf="expanded">
-        <ion-label>Gender:</ion-label>
-        <ion-segment [(ngModel)]="male" item-right>
-            <ion-segment-button value="true">
-                Male
-            </ion-segment-button>
-            <ion-segment-button value="false">
-                Female
-            </ion-segment-button>
-        </ion-segment>
-    </ion-item>
-    <ion-item *ngIf="expanded" (click)="chooseCountry()">
-        <ion-label>Country: <span class="country"><img src="img/flags/{{country}}.png" class="flag"> {{countryName}}</span></ion-label>
-    </ion-item>
-    <ion-item *ngIf="expanded"><button full [disabled]="dataUnchanged()" (click)="doSubmit()">Save</button></ion-item>
+    <div [ngClass]="expanded ? 'item-expand active' : 'item-expand inactive'">
+        <ion-item>
+            <ion-label>Year of birth:</ion-label>
+            <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="1900" max="2016" [(ngModel)]="yearOfBirth"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Gender:</ion-label>
+            <ion-segment [(ngModel)]="male" item-right>
+                <ion-segment-button value="true">
+                    Male
+                </ion-segment-button>
+                <ion-segment-button value="false">
+                    Female
+                </ion-segment-button>
+            </ion-segment>
+        </ion-item>
+        <ion-item (click)="chooseCountry()">
+            <ion-label>Country: <span class="country"><img src="img/flags/{{country}}.png" class="flag"> {{countryName}}</span></ion-label>
+        </ion-item>
+        <ion-item><button full [disabled]="dataUnchanged()" (click)="doSubmit()">Save</button></ion-item>
+    </div>
 </ion-list>
