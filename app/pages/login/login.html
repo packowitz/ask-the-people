@@ -11,8 +11,16 @@
             <ion-input type="number" min="1900" max="2050" [(ngModel)]="user.yearOfBirth"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Gender: <span *ngIf="user.male">Male</span><span *ngIf="!user.male">Female</span></ion-label>
-            <ion-toggle [(ngModel)]="user.male"></ion-toggle>
+            <ion-label>Gender:</ion-label>
+            <ion-segment [(ngModel)]="user.male" item-right>
+                <ion-segment-button value="true">
+                    Male
+                </ion-segment-button>
+                <ion-segment-button value="false">
+                    Female
+                </ion-segment-button>
+            </ion-segment>
+            <!--<ion-toggle [(ngModel)]="user.male"></ion-toggle>-->
         </ion-item>
         <ion-item (click)="chooseCountry()">
             <ion-label>Country: <span *ngIf="user.country" class="country"><img src="img/flags/{{user.country}}.png" class="flag"> {{countryName}}</span></ion-label>
