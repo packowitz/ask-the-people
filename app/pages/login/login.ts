@@ -5,6 +5,7 @@ import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/c
 import {Component} from "@angular/core";
 import {CountrySelection} from "../../components/countrySelection.component";
 import {LoadingPage} from "../loading/loading";
+import {isUndefined} from "ionic-angular/util/util";
 
 @Component({
   templateUrl: 'build/pages/login/login.html'
@@ -24,8 +25,6 @@ export class LoginPage {
               private popoverController: PopoverController,
               private loadingController: LoadingController,
               private toastController: ToastController) {
-    this.user.male = false;
-
     this.loginForm = formBuilder.group({
       'username': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(8)])]
@@ -52,11 +51,13 @@ export class LoginPage {
   }
 
   registerFormInvalid(): boolean {
-    if(!this.user.yearOfBirth || this.user.yearOfBirth < 1900 || this.user.yearOfBirth > 2050) {
-      return true;
-    }
-
-    return !this.user.country;
+    return (!this.user.yearOfBirth
+            || this.user.yearOfBirth < 1900
+            || this.user.yearOfBirth > 2050
+            || isUndefined(this.user.country)
+            || isUndefined(this.user.male))
+      ? true
+      : false;
   }
 
   register() {
@@ -86,7 +87,7 @@ export class LoginPage {
       });
     });
   }
-  
+
   login() {
     let loading = this.loadingController.create({
       content: 'Logging in',
