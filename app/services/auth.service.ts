@@ -4,17 +4,28 @@ import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 import {Model} from "../components/model.component";
 
+export class TokenResponse {
+  token: string;
+  user: User;
+}
+
 @Injectable()
 export class AuthService {
   constructor(public http:Http, private model: Model) {}
 
-  register(user: User) {
+  register(user: User): Observable<TokenResponse> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(Model.server + "/auth/register", JSON.stringify(user), {headers: headers}).map(res => res.json());
   }
 
-  login(username: string, password: string) {
+  registerNewUser(): Observable<TokenResponse> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(Model.server + "/auth/register", null, {headers: headers}).map(res => res.json());
+  }
+
+  login(username: string, password: string): Observable<TokenResponse> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(Model.server + "/auth/login", JSON.stringify({username: username, password: password}), {headers: headers}).map(res => res.json());

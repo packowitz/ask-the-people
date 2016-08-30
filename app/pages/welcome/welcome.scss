@@ -1,0 +1,10 @@
+.welcome-page {
+  background-color: $atp-blue;
+  background-image: inherit;
+
+  scroll-content {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+}

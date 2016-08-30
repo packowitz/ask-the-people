@@ -26,7 +26,7 @@
                 <span *ngIf="!user.country" class="country-placeholder">Please select...</span></ion-label>
         </ion-item>
         <div class="login-button">
-            <button [disabled]="registerFormInvalid()" (click)="register()">Register</button>
+            <button (click)="register()">Register</button>
         </div>
         <ion-list-header class="login" (click)="showLoginForm = !showLoginForm">
             <ion-icon name="arrow-dropdown" *ngIf="showLoginForm"></ion-icon>

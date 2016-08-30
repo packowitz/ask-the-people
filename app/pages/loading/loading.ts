@@ -7,7 +7,7 @@ import {CountryService} from "../../services/country.service";
 import {SurveyService} from "../../services/survey.service";
 import {AuthService} from "../../services/auth.service";
 import {TabsPage} from "../tabs/tabsPage";
-import {LoginPage} from "../login/login";
+import {WelcomePage} from "../welcome/welcome";
 
 @Component({
   templateUrl: 'build/pages/loading/loading.html'
@@ -75,13 +75,18 @@ export class LoadingPage {
   }
 
   loadUser() {
-    this.localStorage.get('token').then(token => {
-      if(token) {
-        this.resolveUser(token);
-      } else {
-        this.nav.setRoot(LoginPage);
-      }
-    });
+    if(this.model.user && this.model.token) {
+      this.loadedUser = true;
+      this.loadDataFromServer();
+    } else {
+      this.localStorage.get('token').then(token => {
+        if(token) {
+          this.resolveUser(token);
+        } else {
+          this.nav.setRoot(WelcomePage);
+        }
+      });
+    }
   }
 
   private resolveUser(token: string) {
@@ -102,7 +107,7 @@ export class LoadingPage {
               text: 'Login Page',
               handler: () => {
                 this.localStorage.remove('token');
-                this.nav.setRoot(LoginPage);
+                this.nav.setRoot(WelcomePage);
               }
             }, {
               text: 'Retry',
