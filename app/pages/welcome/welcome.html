@@ -1,19 +1,55 @@
 <ion-content class="welcome-page">
-    <ion-card>
+    <div class="logo">
+        <img src="img/icon-invert.png">
+        <div>ATP beta</div>
+    </div>
+    <ion-card *ngIf="!showLogin">
         <ion-card-header text-center>
-            <h1>Welcome to ATP</h1>
+            <h1 class="color-grey">Welcome to ATP</h1>
         </ion-card-header>
-        <ion-card-content>
+        <ion-card-content class="color-grey">
             Ask The People (ATP) is a community driven decision helper.
-            By uploading two pictures you ask the people to vote on which they like more.
+            By uploading two pictures you ask the people to vote on which they like more.<br/>
+            Be part of the community and help other people on their decision.
         </ion-card-content>
-        <ion-row no-padding>
-            <ion-col>
-                <button clear small (click)="gotoLogin()">LOGIN</button>
-            </ion-col>
-            <ion-col text-right>
-                <button clear small (click)="register()">I am new to  ATP</button>
-            </ion-col>
-        </ion-row>
+        <ion-card-content>
+            <ion-row>
+                <ion-col>
+                    <button clear small (click)="toggleShowLogin()">LOGIN</button>
+                </ion-col>
+                <ion-col text-right>
+                    <button clear small (click)="register()">I am new to  ATP</button>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
     </ion-card>
+
+    <ion-card *ngIf="showLogin">
+        <ion-card-header text-center>
+            <h1 class="color-grey">Login with your ATP account</h1>
+        </ion-card-header>
+        <ion-card-content class="color-grey">
+            <ion-list>
+                <ion-item>
+                    <ion-label floating>Username</ion-label>
+                    <ion-input type="text" [(ngModel)]="username"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Password</ion-label>
+                    <ion-input type="password" [(ngModel)]="password"></ion-input>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+        <ion-card-content>
+            <ion-row>
+                <ion-col>
+                    <button clear small (click)="toggleShowLogin()">Cancel</button>
+                </ion-col>
+                <ion-col text-right>
+                    <button small [disabled]="!username || !password" (click)="login()">Login</button>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+    <div class="footer">&copy; 2016 Pacworx</div>
 </ion-content>

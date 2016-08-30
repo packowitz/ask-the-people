@@ -2,6 +2,29 @@
   background-color: $atp-blue;
   background-image: inherit;
 
+  .logo {
+    position: fixed;
+    top: 10vw;
+    color: $atp-light-blue;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 500;
+
+    img {
+      width: 20vw;
+    }
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 7vh;
+    color: $atp-light-blue;
+  }
+
+  ion-card {
+    border-radius: 2em;
+  }
+
   scroll-content {
     display: flex !important;
     justify-content: center;
