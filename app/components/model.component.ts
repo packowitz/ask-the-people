@@ -49,7 +49,13 @@ export class Model {
     if(!this.readAnnouncements) {
       this.readAnnouncements = '|';
     }
-    this.announcements.forEach(announcement => this.readAnnouncements += announcement.id + '|');
+    this.announcements.forEach(
+      announcement => {
+        if(this.readAnnouncements.indexOf('|' + announcement.id + '|') == -1) {
+          this.readAnnouncements += announcement.id + '|'
+        }
+      }
+    );
     this.localStorage.set('readAnnouncements', this.readAnnouncements).then(() => this.recalcUnreadMessages());
   }
 
