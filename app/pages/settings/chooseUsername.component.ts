@@ -13,7 +13,7 @@ export class ChooseUsername {
   newUsername: AbstractControl;
   newPassword: AbstractControl;
   newPasswordRepeat: AbstractControl;
-  newUsernameExpanded: boolean = true;
+  newUsernameExpanded: boolean;
 
   constructor(private model: Model,
               private authService: AuthService,
@@ -28,6 +28,12 @@ export class ChooseUsername {
     this.newUsername = this.newUsernameForm.controls['newUsername'];
     this.newPassword = this.newUsernameForm.controls['newPassword'];
     this.newPasswordRepeat = this.newUsernameForm.controls['newPasswordRepeat'];
+
+    if(!this.model.isUserDataCompleteToAnswerATP() || this.model.user.username) {
+      this.newUsernameExpanded = false;
+    } else {
+      this.newUsernameExpanded = true;
+    }
   }
 
   matchingPasswords(passwordKey: string, confirmPasswordKey: string) {

@@ -64,7 +64,17 @@ export class MainPage {
   }
 
   openSurveyPage() {
-    this.nav.push(SurveyPage);
+    if(this.model.isUserDataCompleteToAnswerATP()) {
+      this.nav.push(SurveyPage);
+    } else {
+      this.alertController.create({
+        title: 'Tell us something about you',
+        message: 'To find questions to fit to the right person we need to know something about you. Please go to the settings and fill out the personal data section.',
+        buttons: [
+          {text: 'Settings', handler: () => {this.openSettingsPage();}}
+        ]
+      }).present();
+    }
   }
 
   openStartSurveyPage() {

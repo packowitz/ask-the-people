@@ -43,7 +43,7 @@ export class StartSurveyPage {
 
   createEmptySurvey(user: User) {
     this.survey = new Survey();
-    this.countries = user.surveyCountry ? user.surveyCountry.split(",") : [user.country];
+    this.countries = user.surveyCountry ? user.surveyCountry.split(",") : user.country ? [user.country] : [];
     this.survey.male = user.surveyMale !== false;
     this.survey.female = user.surveyFemale !== false;
     this.ageRange.lower = user.surveyMinAge ? user.surveyMinAge : 1;

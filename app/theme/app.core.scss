@@ -82,10 +82,48 @@ ion-content {
   font-weight: 600;
 }
 
+.text-placeholder {
+  color: $atp-placeholder-grey !important;
+}
+
+.ion-date-placeholder {
+  @extend .text-placeholder;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
 .no-border {
   border: 0;
 }
 
 .float-right {
   float: right;
+}
+
+.buttongroup {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  button:first-child {
+    border-bottom-left-radius: 0.5em;
+    border-top-left-radius: 0.5em;
+    margin-left: 0;
+  }
+
+  button:last-child {
+    border-bottom-right-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    margin-right: 0;
+  }
+
+  button {
+    position: relative;
+    float: left;
+    box-shadow: none;
+    margin: 0 -1px;
+    border-radius: 0px;
+  }
 }

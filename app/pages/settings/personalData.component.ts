@@ -9,9 +9,6 @@ import {CountrySelection} from "../../components/countrySelection.component";
   selector: 'personal-data',
   templateUrl: 'build/pages/settings/personalData.html',
   styles: [`
-    .country {
-        float: right;
-    }
     .flag {
         height: 1.2em;
         border: 1px black solid;
@@ -19,8 +16,9 @@ import {CountrySelection} from "../../components/countrySelection.component";
     }`]
 })
 export class PersonalData {
-  expanded: boolean = false;
-  yearOfBirth: string;
+  expanded: boolean;
+  yearOfBirth: number;
+  yearString: string;
   male: boolean;
   country: string;
   countryName: string;
@@ -30,7 +28,11 @@ export class PersonalData {
               private authService: AuthService,
               private toastController: ToastController,
               private popoverController: PopoverController) {
-    this.yearOfBirth = String(model.user.yearOfBirth);
+    this.expanded = !this.model.isUserDataCompleteToAnswerATP();
+    this.yearOfBirth = model.user.yearOfBirth;
+    if(this.yearOfBirth) {
+      this.yearString = String(this.yearOfBirth);
+    }
     this.male = model.user.male;
     this.country = model.user.country;
     countryService.getCountries().subscribe(countries => {
@@ -41,9 +43,13 @@ export class PersonalData {
       });
     });
   }
+
+  yearChanged() {
+    this.yearOfBirth = Number(this.yearString);
+  }
   
   dataUnchanged(): boolean {
-    return String(this.model.user.yearOfBirth) == this.yearOfBirth &&
+    return this.model.user.yearOfBirth == this.yearOfBirth &&
       this.model.user.male == this.male &&
       this.model.user.country == this.country;
   }
@@ -58,7 +64,7 @@ export class PersonalData {
   }
 
   doSubmit() {
-    this.authService.postPersonalData(Number(this.yearOfBirth), this.male, this.country).subscribe(() => {
+    this.authService.postPersonalData(this.yearOfBirth, this.male, this.country).subscribe(() => {
       this.toastController.create({
         message: 'Personal data updated',
         duration: 2000
