@@ -43,7 +43,7 @@ export class StartSurveyPage {
 
   createEmptySurvey(user: User) {
     this.survey = new Survey();
-    this.countries = user.surveyCountry ? user.surveyCountry.split(",") : user.country ? [user.country] : [];
+    this.countries = user.surveyCountry && user.surveyCountry != 'ALL' ? user.surveyCountry.split(",") : user.country ? [user.country] : [];
     this.survey.male = user.surveyMale !== false;
     this.survey.female = user.surveyFemale !== false;
     this.ageRange.lower = user.surveyMinAge ? user.surveyMinAge : 1;
@@ -129,19 +129,23 @@ export class StartSurveyPage {
   }
 
   surveyComplete(): boolean {
-    return this.survey.pic1 && this.survey.pic2 && this.countries.length > 0;
+    return this.survey.pic1 != null && this.survey.pic2 != null;
   }
 
   private startSurvey() {
     this.survey.minAge = this.ageRange.lower;
     this.survey.maxAge = this.ageRange.upper;
     this.survey.country = "";
-    this.countries.forEach(c => {
-      if(this.survey.country != "") {
-        this.survey.country += ",";
-      }
-      this.survey.country += c;
-    });
+    if(this.countries.length > 0) {
+      this.countries.forEach(c => {
+        if(this.survey.country != "") {
+          this.survey.country += ",";
+        }
+        this.survey.country += c;
+      });
+    } else {
+      this.survey.country = "ALL";
+    }
     let loading = this.loadingController.create({
       content: 'Starting ATP',
       spinner: 'dots'
@@ -149,6 +153,10 @@ export class StartSurveyPage {
     loading.present();
     this.surveyService.postSurvey(this.survey, "NUMBER100", this.saveAsDefault).subscribe(resp => {
       console.log("ATP started");
+      this.model.last3surveys.unshift(resp);
+      if(this.model.last3surveys.length > 3) {
+        this.model.last3surveys.pop();
+      }
       loading.dismiss().then(() => {
         this.toastController.create({
           message: 'ATP started',

@@ -28,6 +28,7 @@
         <ion-item>
             Countries: <ion-icon name="add-circle" *ngIf="countries.length < 20" (click)="addCountry()"></ion-icon>
             <div class="countries">
+                <span class="text-placeholder" *ngIf="countries.length == 0">no restriction</span>
                 <span class="country" *ngFor="let country of countries" (click)="removeCountry(country)"><img src="img/flags/{{country}}.png" class="flag"></span>
             </div>
         </ion-item>
