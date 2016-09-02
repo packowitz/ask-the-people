@@ -11,12 +11,14 @@ export class WelcomePage {
   showLogin: boolean = false;
   username: string;
   password: string;
+  deviceHeight: number = 100;
 
   constructor(private nav: NavController,
               private model: Model,
               private authService: AuthService,
               private loadingController: LoadingController,
               private toastController: ToastController) {
+    this.deviceHeight = window.innerHeight;
   }
 
   toggleShowLogin() {

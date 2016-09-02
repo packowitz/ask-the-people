@@ -1,7 +1,7 @@
-<ion-content class="welcome-page">
+<ion-content class="welcome-page" [style.height]="deviceHeight + 'px'">
     <div class="logo">
         <img src="img/icon-invert.png">
-        <div>ATP beta</div>
+        <div>ATP&nbsp;beta</div>
     </div>
     <ion-card *ngIf="!showLogin">
         <ion-card-header text-center>
