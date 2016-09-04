@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {Model} from "../../components/model.component";
 import {CountryService} from "../../services/country.service";
-import {ToastController, PopoverController} from "ionic-angular/index";
+import {PopoverController} from "ionic-angular/index";
 import {AuthService} from "../../services/auth.service";
 import {CountrySelection} from "../../components/countrySelection.component";
 
@@ -26,7 +26,6 @@ export class PersonalData {
   constructor(private model: Model,
               private countryService: CountryService,
               private authService: AuthService,
-              private toastController: ToastController,
               private popoverController: PopoverController) {
     this.expanded = !this.model.isUserDataCompleteToAnswerATP();
     this.yearOfBirth = model.user.yearOfBirth;
@@ -64,11 +63,6 @@ export class PersonalData {
   }
 
   doSubmit() {
-    this.authService.postPersonalData(this.yearOfBirth, this.male, this.country).subscribe(() => {
-      this.toastController.create({
-        message: 'Personal data updated',
-        duration: 2000
-      }).present();
-    }, err => console.log(err))
+    this.authService.postPersonalData(this.yearOfBirth, this.male, this.country).subscribe(data => this.model.user = data);
   }
 }

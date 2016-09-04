@@ -1,32 +1,21 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers} from "@angular/http";
-import {Model} from "../components/model.component";
 import {Survey} from "../components/domain/survey.component";
 import {Observable} from "rxjs/Observable";
+import {Messages} from "../components/messages.component";
+import {AtpHttp} from "./atpHttp.service";
 
 @Injectable()
 export class SurveyService {
   
-  constructor(private http: Http, private model: Model) {}
-
-  extractUser(res) {
-    let response = res.json();
-    this.model.user = response.user;
-    return response.data;
-  }
+  constructor(private atpHttp: AtpHttp) {}
 
   postSurvey(survey: Survey, type: string, saveAsDefault: boolean): Observable<Survey> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    headers.append('Content-Type', 'application/json');
     let request = {survey: survey, type: type, saveAsDefault: saveAsDefault};
-    return this.http.post(Model.server + "/app/survey/private", JSON.stringify(request), {headers: headers}).map(res => this.extractUser(res));
+    return this.atpHttp.doPost("/app/survey/private", request, "Starting ATP");
   }
 
   getSurveyToAnswer(): Observable<Survey> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/survey/answerable", {headers: headers}).map(res => this.extractUser(res));
+    return this.atpHttp.doGet("/app/survey/answerable", "Loading ATP");
   }
 
   postResult(survey: Survey, result: number): Observable<Survey> {
@@ -34,34 +23,24 @@ export class SurveyService {
       surveyId: survey.id,
       answer: result
     };
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/app/survey/result", JSON.stringify(resultObj), {headers: headers}).map(res => this.extractUser(res));
+    let loadingMessage: string = result == 3 ? "reporting abuse" : Messages.getAnsweredMsg();
+    return this.atpHttp.doPost("/app/survey/result", resultObj, loadingMessage);
   }
   
   getLast3Surveys(): Observable<Survey[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/survey/list3", {headers: headers}).map(res => this.extractUser(res));
+    return this.atpHttp.doGet("/app/survey/list3");
   }
 
   getCurrentSurveyList(): Observable<Survey[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/survey/list/current", {headers: headers}).map(res => this.extractUser(res));
+    return this.atpHttp.doGet("/app/survey/list/current");
   }
 
   getArchivedSurveyList(): Observable<Survey[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/survey/list/archived", {headers: headers}).map(res => this.extractUser(res));
+    return this.atpHttp.doGet("/app/survey/list/archived");
   }
 
   updateSurvey(survey: Survey) {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    this.http.get(Model.server + "/app/survey/update/" + survey.id, {headers: headers}).map(res => this.extractUser(res)).subscribe(data => {
+    this.atpHttp.doGet("/app/survey/update/" + survey.id).subscribe(data => {
       survey.status = data.status;
       survey.answered = data.answered;
       survey.noOpinionCount = data.noOpinionCount;
@@ -71,9 +50,7 @@ export class SurveyService {
   }
   
   loadSurveyDetails(survey: Survey) {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    this.http.get(Model.server + "/app/survey/details/" + survey.id, {headers: headers}).map(res => this.extractUser(res)).subscribe(data => {
+    this.atpHttp.doGet("/app/survey/details/" + survey.id).subscribe(data => {
       survey.status = data.status;
       survey.answered = data.answered;
       survey.noOpinionCount = data.noOpinionCount;

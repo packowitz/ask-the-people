@@ -1,10 +1,9 @@
-import {Model} from "../components/model.component";
-import {Http, Headers} from "@angular/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Rx";
 import {Feedback} from "../components/domain/feedback.component";
 import {FeedbackAnswer} from "../components/domain/feedbackAnswer.component";
 import {Announcement} from "../components/domain/announcement.component";
+import {AtpHttp} from "./atpHttp.service";
 
 export class FeedbackAnswerResponse {
   feedback: Feedback;
@@ -14,43 +13,29 @@ export class FeedbackAnswerResponse {
 @Injectable()
 export class MessagesService {
 
-  constructor(private http:Http, private model:Model) {}
+  constructor(private atpHttp: AtpHttp) {}
 
   loadFeedback(): Observable<Feedback[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/feedback/list", {headers: headers}).map(res => res.json());
+    return this.atpHttp.doGet("/app/feedback/list");
   }
 
   loadAnnouncements(): Observable<Announcement[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/announcement/list", {headers: headers}).map(res => res.json());
+    return this.atpHttp.doGet("/app/announcement/list");
   }
 
   loadFeedbackAnswers(id: number): Observable<FeedbackAnswer[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/feedback/answers/" + id, {headers: headers}).map(res => res.json());
+    return this.atpHttp.doGet("/app/feedback/answers/" + id, "Loading Feedback Details");
   }
 
   sendFeedback(feedback: Feedback): Observable<Feedback> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/app/feedback/", JSON.stringify(feedback), {headers: headers}).map(res => res.json());
+    return this.atpHttp.doPost("/app/feedback/", feedback, "Sending Feedback");
   }
 
   closeFeedback(feedback: Feedback): Observable<Feedback> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.put(Model.server + "/app/feedback/close/" + feedback.id, null, {headers: headers}).map(res => res.json());
+    return this.atpHttp.doPut("/app/feedback/close/", null, "Closing Conversation");
   }
 
   sendFeedbackAnswer(feedback: Feedback, answer: FeedbackAnswer): Observable<FeedbackAnswerResponse> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/app/feedback/answer/" + feedback.id, JSON.stringify(answer), {headers: headers}).map(res => res.json());
+    return this.atpHttp.doPost("/app/feedback/answer/" + feedback.id, answer, "Sending Response");
   }
 }

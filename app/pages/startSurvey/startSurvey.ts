@@ -1,4 +1,4 @@
-import {Platform, Tabs, ActionSheetController, PopoverController, LoadingController, ToastController} from "ionic-angular";
+import {Platform, Tabs, ActionSheetController, PopoverController} from "ionic-angular";
 import {NgZone} from "@angular/core";
 import {CameraOptions} from "ionic-native/dist/plugins/camera";
 import {Camera} from "ionic-native/dist/index";
@@ -9,6 +9,7 @@ import {RandomImage} from "../../components/randomImage.component";
 import {Component} from "@angular/core";
 import {CountrySelection} from "../../components/countrySelection.component";
 import {User} from "../../components/domain/user.component";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   templateUrl: 'build/pages/startSurvey/startSurvey.html'
@@ -34,10 +35,9 @@ export class StartSurveyPage {
               private model: Model,
               private surveyService: SurveyService,
               private tabs: Tabs,
-              private actionShetController: ActionSheetController,
+              private actionSheetController: ActionSheetController,
               private popoverController: PopoverController,
-              private loadingController: LoadingController,
-              private toastController: ToastController) {
+              private notificationService: NotificationService) {
     this.createEmptySurvey(model.user);
   }
 
@@ -64,7 +64,7 @@ export class StartSurveyPage {
   }
 
   choosePicture(isFirstPic: boolean) {
-    this.actionShetController.create({
+    this.actionSheetController.create({
       title: 'Choose action',
       cssClass: 'action-sheets-basic-page',
       buttons: [{
@@ -146,37 +146,20 @@ export class StartSurveyPage {
     } else {
       this.survey.country = "ALL";
     }
-    let loading = this.loadingController.create({
-      content: 'Starting ATP',
-      spinner: 'dots'
-    });
-    loading.present();
     this.surveyService.postSurvey(this.survey, "NUMBER100", this.saveAsDefault).subscribe(resp => {
       console.log("ATP started");
       this.model.last3surveys.unshift(resp);
       if(this.model.last3surveys.length > 3) {
         this.model.last3surveys.pop();
       }
-      loading.dismiss().then(() => {
-        this.toastController.create({
-          message: 'ATP started',
-          duration: 5000,
-          showCloseButton: true,
-          closeButtonText: 'OK'
-        }).present();
+      this.notificationService.showToast({
+        message: 'ATP started',
+        duration: 5000,
+        showCloseButton: true,
+        closeButtonText: 'OK'
       });
       this.createEmptySurvey(this.model.user);
       this.tabs.select(Model.MainTab);
-    }, err => {
-      loading.dismiss().then(() => {
-        this.toastController.create({
-          message: 'Sorry, an error occured',
-          duration: 3000,
-          showCloseButton: true,
-          closeButtonText: 'OK'
-        }).present();
-      });
-      console.log(err);
     });
   }
 

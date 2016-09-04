@@ -1,15 +1,15 @@
-import {Http} from "@angular/http";
 import {Country} from "../components/domain/country.component";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 import {Model} from "../components/model.component";
+import {AtpHttp} from "./atpHttp.service";
 
 @Injectable()
 export class CountryService {
 
   countries: Country[];
   
-  constructor(public http:Http) {}
+  constructor(public atpHttp: AtpHttp) {}
 
   getCountries(): Observable<Country[]> {
     if(this.countries) {
@@ -18,11 +18,9 @@ export class CountryService {
     // if(window.localStorage.getItem("countries")) {
     //   return Observable.create(obs => obs.next(JSON.parse(window.localStorage.getItem("countries"))));
     // }
-    return this.http.get(Model.server + "/country/list").map(res => {
-      if(res.status != 200) {
-        throw new Error('Error while retrieving countries: ' + res.status);
-      }
-      this.countries = res.json()
+
+    return this.atpHttp.doGet("/country/list").map(data => {
+      this.countries = data;
       // window.localStorage.setItem("countries", JSON.stringify(countries));
       return this.countries;
     })

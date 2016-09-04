@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {ToastController} from "ionic-angular/index";
 import {Model} from "../../components/model.component.ts";
 import {AuthService} from "../../services/auth.service.ts";
 
@@ -14,8 +13,7 @@ export class NotificationSettings {
   expanded: boolean = false;
 
   constructor(private model: Model,
-              private authService: AuthService,
-              private toastController: ToastController) {
+              private authService: AuthService) {
     this.enabled = model.user.notifications;
     this.soundEnabled = model.user.notificationsSound;
     this.vibrationEnabled = model.user.notificationsVibration;
@@ -28,11 +26,6 @@ export class NotificationSettings {
   }
 
   doSubmit() {
-    this.authService.postNotification(this.enabled, this.soundEnabled, this.vibrationEnabled).subscribe(() => {
-      this.toastController.create({
-        message: 'Push Notification settings saved',
-        duration: 2000
-      }).present();
-    }, err => console.log(err))
+    this.authService.postNotification(this.enabled, this.soundEnabled, this.vibrationEnabled).subscribe(data => this.model.user = data);
   }
 }

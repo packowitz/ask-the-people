@@ -9,6 +9,8 @@ import {SurveyService} from "./services/survey.service";
 import {ViewChild, Component} from "@angular/core";
 import {HighscoreService} from "./services/highscore.service";
 import {MessagesService} from "./services/messages.service";
+import {NotificationService} from "./services/notification.service";
+import {AtpHttp} from "./services/atpHttp.service";
 
 @Component({
   templateUrl: 'build/app.html'
@@ -28,7 +30,7 @@ class AtpApp {
   }
 }
 
-ionicBootstrap(AtpApp, [AuthService, CountryService, MessagesService, HighscoreService, SurveyService, Model], {
+ionicBootstrap(AtpApp, [AuthService, CountryService, MessagesService, HighscoreService, SurveyService, Model, NotificationService, AtpHttp], {
   tabsHighlight: true,
   tabsPlacement: 'bottom',
   tabsHideOnSubPages: true,

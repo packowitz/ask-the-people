@@ -1,8 +1,8 @@
-import {Http, Headers} from "@angular/http";
 import {User} from "../components/domain/user.component";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 import {Model} from "../components/model.component";
+import {AtpHttp} from "./atpHttp.service";
 
 export class TokenResponse {
   token: string;
@@ -11,62 +11,32 @@ export class TokenResponse {
 
 @Injectable()
 export class AuthService {
-  constructor(public http:Http, private model: Model) {}
-
-  register(user: User): Observable<TokenResponse> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/auth/register", JSON.stringify(user), {headers: headers}).map(res => res.json());
-  }
+  constructor(private model: Model, private atpHttp: AtpHttp) {}
 
   registerNewUser(): Observable<TokenResponse> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/auth/register", null, {headers: headers}).map(res => res.json());
+    return this.atpHttp.doPost("/auth/register", null, "Registering");
   }
 
   login(username: string, password: string): Observable<TokenResponse> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/auth/login", JSON.stringify({username: username, password: password}), {headers: headers}).map(res => res.json());
+    return this.atpHttp.doPost("/auth/login", {username: username, password: password}, "Logging in");
   }
 
   getUserByToken(token: string): Observable<User> {
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + token);
-    return this.http.get(Model.server + "/app/user", {headers: headers}).map(res => res.json());
+    this.model.token = token;
+    return this.atpHttp.doGet("/app/user");
   }
 
-  postUsername(username: string, password: string): Observable<boolean> {
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/app/user/username", JSON.stringify({username: username, password: password}), {headers: headers}).map(res => {
-      let user = res.json();
-      this.model.user = user;
-      return user;
-    });
+  postUsername(username: string, password: string): Observable<User> {
+    return this.atpHttp.doPost("/app/user/username", {username: username, password: password}, "Sending credentials");
   }
 
-  postNotification(enabled: boolean, soundEnabled: boolean, vibrationEnabled: boolean): Observable<boolean> {
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/app/user/notifications", JSON.stringify({enabled: enabled, soundEnabled: soundEnabled, vibrationEnabled: vibrationEnabled}), {headers: headers}).map(res => {
-      let user = res.json();
-      this.model.user = user;
-      return user;
-    });
+  postNotification(enabled: boolean, soundEnabled: boolean, vibrationEnabled: boolean): Observable<User> {
+    let data: any = {enabled: enabled, soundEnabled: soundEnabled, vibrationEnabled: vibrationEnabled};
+    return this.atpHttp.doPost("/app/user/notifications", data, "Sending settings");
   }
 
-  postPersonalData(yearOfBirth: number, male: boolean, country: string) {
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(Model.server + "/app/user/personal-data", JSON.stringify({'yearOfBirth': yearOfBirth, male: male, country: country}), {headers: headers}).map(res => {
-      let user = res.json();
-      this.model.user = user;
-      return user;
-    });
+  postPersonalData(yearOfBirth: number, male: boolean, country: string): Observable<User> {
+    let data: any = {'yearOfBirth': yearOfBirth, male: male, country: country};
+    return this.atpHttp.doPost("/app/user/personal-data", data, "Sending your data");
   }
 }

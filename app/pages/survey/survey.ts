@@ -1,9 +1,10 @@
-import {Loading, Tabs, LoadingController, ToastController, AlertController} from "ionic-angular";
+import {Loading, Tabs, AlertController} from "ionic-angular";
 import {SurveyService} from "../../services/survey.service";
 import {Survey} from "../../components/domain/survey.component";
 import {Messages} from "../../components/messages.component";
 import {Component} from "@angular/core";
 import {Model} from "../../components/model.component";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   templateUrl: 'build/pages/survey/survey.html'
@@ -17,21 +18,15 @@ export class SurveyPage {
 
   constructor(private surveyService: SurveyService,
               private tabs: Tabs,
-              private loadingController: LoadingController,
-              private toastController: ToastController,
+              private notificationService: NotificationService,
               private alertController: AlertController) {
     this.loadNextSurvey();
   }
 
   loadNextSurvey() {
-    this.loading = this.loadingController.create({
-      content: 'Loading survey',
-      spinner: 'dots'
-    });
-    this.loading.present();
     this.surveyService.getSurveyToAnswer().subscribe(data => {
       this.showSurvey(data);
-    }, err => this.handleError(err));
+    });
   }
 
   ngOnInit() {
@@ -43,21 +38,7 @@ export class SurveyPage {
     }, 200);
   }
 
-  handleError(err) {
-    this.loading.dismiss().then(() => {
-      this.toastController.create({
-        message: 'Sorry, an error occured',
-        duration: 3000,
-        showCloseButton: true,
-        closeButtonText: 'OK'
-      }).present();
-    });
-    console.log(err);
-    this.goHome();
-  }
-
   showSurvey(survey: Survey) {
-    this.loading.dismiss();
     this.survey = survey;
     if(survey.title) {
       this.showTitle = true;
@@ -77,40 +58,21 @@ export class SurveyPage {
       message: "Abuse means that you think that these pictures show <strong>illegal</strong> or <strong>illegitimate</strong> content.<br/>If you just don't have a meaning on these picture then please press 'skip'.",
       buttons: [
         {text: 'Cancel'},
-        {text: 'Report Abuse', handler: () => {
-          this.selectPicture(3);
-        }}
+        {text: 'Report Abuse', handler: () => this.selectPicture(3)}
       ]
     }).present();
   }
   
   selectPicture(picNr: number) {
     if(this.enabled) {
-      let timestamp: number = new Date().getTime();
-      let message;
-      if(picNr == 3) {
-        message = "reporting abuse";
-      } else {
-        message = Messages.getAnsweredMsg();
-      }
-      this.loading = this.loadingController.create({
-        content: message,
-        spinner: 'dots'
-      });
-      this.loading.present();
       this.surveyService.postResult(this.survey, picNr).subscribe(data => {
-        let timeDiff: number = new Date().getTime() - timestamp;
-        if(timeDiff > 1500) {
-          this.showSurvey(data);
-        } else {
-          setTimeout(() => this.showSurvey(data), 1500 - timeDiff);
-        }
-      }, err => this.handleError(err));
+        this.showSurvey(data);
+      });
     } else {
-      this.toastController.create({
+      this.notificationService.showToast({
         message: Messages.getTooFastMsg(),
         duration: 1000
-      }).present();
+      });
     }
   }
 }

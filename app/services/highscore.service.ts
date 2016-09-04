@@ -1,35 +1,26 @@
 import {Injectable} from "@angular/core";
-import {Model} from "../components/model.component";
-import {Http, Headers} from "@angular/http";
 import {HighscoreUser} from "../components/domain/highscoreUser.component";
 import {Observable} from "rxjs/Rx";
+import {AtpHttp} from "./atpHttp.service";
 
 @Injectable()
 export class HighscoreService {
 
-  constructor(private http: Http, private model: Model) {}
+  constructor(private atpHttp: AtpHttp) {}
 
   getHighscoreGlobalWeek(): Observable<HighscoreUser[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/user/highscore/week", {headers: headers}).map(res => res.json());
+    return this.atpHttp.doGet("/app/user/highscore/week");
   }
 
   getHighscoreLocalWeek(): Observable<HighscoreUser[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/user/highscore/week/local", {headers: headers}).map(res => res.json());
+    return this.atpHttp.doGet("/app/user/highscore/week/local");
   }
 
   getHighscoreGlobalTotal(): Observable<HighscoreUser[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/user/highscore", {headers: headers}).map(res => res.json());
+    return this.atpHttp.doGet("/app/user/highscore");
   }
 
   getHighscoreLocalTotal(): Observable<HighscoreUser[]> {
-    let headers: Headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.model.token);
-    return this.http.get(Model.server + "/app/user/highscore/local", {headers: headers}).map(res => res.json());
+    return this.atpHttp.doGet("/app/user/highscore/local");
   }
 }

@@ -94,7 +94,6 @@ export class LoadingPage {
       data => {
         console.log("Loaded user data");
         this.model.user = data;
-        this.model.token = token;
         this.loadedUser = true;
         this.loadDataFromServer();
       },
