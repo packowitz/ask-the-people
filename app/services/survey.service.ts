@@ -28,19 +28,19 @@ export class SurveyService {
   }
   
   getLast3Surveys(): Observable<Survey[]> {
-    return this.atpHttp.doGet("/app/survey/list3");
+    return this.atpHttp.doGetBackground("/app/survey/list3");
   }
 
   getCurrentSurveyList(): Observable<Survey[]> {
-    return this.atpHttp.doGet("/app/survey/list/current");
+    return this.atpHttp.doGetBackground("/app/survey/list/current");
   }
 
   getArchivedSurveyList(): Observable<Survey[]> {
-    return this.atpHttp.doGet("/app/survey/list/archived");
+    return this.atpHttp.doGetBackground("/app/survey/list/archived");
   }
 
   updateSurvey(survey: Survey) {
-    this.atpHttp.doGet("/app/survey/update/" + survey.id).subscribe(data => {
+    this.atpHttp.doGetBackground("/app/survey/update/" + survey.id).subscribe(data => {
       survey.status = data.status;
       survey.answered = data.answered;
       survey.noOpinionCount = data.noOpinionCount;
@@ -50,7 +50,7 @@ export class SurveyService {
   }
   
   loadSurveyDetails(survey: Survey) {
-    this.atpHttp.doGet("/app/survey/details/" + survey.id).subscribe(data => {
+    this.atpHttp.doGet("/app/survey/details/" + survey.id, "Loading ATP details").subscribe(data => {
       survey.status = data.status;
       survey.answered = data.answered;
       survey.noOpinionCount = data.noOpinionCount;

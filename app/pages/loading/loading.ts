@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {Splashscreen} from "ionic-native/dist/index";
-import {Storage, SqlStorage, Alert, NavController, AlertController} from "ionic-angular/index";
+import {Storage, SqlStorage, NavController} from "ionic-angular/index";
 import {Model} from "../../components/model.component";
 import {MessagesService} from "../../services/messages.service";
 import {CountryService} from "../../services/country.service";
@@ -25,27 +25,13 @@ export class LoadingPage {
               private surveyService: SurveyService,
               private countryService: CountryService,
               private feedbackService: MessagesService,
-              private model: Model,
-              private alertController: AlertController) {
+              private model: Model) {
     this.localStorage = new Storage(SqlStorage);
     this.loadDataFromServer();
   }
 
   ionViewDidEnter() {
     Splashscreen.hide();
-  }
-
-  showNetworkError() {
-    this.alertController.create({
-      title: 'Connection lost',
-      message: 'The ATP-Servers are not reachable. Please check your internet connection.',
-      buttons: [{
-        text: 'Retry',
-        handler: () => {
-          this.loadDataFromServer();
-        }
-      }]
-    }).present();
   }
 
   loadDataFromServer() {
@@ -70,8 +56,8 @@ export class LoadingPage {
         console.log("loaded " + countries.length + " countries");
         this.loadedCountries = true;
         this.loadDataFromServer();
-      },
-      error => this.showNetworkError());
+      }
+    );
   }
 
   loadUser() {
@@ -96,28 +82,6 @@ export class LoadingPage {
         this.model.user = data;
         this.loadedUser = true;
         this.loadDataFromServer();
-      },
-      error => {
-        if(error.status == 401) {
-          this.alertController.create({
-            title: 'Authentication Error',
-            message: 'Your account does not exist! Go to the Login Page to login or create a new account.',
-            buttons: [{
-              text: 'Login Page',
-              handler: () => {
-                this.localStorage.remove('token');
-                this.nav.setRoot(WelcomePage);
-              }
-            }, {
-              text: 'Retry',
-              handler: () => {
-                this.resolveUser(token);
-              }
-            }]
-          }).present();
-        } else {
-          this.showNetworkError();
-        }
       }
     );
   }
@@ -129,8 +93,7 @@ export class LoadingPage {
         console.log("Loaded " + this.model.last3surveys.length + " last surveys");
         this.loadedLast3Surveys = true;
         this.loadDataFromServer();
-      },
-      error => this.showNetworkError()
+      }
     );
   }
 
@@ -142,8 +105,7 @@ export class LoadingPage {
         console.log("Loaded " + this.model.feedback.length + " feedback");
         this.loadedUnreadFeedback = true;
         this.loadDataFromServer();
-      },
-      error => this.showNetworkError()
+      }
     );
   }
 
@@ -155,8 +117,7 @@ export class LoadingPage {
         console.log("Loaded " + this.model.announcements.length + " announcements");
         this.loadedAnnouncements = true;
         this.loadDataFromServer();
-      },
-      error => this.showNetworkError()
+      }
     );
   }
 }

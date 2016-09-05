@@ -16,11 +16,11 @@ export class MessagesService {
   constructor(private atpHttp: AtpHttp) {}
 
   loadFeedback(): Observable<Feedback[]> {
-    return this.atpHttp.doGet("/app/feedback/list");
+    return this.atpHttp.doGetBackground("/app/feedback/list");
   }
 
   loadAnnouncements(): Observable<Announcement[]> {
-    return this.atpHttp.doGet("/app/announcement/list");
+    return this.atpHttp.doGetBackground("/app/announcement/list");
   }
 
   loadFeedbackAnswers(id: number): Observable<FeedbackAnswer[]> {

@@ -23,7 +23,7 @@ export class AuthService {
 
   getUserByToken(token: string): Observable<User> {
     this.model.token = token;
-    return this.atpHttp.doGet("/app/user");
+    return this.atpHttp.doGetBackground("/app/user");
   }
 
   postUsername(username: string, password: string): Observable<User> {

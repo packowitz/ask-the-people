@@ -9,18 +9,18 @@ export class HighscoreService {
   constructor(private atpHttp: AtpHttp) {}
 
   getHighscoreGlobalWeek(): Observable<HighscoreUser[]> {
-    return this.atpHttp.doGet("/app/user/highscore/week");
+    return this.atpHttp.doGetBackground("/app/user/highscore/week");
   }
 
   getHighscoreLocalWeek(): Observable<HighscoreUser[]> {
-    return this.atpHttp.doGet("/app/user/highscore/week/local");
+    return this.atpHttp.doGetBackground("/app/user/highscore/week/local");
   }
 
   getHighscoreGlobalTotal(): Observable<HighscoreUser[]> {
-    return this.atpHttp.doGet("/app/user/highscore");
+    return this.atpHttp.doGetBackground("/app/user/highscore");
   }
 
   getHighscoreLocalTotal(): Observable<HighscoreUser[]> {
-    return this.atpHttp.doGet("/app/user/highscore/local");
+    return this.atpHttp.doGetBackground("/app/user/highscore/local");
   }
 }
