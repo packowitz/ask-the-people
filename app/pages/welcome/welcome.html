@@ -3,26 +3,33 @@
         <img src="img/icon-invert.png">
         <div>ATP&nbsp;beta</div>
     </div>
-    <ion-card *ngIf="!showLogin">
-        <ion-card-header text-center>
-            <h1 class="color-grey">Welcome to ATP</h1>
-        </ion-card-header>
-        <ion-card-content class="color-grey">
-            Ask The People (ATP) is a community driven decision helper.
-            By uploading two pictures you ask the people to vote on which one they like more.<br/>
-            Earn credits by helping other people on their decisions.
-        </ion-card-content>
-        <ion-card-content>
-            <ion-row>
-                <ion-col>
-                    <button clear small (click)="toggleShowLogin()">LOGIN</button>
-                </ion-col>
-                <ion-col text-right>
-                    <button clear small (click)="register()">I am new to  ATP</button>
-                </ion-col>
-            </ion-row>
-        </ion-card-content>
-    </ion-card>
+    <ion-slides [options]="sliderOptions">
+        <ion-slide>
+            <h1 class="color-dark">Welcome to ATP</h1>
+            <div class="welcome-text">
+                Ask The People (ATP) is a community driven decision helper.
+                By uploading two pictures you ask the people to vote on which one they like more.<br/>
+                Earn credits by helping other people on their decisions.
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <ion-list>
+                <ion-item>
+                    <ion-label floating>email or username</ion-label>
+                    <ion-input type="text" [(ngModel)]="username"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>password</ion-label>
+                    <ion-input type="password" [(ngModel)]="password"></ion-input>
+                </ion-item>
+            </ion-list>
+            <div class="action-items">
+                <button light class="login-button" [disabled]="!username || !password" (click)="login()">Login</button>
+                <div (click)="forgotPassword()">Forgot password</div>
+                <div (click)="startATP()">I am new to ATP</div>
+            </div>
+        </ion-slide>
+    </ion-slides>
 
     <ion-card *ngIf="showLogin">
         <ion-card-header text-center>
@@ -51,5 +58,6 @@
             </ion-row>
         </ion-card-content>
     </ion-card>
+    <div class="flex-grow">&nbsp;</div>
     <div class="footer">&copy; 2016 Pacworx</div>
 </ion-content>

@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private model: Model, private atpHttp: AtpHttp) {}
 
   registerNewUser(): Observable<TokenResponse> {
-    return this.atpHttp.doPost("/auth/register", null, "Registering");
+    return this.atpHttp.doPost("/auth/register", null, "Starting ATP");
   }
 
   login(username: string, password: string): Observable<TokenResponse> {

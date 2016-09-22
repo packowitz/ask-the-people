@@ -9,6 +9,7 @@ import {LoadingPage} from "../loading/loading";
 })
 export class WelcomePage {
   showLogin: boolean = false;
+  sliderOptions = {pager: true};
   username: string;
   password: string;
   deviceHeight: number = 100;
@@ -24,7 +25,7 @@ export class WelcomePage {
     this.showLogin = !this.showLogin;
   }
 
-  register() {
+  startATP() {
     this.authService.registerNewUser().subscribe(
       data => {
         this.model.token = data.token;
@@ -42,6 +43,10 @@ export class WelcomePage {
       let storage = new Storage(SqlStorage);
       storage.set('token', data.token).then(() => this.nav.setRoot(LoadingPage));
     });
+  }
+
+  forgotPassword() {
+    window.open("https://atp-pacworx.rhcloud.com/atp.html", "_system");
   }
 
 }
