@@ -13,6 +13,8 @@ import {SurveyListComponent} from "../../components/surveyList.component";
 })
 export class MainPage {
 
+  currentYear: number = new Date().getFullYear();
+
   constructor(private model: Model,
               private nav: NavController,
               private surveyService: SurveyService,
