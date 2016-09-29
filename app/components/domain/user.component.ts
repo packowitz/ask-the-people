@@ -8,6 +8,8 @@ export class User {
   surveysStarted: number;
   surveysAnsweredWeek: number;
   surveysStartedWeek: number;
+  deviceOs: string;
+  notificationRegId: string;
   notifications: boolean;
   notificationsSound: boolean;
   notificationsVibration: boolean;

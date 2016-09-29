@@ -39,4 +39,8 @@ export class AuthService {
     let data: any = {'yearOfBirth': yearOfBirth, male: male, country: country};
     return this.atpHttp.doPost("/app/user/personal-data", data, "Sending your data");
   }
+
+  postDeviceBackground(deviceOs: string, regId: string): Observable<User> {
+    return this.atpHttp.doPostBackground("/app/user/device", {deviceOs: deviceOs, notificationRegId: regId});
+  }
 }

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {Splashscreen} from "ionic-native/dist/index";
-import {Storage, SqlStorage, NavController} from "ionic-angular/index";
+import {Splashscreen} from "ionic-native";
+import {Storage, SqlStorage, NavController, Platform, AlertController} from "ionic-angular/index";
 import {Model} from "../../components/model.component";
 import {MessagesService} from "../../services/messages.service";
 import {CountryService} from "../../services/country.service";
@@ -8,6 +8,8 @@ import {SurveyService} from "../../services/survey.service";
 import {AuthService} from "../../services/auth.service";
 import {TabsPage} from "../tabs/tabsPage";
 import {WelcomePage} from "../welcome/welcome";
+
+declare var FirebasePlugin: any;
 
 @Component({
   templateUrl: 'build/pages/loading/loading.html'
@@ -19,13 +21,16 @@ export class LoadingPage {
   loadedLast3Surveys: boolean = false;
   loadedUnreadFeedback: boolean = false;
   loadedAnnouncements: boolean = false;
+  registeredNotifications: boolean = false;
 
   constructor(private nav: NavController,
               private authService: AuthService,
               private surveyService: SurveyService,
               private countryService: CountryService,
               private feedbackService: MessagesService,
-              private model: Model) {
+              private model: Model,
+              private platform: Platform,
+              private alertController: AlertController) {
     this.localStorage = new Storage(SqlStorage);
     this.loadDataFromServer();
   }
@@ -37,14 +42,16 @@ export class LoadingPage {
   loadDataFromServer() {
     if(!this.loadedCountries) {
       this.loadCountries();
-    } else if((!this.loadedUser)) {
+    } else if(!this.loadedUser) {
       this.loadUser();
-    } else if((!this.loadedLast3Surveys)) {
+    } else if(!this.loadedLast3Surveys) {
       this.loadLast3Surveys();
-    } else if((!this.loadedUnreadFeedback)) {
+    } else if(!this.loadedUnreadFeedback) {
       this.loadFeedback();
-    } else if((!this.loadedAnnouncements)) {
+    } else if(!this.loadedAnnouncements) {
       this.loadAnnouncements();
+    } else if(!this.registeredNotifications) {
+      this.registerNotification();
     } else {
       this.nav.setRoot(TabsPage);
     }
@@ -119,5 +126,31 @@ export class LoadingPage {
         this.loadDataFromServer();
       }
     );
+  }
+
+  private registerNotification() {
+    if(FirebasePlugin) {
+      try {
+        FirebasePlugin.getInstanceId(
+          token => {
+            let platform = this.platform.is("android") ? "android" : this.platform.is("ios") ? "iOS" : "unknown";
+            this.authService.postDeviceBackground(platform, token).subscribe(data => this.model.user = data);
+          },
+          err => console.log("Error on FirebasePlugin.getInstanceId: " + err)
+        );
+        FirebasePlugin.onNotificationOpen(
+          data => {
+            alert("Notification: " + JSON.stringify(data) );
+          },
+          err => {
+            alert('Error registering onNotification callback: ' + err);
+          }
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    this.registeredNotifications = true;
+    this.loadDataFromServer();
   }
 }

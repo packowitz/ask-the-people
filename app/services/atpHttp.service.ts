@@ -56,6 +56,19 @@ export class AtpHttp {
       .catch(err => this.loggingError(err));
   }
 
+  doPostBackground(uri: string, body: any): Observable<any> {
+    let headers: Headers = new Headers();
+    if(this.model.token) {
+      headers.append('Authorization', 'Bearer ' + this.model.token);
+    }
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(Model.server + uri, body ? JSON.stringify(body) : null, {headers: headers})
+      .timeout(AtpHttp.timeout, new Error('timeout exceeded'))
+      .retryWhen(data => this.retryWhen(data, () => this.doPostBackground(uri, body)))
+      .map(data => this.handleData(data))
+      .catch(err => this.loggingError(err));
+  }
+
   doPut(uri: string, body: any, loadingMessage: string): Observable<any> {
     this.notificationService.showLoading(loadingMessage);
     let headers: Headers = new Headers();
